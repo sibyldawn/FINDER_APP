@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,6 +16,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 const styles = theme => ({
   root: {
+    textDecoration: 'none',
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
@@ -43,28 +45,33 @@ class Aside extends Component {
     <div className={classes.root}>
      
       <List>
-        <ListItem>
+        <Link to="/profile"><ListItem>
           <Avatar>
             <Face />
           </Avatar>
           <ListItemText primary="Profile" />
         </ListItem>
+        </Link>
         <li>
           <Divider inset />
         </li>
+        <Link to="/Matches">
         <ListItem>
           <Avatar>
             <SupervisedUserCircle />
           </Avatar>
           <ListItemText primary="Match List" />
         </ListItem>
+        </Link>
         <Divider inset component="li" />
+        <Link to="/Settings">
         <ListItem>
           <Avatar>
             <Settings />
           </Avatar>
           <ListItemText primary="Settings" />
         </ListItem>
+        </Link>
       </List>
       <div><FormGroup>
           <FormControlLabel
