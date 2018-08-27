@@ -38,7 +38,7 @@ class Footer extends Component {
        <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
        <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
        <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
-       <Link to="/JobMap"><BottomNavigationAction label="Map" value="map" icon={<LocationOnIcon />} /></Link>
+       <Link to="/JobMap"><BottomNavigationAction label="JobMap" value="map" icon={<LocationOnIcon />} /></Link>
        <Link to="/Settings"><BottomNavigationAction label="Settings" value="settings" icon={<Settings />} /></Link>
       </BottomNavigation>
     );
@@ -52,12 +52,4 @@ Footer.propTypes = {
 export default withRouter(withStyles(styles)(Footer));
 
 
-// import React, { Component } from 'react';
 
-// // export default class Footer extends Component {
-// //   render() {
-// //     return <div>
-// //       <h1>THIS IS THE FOOTER!</h1>
-// //     </div>
-// //   }
-// // }

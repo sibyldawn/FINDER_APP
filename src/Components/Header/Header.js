@@ -13,6 +13,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import Aside from '../Aside/Aside';
 
 const styles = {
   root: {
@@ -31,6 +33,7 @@ class Header extends Component {
   state = {
     auth: true,
     anchorEl: null,
+    left: false,
   };
 
   handleChange = (event, checked) => {
@@ -45,6 +48,12 @@ class Header extends Component {
     this.setState({ anchorEl: null });
   };
 
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
@@ -54,9 +63,20 @@ class Header extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
+            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
+            <MenuIcon/>
+            </IconButton>  
+                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                <div
+                    tabIndex={0}
+                    role="button"
+                    onClick={this.toggleDrawer('left', false)}
+                    onKeyDown={this.toggleDrawer('left', false)}
+                >
+                    <Aside/>
+                </div>
+                </Drawer>
+            
             <Typography variant="title" color="inherit" className={classes.flex}>
               Finder
             </Typography>
