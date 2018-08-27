@@ -9,10 +9,12 @@ import Settings from './Components/Settings/Settings';
 import JobMap from './Components/JobMap/JobMap';
 import Messages from './Components/Messages/Messages';
 import ChatWindow from './Components/ChatWindow/ChatWindow';
+import Header from './Components/Header/Header'
 
 export default (
         <Switch>
             <Route  exact path="/" component={MatchFinder}/>
+            <Route  path ='/header' component={Header} />
             <Route  path="/Registration" component={Registration}/>
             <Route  path="/profile" component={Profile}/>
             <Route  path="/ProfileSettings" component={ProfileSettings}/>
