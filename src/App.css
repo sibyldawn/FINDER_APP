@@ -5,15 +5,21 @@ font-family: 'Hind Siliguri', sans-serif;
 font-family: 'Baloo Bhai', cursive;
 font-family: 'Bangers', cursive;*/
 
-/* colors
+ /* colors
 black
 white
 dark blue-#1F2D44
 light blue - #2699FB
-teal - #5ACCC1
+teal - #5ACCC1 
 gradient - linear-gradient(to right, #0099ff 0%, #5accc1 100%)
 
-*/
+
+blue text header text-#4063fc
+camera blue- #2699FB
+grey nav bar outline- #A8B4B3
+ */
+
+
 .App {
   text-align: center;
 }
