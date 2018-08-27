@@ -50,7 +50,7 @@ app.get('/auth/callback', (req, res) => {
         console.log('------------ Auth0 response', response)
         const auth0Id = response.data.sub // .sub is short for 'subject' on Auth0
         const db = req.app.get('db')
-        return db.get_single_user(auth0Id).then(users => {
+        return db.get_single_applicant(auth0Id).then(users => {
             if (users.length) {
                 const user = users[0]
                 req.session.user = user // Using sessions with Auth0
@@ -64,11 +64,10 @@ app.get('/auth/callback', (req, res) => {
                     auth0_id: auth0Id,
                     first_name: given_name,
                     last_name: family_name,
-                    username: nickname,
                     picture: picture,
                     email: email
                 }
-            return db.add_user(createUserData).then(newUsers => {
+            return db.add_applicant(createUserData).then(newUsers => {
                 const user = newUsers[0]
                 console.log('------------ newUsers', newUsers)
                 req.session.user = user // Here is session again
