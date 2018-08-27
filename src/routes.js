@@ -14,7 +14,7 @@ export default (
         <Switch>
             <Route  exact path="/" component={MatchFinder}/>
             <Route  path="/Registration" component={Registration}/>
-            <Route  path="/Profile" component={Profile}/>
+            <Route  path="/profile" component={Profile}/>
             <Route  path="/ProfileSettings" component={ProfileSettings}/>
             <Route  path="/Matches" component={Matches}/>
             <Route  path="/Settings" component={Settings}/>
