@@ -14,10 +14,8 @@ import Settings from '@material-ui/icons/Settings';
 const styles = {
   root: {
     position: 'absolute',
-    left:0,
     bottom: 0,
     width: '100vw',
-    background: '#5ACCC1'
   },
 };
 
