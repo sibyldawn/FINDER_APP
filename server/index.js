@@ -15,6 +15,13 @@ app.use(session({
     resave: false
 }))
 
+// Session endpoints
+app.get('/api/session/user', (req, res) => {
+    req.session.user ?
+    res.status(200).send(req.session.user)
+    : res.status(200).send('No user logged in!')
+})
+
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
 }).catch(error => {
@@ -47,7 +54,7 @@ app.get('/auth/callback', (req, res) => {
     }
     // This function will take the returned user info, determine whether a user is logged in, and store their info in the database if they are new.
     function storeUserInfoInDatabase (response) {
-        console.log('------------ Auth0 response', response)
+        // console.log('------------ Auth0 response', response)
         const auth0Id = response.data.sub // .sub is short for 'subject' on Auth0
         const db = req.app.get('db')
         return db.get_single_applicant(auth0Id).then(users => {
@@ -56,10 +63,9 @@ app.get('/auth/callback', (req, res) => {
                 req.session.user = user // Using sessions with Auth0
                 res.redirect(prevPath)
                 console.log('------------ users', users)
-                console.log('------------ this.props', this.props)
+                console.log('------------ req.session.user', req.session.user)
             } else {
-                // console.log('------------ users', users)
-                const {given_name, family_name, nickname, picture, email} = response.data
+                const {given_name, family_name, picture, email} = response.data
                 const createUserData = {
                     auth0_id: auth0Id,
                     first_name: given_name,
@@ -67,12 +73,12 @@ app.get('/auth/callback', (req, res) => {
                     picture: picture,
                     email: email
                 }
-            return db.add_applicant(createUserData).then(newUsers => {
-                const user = newUsers[0]
-                console.log('------------ newUsers', newUsers)
-                req.session.user = user // Here is session again
-                res.redirect('/profile')
-                }).catch(error => console.log('------------ Add user error', error))
+                return db.add_applicant(createUserData).then(newUsers => {
+                    const user = newUsers[0]
+                    console.log('------------ newUsers', newUsers)
+                    req.session.user = user // Here is session again
+                    res.redirect('/profile')
+                    }).catch(error => console.log('------------ Add user error', error))
             }
         }).catch(error => console.log('------------ Get user error', error))
     }
