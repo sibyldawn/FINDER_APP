@@ -9,6 +9,7 @@ import MessageSharp from '@material-ui/icons/MessageSharp';
 import SwapHorizSharp from '@material-ui/icons/SwapHorizSharp';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Settings from '@material-ui/icons/Settings';
+import { Link } from 'react-router-dom';
 
 
 const styles = {
@@ -33,12 +34,12 @@ class Footer extends Component {
     const { value } = this.state;
 
     return (
-      <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
-        <BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} />
-        <BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} />
-        <BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} />
-        <BottomNavigationAction label="Map" value="map" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Settings" value="settings" icon={<Settings />} />
+      <BottomNavigation  showLabels value={value} onChange={this.handleChange} className={classes.root} color="inherit">
+       <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
+       <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
+       <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
+       <Link to="/JobMap"><BottomNavigationAction label="Map" value="map" icon={<LocationOnIcon />} /></Link>
+       <Link to="/Settings"><BottomNavigationAction label="Settings" value="settings" icon={<Settings />} /></Link>
       </BottomNavigation>
     );
   }
