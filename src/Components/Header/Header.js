@@ -80,7 +80,6 @@ class Header extends Component {
     };
 
     render() {
-        console.log('------------ this.state.user', this.state.user)
         const { classes } = this.props;
         const { auth, anchorEl } = this.state;
         const open = Boolean(anchorEl);
@@ -110,7 +109,7 @@ class Header extends Component {
                         <IconButton
                         aria-owns={open ? 'menu-appbar' : null}
                         aria-haspopup="true"
-                        onClick={this.handleMenu}
+                        onClick={this.state.login ? this.handleMenu : this.login }
                         color="inherit"
                         >
                         {this.state.login ?
@@ -128,28 +127,27 @@ class Header extends Component {
                                         padding: 0 }} 
                                         src={this.state.user.picture} alt="Profile"/>
                                 </figure>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                    >
-                                    <MenuItem onClick={this.logout}>Logout</MenuItem>
-                                </Menu>
                             </div>
                             :
-                            <AccountCircle onClick={this.login} />
+                            <AccountCircle />
                         }
                         </IconButton>
-                        
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={this.handleClose}
+                            >
+                            <MenuItem onClick={this.handleClose}><div onClick={this.logout}>Logout</div></MenuItem>
+                        </Menu>  
                     </div>
                     )}
                     </Toolbar>
