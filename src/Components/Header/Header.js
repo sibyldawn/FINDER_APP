@@ -73,6 +73,7 @@ handleClose = () => {
 };
 
 render() {
+    console.log("window",window)
     console.log('------------ this.state.user', this.state.user)
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
