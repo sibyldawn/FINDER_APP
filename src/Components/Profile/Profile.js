@@ -62,7 +62,7 @@ export default class Profile extends Component {
                             <div><input type="text" value={this.state.current_zipcode} onChange={(e) => this.handleChange('current_zipcode', e.target.value)} placeholder='Zipcode' maxLength='5' minLength='5'/></div>
                             <div><textarea value={this.state.work_history} placeholder='Work History' onChange={(e) => this.handleChange('work_history', e.target.value)} cols="30" rows="10"></textarea></div>
                             <div><textarea value={this.state.education_background} placeholder='Education Background' onChange={(e) => this.handleChange('education_background', e.target.value)} cols="30" rows="10"></textarea></div>
-                            <div><textarea value={this.state.job_interest} placeholder='Job Interests' onChange={(e) => this.handleChange('job_interest', e.target.value)} cols="10" rows="10"></textarea></div>
+                            <div><textarea value={this.state.job_interest} placeholder='Job Interests' onChange={(e) => this.handleChange('job_interest', e.target.value)} cols="30" rows="5"></textarea></div>
                             <div><input type="text" value={this.state.job_title} onChange={(e) => this.handleChange('job_title', e.target.value)} placeholder='Job Title' /></div>
                             <div>Preferred location: <select onChange={(e) => this.handleChange('state', e.target.value)}>
                                 <option value={this.state.preferred_location}>State</option>
