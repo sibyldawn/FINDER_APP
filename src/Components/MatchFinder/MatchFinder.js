@@ -45,16 +45,18 @@ export default class App extends React.Component {
 
     console.log(this.deck)
     return (
-      <div className="demo-wrapper" ref={this.deck}>
-              
+      <div  className="demo-wrapper" 
+      ref={this.deck}>
+      <figure style={{height:'100vh'}}>
         <MotionStack
-          ref={this.deck}
           data={data}
           onSwipeEnd={this.onSwipeEnd}
           onBeforeSwipe={this.onBeforeSwipe}
           render={props => props.element}
           renderButtons={this.renderButtons}
+          style={{height:'100%'}}
         />
+       </figure> 
       </div>
     );
   }
