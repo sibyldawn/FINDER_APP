@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import axios from 'axios'
+import Card from '../Card/Card'
 
 const styles = theme => ({
     progress: {
@@ -98,9 +99,6 @@ class Profile extends Component {
             :
             <div>
                 <div>
-                    <figure><img src={this.state.picture} alt="Profile" width='200'/></figure>
-                    <div>{this.state.first_name} {this.state.last_name}</div>
-                    <div>{this.state.email}</div>
                     {this.state.editing ?
                         <div className={classes.container}>
                             <div>
@@ -400,10 +398,7 @@ class Profile extends Component {
                             </div> 
                         </div>
                     :
-                        <div>
-                            <div>{this.state.bio}</div>
-                            <div>{this.state.current_zipcode}</div>
-                        </div>
+                        <Card id={this.state.auth0_id} />
                     }    
                 </div>
                 <div>

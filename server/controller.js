@@ -24,5 +24,17 @@ module.exports = {
             res.status(500).send('Error updating applicant!')
             console.log('------------ updateApplicant Error', error)
         })
+    },
+    
+    getUser(req, res) {
+        const dbInstance = req.app.get('db')
+        const { id } = req.query
+
+        dbInstance.get_single_applicant([id])
+        .then(user => res.status(200).send(user))
+        .catch(error => {
+            res.status(500).send('Error retrieving applicant!')
+            console.log('------------ getUser error', error)
+        })
     }
 }
