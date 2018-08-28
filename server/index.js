@@ -5,6 +5,7 @@ const session = require('express-session');
 require('dotenv').config();
 const app = express();
 const axios = require('axios');
+const controller = require('./controller')
 
 app.use(bodyParser.json());
 
@@ -25,6 +26,9 @@ app.post('/api/session/user', (req, res) => {
     req.session.destroy()
     res.status(200).send('Session destroyed')
 })
+
+// User endpoints
+app.post('/api/user', controller.updateUser)
 
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
