@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import MotionStack from 'react-motion-stack';
 import 'react-motion-stack/build/motion-stack.css';
-import './index.css';
+import './MatchFinder.css';
+
  
 const data = Array.from({ length: 10 }, (_, i) => ({
   id: new Date().getTime() + i,
@@ -15,6 +16,11 @@ const data = Array.from({ length: 10 }, (_, i) => ({
 }));
  
 export default class App extends React.Component {
+  constructor(){
+    super()
+      this.deck = React.createRef();
+  }
+
   onBeforeSwipe = (swipe, direction, state) => {
     console.log('direction', direction);
     console.log('state', state);
@@ -26,19 +32,23 @@ export default class App extends React.Component {
     console.log('data', data);
   };
  
-  renderButtons(props) {
-    return (
-      <div className="btn-group">
-        <button children="👎" onClick={props.reject} />
-        <button children="👍" onClick={props.accept} />
-      </div>
-    );
-  }
+  // renderButtons(props) {
+  //   return (
+  //     <div className="btn-group">
+  //       <button children="👎" onClick={props.reject} />
+  //       <button children="👍" onClick={props.accept} />
+  //     </div>
+  //   );
+  // }
  
   render() {
+
+    console.log(this.deck)
     return (
-      <div className="demo-wrapper">
+      <div className="demo-wrapper" ref={this.deck}>
+              
         <MotionStack
+          ref={this.deck}
           data={data}
           onSwipeEnd={this.onSwipeEnd}
           onBeforeSwipe={this.onBeforeSwipe}
@@ -49,4 +59,4 @@ export default class App extends React.Component {
     );
   }
 }
-render(<App />, document.getElementById('root'));
+
