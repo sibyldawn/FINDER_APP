@@ -135,7 +135,6 @@
 //   }
 // }
 
-<<<<<<< HEAD
 // Card.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
@@ -152,45 +151,3 @@ const Cards = () => {
 };
 
 export default Cards;
-=======
-  render() {
-    const { classes } = this.props;
-  };
-}
-
-function UserCard(props) {
-  const { classes } = props;
-  return (
-    <Card className={classes.card}>
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="Contemplative Reptile"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="headline" component="h2">
-          Lizard
-        </Typography>
-        <Typography component="p">
-          Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-          across all continents except Antarctica
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-  );
-}
-
-UserCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(UserCard);
->>>>>>> 58e34af591cb0b179d1f801def6b1b179e51b56b
