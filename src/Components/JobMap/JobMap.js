@@ -1,5 +1,4 @@
 import React from 'react';
-
 const JobMap = () => {
     return (
         <div>
@@ -9,7 +8,9 @@ const JobMap = () => {
         
         <input type="text" className="industrycode"/>
         <input type="text" className="jobdistance"/>
-        <div className="googlemap">Google Map</div>
+        <div className="googlemap">Google Map
+        
+        </div>
 
         <div className="joblocation">Job Location</div>
 

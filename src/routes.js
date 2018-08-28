@@ -11,7 +11,7 @@ import Messages from './Components/Messages/Messages';
 import ChatWindow from './Components/ChatWindow/ChatWindow';
 import JobMatched from './Components/JobMatched/JobMatched';
 import SnapShotCard from './Components/SnapShotCard/SnapShotCard';
-import Header from './Components/Header/Header'
+import Header from './Components/Header/Header';
 
 export default (
         <Switch>

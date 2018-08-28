@@ -7,14 +7,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-// import Collapse from '@material-ui/core/Collapse';
+import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ShareIcon from '@material-ui/icons/Share';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ShareIcon from '@material-ui/icons/Share';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
@@ -22,7 +22,7 @@ const styles = theme => ({
     maxWidth: 400,
   },
   media: {
-    height: 200,
+    height: 0,
     paddingTop: '56.25%', // 16:9
   },
   actions: {
@@ -46,7 +46,7 @@ const styles = theme => ({
   },
 });
 
-class RecipeReviewCard extends React.Component {
+class Card extends React.Component {
   state = { expanded: false };
 
   handleExpandClick = () => {
@@ -69,51 +69,22 @@ class RecipeReviewCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
-
-          
-          title="Lil Debbie"
-
-         
-          subheader="San Francisco"
-
-          
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
         />
-
-
-        <div className="pictureDetails">
         <CardMedia
           className={classes.media}
-          image="https://randomuser.me/api/portraits/women/72.jpg"
-          title="Jobless"
+          image="/static/images/cards/paella.jpg"
+          title="Contemplative Reptile"
         />
-        </div>
-
-
-
         <CardContent>
-        <div className="industryCode">
-        <Typography component="h4">
-            Industry Code: 35 Home Decorator
-        </Typography>
-        </div>
-
-
-
-
-
-
-          <div className="details">
           <Typography component="p">
-            My name is Debbie and I need a job.I like to take walks in the park with my dog.i also like drinking bubblecgum flavored soda.The last movie I saw was Power Rangers.
-          Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
+            This impressive paella is a perfect party dish and a fun meal to cook together with your
+            guests. Add 1 cup of frozen peas along with the mussels, if you like.
           </Typography>
-          </div>
-
-
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          {/* <IconButton aria-label="Add to favorites">
+          <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="Share">
@@ -128,9 +99,9 @@ class RecipeReviewCard extends React.Component {
             aria-label="Show more"
           >
             <ExpandMoreIcon />
-          </IconButton> */}
+          </IconButton>
         </CardActions>
-        {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph variant="body2">
               Method:
@@ -158,14 +129,14 @@ class RecipeReviewCard extends React.Component {
               Set aside off of the heat to let rest for 10 minutes, and then serve.
             </Typography>
           </CardContent>
-        </Collapse> */}
+        </Collapse>
       </Card>
     );
   }
 }
 
-RecipeReviewCard.propTypes = {
+Card.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RecipeReviewCard);
+export default withStyles(styles)(Card);
