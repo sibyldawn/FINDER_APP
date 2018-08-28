@@ -37,6 +37,11 @@ export default class Profile extends Component {
         })
     }
 
+    submitEdit = () => {
+        const { active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history } = this.state
+        axios.post('/api/user', { active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history })
+    }
+
     render() {
         console.log('------------ this.state', this.state)
         return (
@@ -60,7 +65,7 @@ export default class Profile extends Component {
                             <div><textarea value={this.state.job_interest} placeholder='Job Interests' onChange={(e) => this.handleChange('job_interest', e.target.value)} cols="10" rows="10"></textarea></div>
                             <div><input type="text" value={this.state.job_title} onChange={(e) => this.handleChange('job_title', e.target.value)} placeholder='Job Title' /></div>
                             <div>Preferred location: <select onChange={(e) => this.handleChange('state', e.target.value)}>
-                                <option value='State'>State</option>
+                                <option value={this.state.preferred_location}>State</option>
                                 <option value='AL'>Alabama</option>
                                 <option value='AK'>Alaska</option>
                                 <option value='AZ'>Arizona</option>
@@ -114,7 +119,7 @@ export default class Profile extends Component {
                                 <option value='WY'>Wyoming</option>
                             </select></div>
                             <div>Industry: <select onChange={(e) => this.handleChange('industry_code', e.target.value)}>  
-                                <option value=''>Industry</option>                           
+                                <option value={this.state.industry_code}>Industry</option>                           
                                 <option value='Airlines/Aviation'>Airlines/Aviation</option>
                                 <option value='Alternative Dispute Resolution'>Alternative Dispute Resolution</option>
                                 <option value='Alternative Medicine'>Alternative Medicine</option>
@@ -271,6 +276,7 @@ export default class Profile extends Component {
                 </div>
                 <div>
                     <button onClick={() => this.setState({ editing: !this.state.editing })}>{this.state.editing ? 'Cancel' : 'Edit Profile'}</button>
+                    {this.state.editing && <button onClick={this.submitEdit}>Submit Changes</button>}
                 </div>
             </div>
         );

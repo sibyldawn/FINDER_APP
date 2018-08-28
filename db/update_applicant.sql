@@ -1,0 +1,2 @@
+insert into applicant (active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history)
+vales (${active}, ${attachment}, ${bio}, ${current_zipcode}, ${education_background}, ${email}, ${industry_code}, ${job_interest}, ${job_title}, ${picture}, ${preferred_location}, ${work_history})
