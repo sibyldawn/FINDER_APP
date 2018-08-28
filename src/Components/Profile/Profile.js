@@ -1,7 +1,37 @@
 import React, { Component } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
 import axios from 'axios'
 
-export default class Profile extends Component {
+const styles = theme => ({
+    progress: {
+      margin: theme.spacing.unit * 2,
+    },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    input: {
+        margin: theme.spacing.unit,
+    },
+    textarea: {
+        border: 'solid',
+        borderRadius: 9,
+        padding: 8,
+        borderColor: '#3f51b5',
+        borderWidth: 2
+    },
+    selectEmpty: {
+        marginTop: theme.spacing.unit * 2,
+    },
+});
+
+class Profile extends Component {
     state = {
         active: '',
         attachment: '',
@@ -44,10 +74,11 @@ export default class Profile extends Component {
 
     render() {
         console.log('------------ this.state', this.state)
+        const { classes } = this.props
         return (
             !this.state.first_name ?
             <div>
-                Loading...
+                <CircularProgress className={classes.progress} size={50} color='primary' />
             </div>
             :
             <div>
@@ -56,15 +87,90 @@ export default class Profile extends Component {
                     <div>{this.state.first_name} {this.state.last_name}</div>
                     <div>{this.state.email}</div>
                     {this.state.editing ?
-                        <div>
-                            <div><input type="text" value={this.state.picture} onChange={(e) => this.handleChange('picture', e.target.value)}/></div>
-                            <div><textarea value={this.state.bio} placeholder='Bio' onChange={(e) => this.handleChange('bio', e.target.value)} cols="30" rows="10"></textarea></div>
-                            <div><input type="text" value={this.state.current_zipcode} onChange={(e) => this.handleChange('current_zipcode', e.target.value)} placeholder='Zipcode' maxLength='5' minLength='5'/></div>
-                            <div><textarea value={this.state.work_history} placeholder='Work History' onChange={(e) => this.handleChange('work_history', e.target.value)} cols="30" rows="10"></textarea></div>
-                            <div><textarea value={this.state.education_background} placeholder='Education Background' onChange={(e) => this.handleChange('education_background', e.target.value)} cols="30" rows="10"></textarea></div>
-                            <div><textarea value={this.state.job_interest} placeholder='Job Interests' onChange={(e) => this.handleChange('job_interest', e.target.value)} cols="30" rows="5"></textarea></div>
-                            <div><input type="text" value={this.state.job_title} onChange={(e) => this.handleChange('job_title', e.target.value)} placeholder='Job Title' /></div>
-                            <div>Preferred location: <select onChange={(e) => this.handleChange('state', e.target.value)}>
+                        <div className={classes.container}>
+                            <div>
+                                <Input 
+                                    defaultValue={this.state.picture} 
+                                    className={classes.input} 
+                                    placeholder='Zipcode'
+                                    onChange={(e) => this.handleChange('picture', e.target.value)} />
+                            </div>
+                            <div>
+                                <TextField
+                                    helperText='Bio'
+                                    multiline={true}
+                                    rows={8}
+                                    rowsMax={12} 
+                                    placeholder="Bio"
+                                    value={this.state.bio}
+                                    onChange={(e) => this.handleChange('bio', e.target.value)} 
+                                    className={classes.textarea} />
+                                <textarea value={this.state.bio} placeholder='Bio' onChange={(e) => this.handleChange('bio', e.target.value)} cols="30" rows="10"></textarea>
+                            </div>
+                            <div>
+                                <Input
+                                    defualtValue={this.state.current_zipcode}
+                                    className={classes.input}
+                                    type='number'
+                                    onChange={(e) => this.handleChange('current_zipcode', e.target.value)} />
+                                <input type="text" value={this.state.current_zipcode} onChange={(e) => this.handleChange('current_zipcode', e.target.value)} placeholder='Zipcode' maxLength='5' minLength='5'/>
+                            </div>
+                            <div>
+                                <TextField
+                                    helperText='Work History'
+                                    multiline={true}
+                                    rows={8}
+                                    rowsMax={12}
+                                    value={this.state.work_history}
+                                    onChange={(e) => this.handleChange('work_history', e.target.value)}
+                                    className={classes.textarea} />
+                                <textarea value={this.state.work_history} placeholder='Work History' onChange={(e) => this.handleChange('work_history', e.target.value)} cols="30" rows="10"></textarea>
+                            </div>
+                            <div>
+                                <TextField
+                                    helperText='Education Background'
+                                    multiline={true}
+                                    rows={8}
+                                    rowsMad={12}
+                                    value={this.state.education_background}
+                                    onChange={(e) => this.handleChange('education_background', e.target.value)}
+                                    className={classes.textarea} />
+                                <textarea value={this.state.education_background} placeholder='Education Background' onChange={(e) => this.handleChange('education_background', e.target.value)} cols="30" rows="10"></textarea></div>
+                            <div>
+                                <TextField
+                                    helperText='Job Interests'
+                                    multiline={true}
+                                    rows={5}
+                                    rowsMad={12}
+                                    value={this.state.job_interest}
+                                    onChange={(e) => this.handleChange('job_interest', e.target.value)}
+                                    className={classes.textarea} />
+                                <textarea value={this.state.job_interest} placeholder='Job Interests' onChange={(e) => this.handleChange('job_interest', e.target.value)} cols="30" rows="5"></textarea>
+                            </div>
+                            <div>
+                                <Input
+                                    defaultValue={this.state.job_title}
+                                    placeholder='Job Title'
+                                    className={classes.input}
+                                    onChange={(e) => this.handleChange('job_title', e.target.value)} />
+                                <input type="text" value={this.state.job_title} onChange={(e) => this.handleChange('job_title', e.target.value)} placeholder='Job Title' />
+                            </div>
+                            <div>
+                                <NativeSelect
+                                    value={this.state.preferred_location}
+                                    onChange={(e) => this.handleChange('preferred_location', e.target.value)}
+                                    name='Preferred Location' >
+                                    <option value={this.state.preferred_location}>State</option>
+                                    <option value='AL'>Alabama</option>
+                                    <option value='AK'>Alaska</option>
+                                    <option value='AZ'>Arizona</option>
+                                    <option value='AR'>Arkansas</option>
+                                    <option value='CA'>California</option>
+                                    <option value='CO'>Colorado</option>
+                                    <option value='CT'>Connecticut</option>
+                                    <option value='DE'>Delaware</option>
+                                </ NativeSelect>
+                                Preferred location: <select onChange={(e) => this.handleChange('preferred_location', e.target.value)}>
                                 <option value={this.state.preferred_location}>State</option>
                                 <option value='AL'>Alabama</option>
                                 <option value='AK'>Alaska</option>
@@ -282,3 +388,9 @@ export default class Profile extends Component {
         );
     }
 }
+
+Profile.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Profile);
