@@ -20,6 +20,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 const styles = theme => ({
   card: {
     maxWidth: 400,
+    color:'red'
   },
   media: {
     height: 200,
@@ -44,6 +45,14 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  title: {
+    color: 'blue',
+    fontSize: 36,
+  },
+  subheader: { 
+    color: 'purple',
+    fontSize: 26,
+  }
 });
 
 class RecipeReviewCard extends React.Component {
@@ -58,7 +67,7 @@ class RecipeReviewCard extends React.Component {
 
     return (
       <Card className={classes.card}>
-        <CardHeader
+        <CardHeader className={classes.title}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
               R
@@ -71,10 +80,10 @@ class RecipeReviewCard extends React.Component {
           }
 
           
-          title="Lil Debbie"
+          title={<p className={classes.title}>Lil Debbie</p>}
 
          
-          subheader="San Francisco"
+          subheader={<p className={classes.subheader}>San Francisco</p>}
 
           
         />

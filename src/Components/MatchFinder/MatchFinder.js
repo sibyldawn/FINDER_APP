@@ -1,9 +1,62 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { render } from 'react-dom';
+import MotionStack from 'react-motion-stack';
+import 'react-motion-stack/build/motion-stack.css';
+import './MatchFinder.css';
 
-export default class MatchFinder extends Component {
+ 
+const data = Array.from({ length: 10 }, (_, i) => ({
+  id: new Date().getTime() + i,
+  element: (
+    <img
+      draggable={false}
+      src={`https://source.unsplash.com/random/${i + 1}`}
+    />
+  )
+}));
+ 
+export default class App extends React.Component {
+  constructor(){
+    super()
+      this.deck = React.createRef();
+  }
+
+  onBeforeSwipe = (swipe, direction, state) => {
+    console.log('direction', direction);
+    console.log('state', state);
+ 
+    swipe();
+  }
+ 
+  onSwipeEnd = ({ data }) => {
+    console.log('data', data);
+  };
+ 
+  // renderButtons(props) {
+  //   return (
+  //     <div className="btn-group">
+  //       <button children="👎" onClick={props.reject} />
+  //       <button children="👍" onClick={props.accept} />
+  //     </div>
+  //   );
+  // }
+ 
   render() {
-    return <h1>
-      MATCHFINDER
-    </h1>
+
+    console.log(this.deck)
+    return (
+      <div className="demo-wrapper" ref={this.deck}>
+              
+        <MotionStack
+          ref={this.deck}
+          data={data}
+          onSwipeEnd={this.onSwipeEnd}
+          onBeforeSwipe={this.onBeforeSwipe}
+          render={props => props.element}
+          renderButtons={this.renderButtons}
+        />
+      </div>
+    );
   }
 }
+
