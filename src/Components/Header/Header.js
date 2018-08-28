@@ -15,7 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import Aside from '../Aside/Aside';
-import axios from 'axios'
+import axios from 'axios';
 
 const styles = {
     root: {
@@ -32,128 +32,109 @@ const styles = {
 
 class Header extends Component {
     state = {
-        auth: true,
-        anchorEl: null,
-        left: false,
-        login: false,
-        user: ''
-    };
+    auth: true,
+    anchorEl: null,
+    login: false,
+    user: ''
+};
 
-    componentDidMount() {
-        axios.get('/api/session/user').then(res => {
-            console.log('------------ res', res)
-            res.data.first_name &&
-            this.setState({ user: res.data, login: true })
-            })
-    }
-
-    handleChange = (event, checked) => {
-        this.setState({ auth: checked });
-    };
-
-    login = () => {
-        const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback?prevPath=${window.location.pathname}`)
-
-        window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&response_type=code`
-    }
-
-    logout = () => {
-        this.setState({ anchorEl: null, user: '', login: false });
-        axios.post('/api/session/user').then(res => {
-            console.log('------------ res', res)
-            window.location = '/'
+componentDidMount() {
+    axios.get('/api/session/user').then(res => {
+        console.log('------------ res', res)
+        res.data.first_name &&
+        this.setState({ user: res.data, login: true })
         })
-    }
+}
 
-    handleMenu = event => {
-            this.setState({ anchorEl: event.currentTarget });
-    };
+handleChange = (event, checked) => {
+    this.setState({ auth: checked });
+};
 
-    handleClose = () => {
-        this.setState({ anchorEl: null });
-    };
+login = () => {
+    const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback?prevPath=${window.location.pathname}`)
 
-    toggleDrawer = (side, open) => () => {
-        this.setState({
-            [side]: open,
-        });
-    };
+    window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&response_type=code`
+}
 
-    render() {
-        const { classes } = this.props;
-        const { auth, anchorEl } = this.state;
-        const open = Boolean(anchorEl);
+handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+};
 
-        return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-                        <div
-                            tabIndex={0}
-                            role="button"
-                            onClick={this.toggleDrawer('left', false)}
-                            onKeyDown={this.toggleDrawer('left', false)}
-                        >
-                            <Aside/>
-                        </div>
-                    </Drawer>
-                    <Typography variant="title" color="inherit" className={classes.flex}>
-                        Finder
-                    </Typography>
-                    {auth && (
-                    <div>
-                        <IconButton
-                        aria-owns={open ? 'menu-appbar' : null}
-                        aria-haspopup="true"
-                        onClick={this.state.login ? this.handleMenu : this.login }
-                        color="inherit"
-                        >
-                        {this.state.login ?
-                            <div>
-                                <figure style={{ 
-                                    margin: 0, 
-                                    padding: 0, 
+handleClose = () => {
+    this.setState({ anchorEl: null, user: '', login: false });
+    axios.post('/api/session/user').then(res => {
+        console.log('------------ res', res)
+        window.location = '/'
+    })
+};
+
+render() {
+    console.log('------------ this.state.user', this.state.user)
+    const { classes } = this.props;
+    const { auth, anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="title" color="inherit" className={classes.flex}>
+                    Finder
+                </Typography>
+                {auth && (
+                <div>
+                    <IconButton
+                    aria-owns={open ? 'menu-appbar' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleMenu}
+                    color="inherit"
+                    >
+                    {this.state.login ?
+                        <div>
+                            <figure style={{ 
+                                margin: 0, 
+                                padding: 0, 
+                                height: 30, 
+                                width: 30 }}>
+                                <img style={{ 
+                                    borderRadius: "50%", 
+                                    width: 30, 
                                     height: 30, 
-                                    width: 30 }}>
-                                    <img style={{ 
-                                        borderRadius: "50%", 
-                                        width: 30, 
-                                        height: 30, 
-                                        margin: 0, 
-                                        padding: 0 }} 
-                                        src={this.state.user.picture} alt="Profile"/>
-                                </figure>
-                            </div>
-                            :
-                            <AccountCircle />
-                        }
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={this.handleClose}
-                            >
-                            <MenuItem onClick={this.handleClose}><div onClick={this.logout}>Logout</div></MenuItem>
-                        </Menu>  
-                    </div>
-                    )}
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
+                                    margin: 0, 
+                                    padding: 0 }} 
+                                    src={this.state.user.picture} alt="Profile"/>
+                            </figure>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={this.handleClose}
+                                >
+                                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                            </Menu>
+                        </div>
+                        :
+                        <AccountCircle onClick={this.login} />
+                    }
+                    </IconButton>
+                    
+                </div>
+                )}
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
     }
 }
 
