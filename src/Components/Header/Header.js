@@ -56,16 +56,20 @@ login = () => {
     window.location = `https://${process.env.REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${process.env.REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${redirectUri}&response_type=code`
 }
 
-handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
-};
-
-handleClose = () => {
+logout = () => {
     this.setState({ anchorEl: null, user: '', login: false });
     axios.post('/api/session/user').then(res => {
         console.log('------------ res', res)
         window.location = '/'
     })
+}
+
+handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+};
+
+handleClose = () => {
+    this.setState({ anchorEl: null });
 };
 
 render() {
@@ -87,10 +91,10 @@ render() {
                 {auth && (
                 <div>
                     <IconButton
-                    aria-owns={open ? 'menu-appbar' : null}
-                    aria-haspopup="true"
-                    onClick={this.handleMenu}
-                    color="inherit"
+                        aria-owns={open ? 'menu-appbar' : null}
+                        aria-haspopup="true"
+                        onClick={this.state.login ? this.handleMenu : this.login}
+                        color="inherit"
                     >
                     {this.state.login ?
                         <div>
@@ -107,28 +111,28 @@ render() {
                                     padding: 0 }} 
                                     src={this.state.user.picture} alt="Profile"/>
                             </figure>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={open}
-                                onClose={this.handleClose}
-                                >
-                                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                            </Menu>
                         </div>
                         :
-                        <AccountCircle onClick={this.login} />
+                        <AccountCircle style={{ fontSize: 33 }} />
                     }
                     </IconButton>
                     
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={open}
+                        onClose={this.handleClose}
+                        >
+                        <MenuItem onClick={this.handleClose}><div onClick={this.logout}>Logout</div></MenuItem>
+                    </Menu>
                 </div>
                 )}
                 </Toolbar>
