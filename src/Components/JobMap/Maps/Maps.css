@@ -1,0 +1,15 @@
+.mapsize {
+    width:200px;
+    height: 200px;
+
+}
+
+.mapsize >div{
+    
+    width: 50% !important;
+    height: 35% !important;
+    z-index: 0 !important;
+    margin-left: auto;
+    margin-left: auto;
+    
+} 
