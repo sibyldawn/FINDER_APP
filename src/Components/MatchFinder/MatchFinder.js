@@ -1,23 +1,21 @@
 import React from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import MotionStack from 'react-motion-stack';
 import 'react-motion-stack/build/motion-stack.css';
+import UserCard from '../Card/Card';
 import './MatchFinder.css';
 
- 
-const data = Array.from({ length: 10 }, (_, i) => ({
-  id: new Date().getTime() + i,
-  element: (
-    <img
-      draggable={false}
-      src={`https://source.unsplash.com/random/${i + 1}`}
-    />
-  )
-}));
+
+
+
  
 export default class App extends React.Component {
   constructor(){
     super()
+      this.state = {
+        arr: ["card1","card2","card3","card4","card5"]
+      }
+
       this.deck = React.createRef();
   }
 
@@ -42,21 +40,34 @@ export default class App extends React.Component {
   // }
  
   render() {
-
+    // const data = this.state.arr.map( (e,i) => {
+    //   return <div key={i} style={{background:"yellow",height:'80vh',width:'80vw'}}>{e}</div>
+    // })
+     
+      const data = Array.from({ length: 10 }, (_, i) => ({
+        id: new Date().getTime() + i,
+        element: (
+          // <img
+          //   draggable={false}
+          //   src={`https://source.unsplash.com/random/${i + 1}`}
+          // />
+          <UserCard
+          draggable={false}
+          />
+        )
+      }));
+    console.log("data",data);
     console.log(this.deck)
     return (
-      <div  className="demo-wrapper" 
-      ref={this.deck}>
-      <figure style={{height:'100vh'}}>
+      <div className="demo-wrapper">
         <MotionStack
           data={data}
           onSwipeEnd={this.onSwipeEnd}
           onBeforeSwipe={this.onBeforeSwipe}
           render={props => props.element}
           renderButtons={this.renderButtons}
-          style={{height:'100%'}}
+          
         />
-       </figure> 
       </div>
     );
   }
