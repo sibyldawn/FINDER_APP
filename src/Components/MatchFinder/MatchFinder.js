@@ -59,7 +59,7 @@ export default class App extends React.Component {
     console.log("data",data);
     console.log(this.deck)
     return (
-      <div  className="demo-wrapper">
+      <div className="demo-wrapper">
         <MotionStack
           data={data}
           onSwipeEnd={this.onSwipeEnd}
