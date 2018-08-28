@@ -9,12 +9,9 @@ import Settings from './Components/Settings/Settings';
 import JobMap from './Components/JobMap/JobMap';
 import Messages from './Components/Messages/Messages';
 import ChatWindow from './Components/ChatWindow/ChatWindow';
-<<<<<<< HEAD
 import JobMatched from './Components/JobMatched/JobMatched';
 import SnapShotCard from './Components/SnapShotCard/SnapShotCard';
-=======
 import Header from './Components/Header/Header'
->>>>>>> b9fbb41d854bb2ce670b4e87fe9f15c948e44f70
 
 export default (
         <Switch>
