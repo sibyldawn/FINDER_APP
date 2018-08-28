@@ -21,6 +21,10 @@ app.get('/api/session/user', (req, res) => {
     res.status(200).send(req.session.user)
     : res.status(200).send('No user logged in!')
 })
+app.post('/api/session/user', (req, res) => {
+    req.session.destroy()
+    res.status(200).send('Session destroyed')
+})
 
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
