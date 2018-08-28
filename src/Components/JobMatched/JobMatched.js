@@ -4,35 +4,51 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
-
+import './JobMatched.css';
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+    position: 'fixed',
+    // bottom: 90
   },
+  button2: {
+    margin: theme.spacing.unit,
+    position: 'absolute',
+    
+  },
+
   extendedIcon: {
     marginRight: theme.spacing.unit,
   },
+  
 });
+
+
+
 
 function FloatingActionButtons(props) {
   const { classes } = props;
-  return (
-    <div>
-      
-    <div className="handshake">
-    <img src="https://dehayf5mhw1h7.cloudfront.net/wp-content/uploads/sites/714/2018/06/06093841/shutterstock_340774508.jpg" alt=""/>
-    </div>
 
+
+  return (
+    <div className="backgroundhands">
+     
+    <div className="handshake">
+     <img src="https://dehayf5mhw1h7.cloudfront.net/wp-content/uploads/sites/714/2018/06/06093841/shutterstock_340774508.jpg" alt="" height={300} width={370}/>
+    </div> 
+
+
+      <div className="buttonStyle">
       <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
         <FindInPageSharp />
         Keep Job Matching!
       </Button>
-      <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
+      <Button variant="extendedFab" aria-label="Delete" className={classes.button2}>
         <QuestionAnswer />
         Message
       </Button>
-
+      </div>
 
     </div>
   );

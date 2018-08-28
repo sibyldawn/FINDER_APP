@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 // import ShareIcon from '@material-ui/icons/Share';
 // import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import './SnapShotCard.scss';
 
 const styles = theme => ({
   card: {
@@ -52,6 +53,9 @@ const styles = theme => ({
   subheader: { 
     color: 'purple',
     fontSize: 26,
+  },
+  details: {
+    color: 'purple',
   }
 });
 
@@ -112,7 +116,7 @@ class RecipeReviewCard extends React.Component {
 
 
           <div className="details">
-          <Typography component="p">
+          <Typography className={classes.details} component="p">
             My name is Debbie and I need a job.I like to take walks in the park with my dog.i also like drinking bubblecgum flavored soda.The last movie I saw was Power Rangers.
           Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
               without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
