@@ -7,14 +7,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
+// import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ShareIcon from '@material-ui/icons/Share';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
@@ -69,37 +69,56 @@ class RecipeReviewCard extends React.Component {
               <MoreVertIcon />
             </IconButton>
           }
+
+          
           title="Lil Debbie"
+
+         
           subheader="San Francisco"
+
+          
         />
+
+
+        <div className="pictureDetails">
         <CardMedia
           className={classes.media}
           image="https://randomuser.me/api/portraits/women/72.jpg"
           title="Jobless"
         />
-        <CardContent>
+        </div>
 
-          <Typography component="h4">
+
+
+        <CardContent>
+        <div className="industryCode">
+        <Typography component="h4">
             Industry Code: 35 Home Decorator
         </Typography>
+        </div>
 
+
+
+
+
+
+          <div className="details">
           <Typography component="p">
             My name is Debbie and I need a job.I like to take walks in the park with my dog.i also like drinking bubblecgum flavored soda.The last movie I saw was Power Rangers.
           Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-              to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-          
+              without stirring, until most of the liquid is absorbed, 15 to 18 minutes.
           </Typography>
+          </div>
+
+
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
+          {/* <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
           </IconButton>
-          {/* <IconButton aria-label="Share">
+          <IconButton aria-label="Share">
             <ShareIcon />
-          </IconButton> */}
+          </IconButton>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
@@ -108,8 +127,8 @@ class RecipeReviewCard extends React.Component {
             aria-expanded={this.state.expanded}
             aria-label="Show more"
           >
-            {/* <ExpandMoreIcon /> */}
-          </IconButton>
+            <ExpandMoreIcon />
+          </IconButton> */}
         </CardActions>
         {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>

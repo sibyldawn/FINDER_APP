@@ -50,7 +50,25 @@ export default withStyles(styles)(FloatingActionButtons);
 //<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/easing/EasePack.min.js"></script>
 //<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenLite.min.js"></script>
 
+
+
+
+
+
+
 //.TweenLite( target:Object, duration:Number, vars:Object ) ;
 //TweenLite.to( target:handshake, duration:4, vars:Object )
-// TweenLite.to( ".handshake", 4, {opacity: 0} )
+// TweenLite.to( ".handshake", 4, )
 //TweenLite.to(graph, 2.5, { ease: Bounce.easeOut, y: -500 });
+//TweenLite.to(element, 2, {rotation:30, scaleX:0.8});
+//TweenLite.to(element, 2, {rotationX:45, scaleX:0.8, z:-300});
+
+
+
+//green sock dev tools code
+//<script src="js/gsap/GSDevTools.min.js"></script>
+
+
+//Instantiate GSDevTools    
+//USE THIS IN CODE PEN TO CONTROL YOUR ANIMATIONS AND SAVE TIME
+//GSDevTools.create();
