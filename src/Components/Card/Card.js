@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,17 +17,36 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import axios from 'axios'
 
 const styles = theme => ({
   card: {
     minWidth: 200,
-    maxWidth: "100%",
+    maxWidth: "80%",
     height: "80vh",
     overflow: "scroll",
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '5%',
+    marginBottom: '5%'
+  },
+  cardheader: {
+    textAlign: 'center'
+  },
+  cardcontent: {
+    textAlign: 'left',
+    paddingLeft: '15%',
+    paddingRight: '15%',
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    borderRadius: '50%',
+    width: 300,
+    height: 300,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    display: 'absolute',
+    marginTop: '5%',
+    marginBottom: '5%'
   },
   actions: {
     display: 'flex',
@@ -37,8 +57,9 @@ const styles = theme => ({
       duration: theme.transitions.duration.shortest,
     }),
     marginLeft: 'auto',
+    marginRight: 'auto',
     [theme.breakpoints.up('sm')]: {
-      marginRight: -8,
+      marginRight: 'auto',
     },
   },
   expandOpen: {
@@ -50,90 +71,116 @@ const styles = theme => ({
 });
 
 class UserCard extends React.Component {
-  state = { expanded: false };
+  state = { 
+    expanded: false,
+    user: ''
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
 
+  componentDidMount() {
+    const { id } = this.props
+    console.log('------------ id', id)
+    if(id && id.length){
+      axios.get(`/api/user?id=${id}`).then(res => {
+        console.log('------------ GET user res', res)
+        this.setState({
+          user: res.data[0]
+        })
+      })
+    }
+  }
+
   render() {
     const { classes } = this.props;
-
+    console.log('------------ this.state.user', this.state.user)
+    const { user } = this.state
     return (
-      <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
-        />
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph variant="body2">
-              Method:
-            </Typography>
+      user ? 
+        <Card className={classes.card}>
+          <CardHeader
+            className={classes.cardheader}
+            title={`${user.first_name} ${user.last_name}`}
+            subheader={user.job_interest}
+          />
+          <CardMedia
+            className={classes.media}
+            image={user.picture}
+            title={`${user.first_name} ${user.last_name}`}
+          />
+          <CardContent className={classes.cardcontent}>
             <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-              minutes.
+              <Typography paragraph variant="body2">
+                Bio:
+              </Typography>
+              {user.bio}
             </Typography>
+
             <Typography paragraph>
-              Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-              heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-              browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-              chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-              salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-              minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+              <Typography paragraph variant="body2">
+                Work History:
+              </Typography>
+              {user.work_history}
             </Typography>
-            <Typography paragraph>
-              Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-              without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-              to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-              cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-              minutes more. (Discard any mussels that don’t open.)
-            </Typography>
-            <Typography>
-              Set aside off of the heat to let rest for 10 minutes, and then serve.
-            </Typography>
+
           </CardContent>
-        </Collapse>
-      </Card>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent className={classes.cardcontent}>
+
+              <Typography paragraph variant="body2">
+                Preferred Location:
+              </Typography>
+              <Typography paragraph>
+                {user.preferred_location}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Current Zipcode: 
+              </Typography>
+              <Typography paragraph>
+                {user.current_zipcode}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Industry: 
+              </Typography>
+              <Typography paragraph>
+                {user.industry_code}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Job Title: 
+              </Typography>
+              <Typography paragraph>
+                {user.job_title}
+              </Typography>
+              
+              <Typography paragraph variant="body2">
+                Education Background: 
+              </Typography>
+              <Typography paragraph>
+                {user.education_background}
+              </Typography>
+
+            </CardContent>
+          </Collapse>
+        </Card>
+        :
+        <CircularProgress className={classes.progress} size={50} color='primary' />
     );
   }
 }

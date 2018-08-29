@@ -1,16 +1,16 @@
 import React from 'react';
 import MapContainer from './Maps/Maps';
-
+// import './JobMaps.css';
 const JobMap = () => {
     return (
-        <div>
-            JobMap
+        <div className="jobMapComponent">
+           
         <div className="jobsearch">Job Search</div>
 
         
-        <input type="text" className="industrycode"/>
-        <input type="text" className="jobdistance"/>
-        <div className="googlemap">Google Map
+        <input type="text" className="industrycode" placeholder="industry type"/>
+        <input type="text" className="jobdistance"placeholder="job distance"/>
+        <div className="googlemap">
         <MapContainer/>
         </div>
 
