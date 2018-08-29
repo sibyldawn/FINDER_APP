@@ -23,21 +23,7 @@ const styles = theme => ({
   },
 });
 
-
-
-
 class Aside extends Component {
-  constructor(prop){
-    super();
-
-    this.state = {
-        auth:true
-    }
-  }
-
-      handleChange = (event, checked) => {
-      this.setState({ auth: checked });
-    };
 
   render(){
   const { classes } = this.props;

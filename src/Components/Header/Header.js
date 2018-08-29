@@ -35,7 +35,8 @@ class Header extends Component {
     auth: true,
     anchorEl: null,
     login: false,
-    user: ''
+    user: '',
+    left: false,
 };
 
 componentDidMount() {
@@ -45,6 +46,9 @@ componentDidMount() {
         this.setState({ user: res.data, login: true })
         })
 }
+handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
+};
 
 handleChange = (event, checked) => {
     this.setState({ auth: checked });
@@ -64,9 +68,12 @@ logout = () => {
     })
 }
 
-handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
-};
+toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  };
+
 
 handleClose = () => {
     this.setState({ anchorEl: null });
@@ -83,9 +90,19 @@ render() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
                     <MenuIcon />
                 </IconButton>
+                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                    <div
+                        tabIndex={0}
+                        role="button"
+                        onClick={this.toggleDrawer('left', false)}
+                        onKeyDown={this.toggleDrawer('left', false)}
+                    >
+                        <Aside/>
+                    </div>
+                    </Drawer>
                 <Typography variant="title" color="inherit" className={classes.flex}>
                     Finder
                 </Typography>
