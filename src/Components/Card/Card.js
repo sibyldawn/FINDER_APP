@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
@@ -81,12 +82,15 @@ class UserCard extends React.Component {
 
   componentDidMount() {
     const { id } = this.props
-    axios.get(`/api/user?id=linkedin|c5Bs14lP1I`).then(res => {
-      console.log('------------ GET user res', res)
-      this.setState({
-        user: res.data[0]
+    console.log('------------ id', id)
+    if(id && id.length){
+      axios.get(`/api/user?id=${id}`).then(res => {
+        console.log('------------ GET user res', res)
+        this.setState({
+          user: res.data[0]
+        })
       })
-    })
+    }
   }
 
   render() {
@@ -94,86 +98,89 @@ class UserCard extends React.Component {
     console.log('------------ this.state.user', this.state.user)
     const { user } = this.state
     return (
-      <Card className={classes.card}>
-        <CardHeader
-          className={classes.cardheader}
-          title={`${user.first_name} ${user.last_name}`}
-          subheader={user.job_interest}
-        />
-        <CardMedia
-          className={classes.media}
-          image={user.picture}
-          title={`${user.first_name} ${user.last_name}`}
-        />
-        <CardContent className={classes.cardcontent}>
-          <Typography paragraph>
-            <Typography paragraph variant="body2">
-              Bio:
-            </Typography>
-            {user.bio}
-          </Typography>
-
-          <Typography paragraph>
-            <Typography paragraph variant="body2">
-              Work History:
-            </Typography>
-            {user.work_history}
-          </Typography>
-
-        </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="Show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+      user ? 
+        <Card className={classes.card}>
+          <CardHeader
+            className={classes.cardheader}
+            title={`${user.first_name} ${user.last_name}`}
+            subheader={user.job_interest}
+          />
+          <CardMedia
+            className={classes.media}
+            image={user.picture}
+            title={`${user.first_name} ${user.last_name}`}
+          />
           <CardContent className={classes.cardcontent}>
-
-            <Typography paragraph variant="body2">
-              Preferred Location:
-            </Typography>
             <Typography paragraph>
-              {user.preferred_location}
-            </Typography>
-
-            <Typography paragraph variant="body2">
-              Current Zipcode: 
-            </Typography>
-            <Typography paragraph>
-              {user.current_zipcode}
+              <Typography paragraph variant="body2">
+                Bio:
+              </Typography>
+              {user.bio}
             </Typography>
 
-            <Typography paragraph variant="body2">
-              Industry: 
-            </Typography>
             <Typography paragraph>
-              {user.industry_code}
-            </Typography>
-
-            <Typography paragraph variant="body2">
-              Job Title: 
-            </Typography>
-            <Typography paragraph>
-              {user.job_title}
-            </Typography>
-            
-            <Typography paragraph variant="body2">
-              Education Background: 
-            </Typography>
-            <Typography paragraph>
-              {user.education_background}
+              <Typography paragraph variant="body2">
+                Work History:
+              </Typography>
+              {user.work_history}
             </Typography>
 
           </CardContent>
-        </Collapse>
-      </Card>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent className={classes.cardcontent}>
+
+              <Typography paragraph variant="body2">
+                Preferred Location:
+              </Typography>
+              <Typography paragraph>
+                {user.preferred_location}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Current Zipcode: 
+              </Typography>
+              <Typography paragraph>
+                {user.current_zipcode}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Industry: 
+              </Typography>
+              <Typography paragraph>
+                {user.industry_code}
+              </Typography>
+
+              <Typography paragraph variant="body2">
+                Job Title: 
+              </Typography>
+              <Typography paragraph>
+                {user.job_title}
+              </Typography>
+              
+              <Typography paragraph variant="body2">
+                Education Background: 
+              </Typography>
+              <Typography paragraph>
+                {user.education_background}
+              </Typography>
+
+            </CardContent>
+          </Collapse>
+        </Card>
+        :
+        <CircularProgress className={classes.progress} size={50} color='primary' />
     );
   }
 }

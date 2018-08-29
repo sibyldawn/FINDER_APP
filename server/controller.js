@@ -36,5 +36,18 @@ module.exports = {
             res.status(500).send('Error retrieving applicant!')
             console.log('------------ getUser error', error)
         })
+    },
+
+    getUsersByIndustry(req, res) {
+        const dbInstance = req.app.get('db')
+        const { industry } = req.query
+        console.log('------------ industry', req.query)
+
+        dbInstance.get_user_by_industry([industry])
+        .then(users => res.status(200).send(users))
+        .catch(error => {
+            res.status(500).send('Error retrieving Users!')
+            console.log('------------ getUsersByIndustry error', error)
+        })
     }
 }

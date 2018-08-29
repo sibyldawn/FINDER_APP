@@ -30,6 +30,7 @@ app.post('/api/session/user', (req, res) => {
 // User endpoints
 app.post('/api/user', controller.updateUser)
 app.get('/api/user', controller.getUser)
+app.get('/api/users/filter', controller.getUsersByIndustry)
 
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);

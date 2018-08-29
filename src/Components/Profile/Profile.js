@@ -101,6 +101,7 @@ class Profile extends Component {
                 <div>
                     {this.state.editing ?
                         <div className={classes.container}>
+                            <img src={this.state.picture} alt="Profile"/>
                             <div>
                                 <FormControl className={classes.FormControl}>
                                     <InputLabel htmlFor='profile-picture'>Profile Picture URL</InputLabel>
