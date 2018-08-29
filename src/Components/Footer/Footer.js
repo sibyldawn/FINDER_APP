@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const styles = {
   root: {
-    position: 'relative',
+    position: 'fixed',
     bottom: 0,
     width: '100vw',
   },
