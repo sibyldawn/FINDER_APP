@@ -6,6 +6,7 @@ require('dotenv').config();
 const app = express();
 const axios = require('axios');
 const controller = require('./controller')
+const cloudinary = require('cloudinary')
 
 app.use(bodyParser.json());
 
@@ -37,6 +38,18 @@ massive(process.env.CONNECTION_STRING).then(db => {
 }).catch(error => {
     console.log('----------- Massive Error', error);
 });
+
+// Cloudinary endpoints
+app.get('/api/upload', (req, res) => {
+    const timestamp = Math.round((new Date()).getTime() / 1000)
+    const apiSecret = process.env.CLOUDINARY_SECRET
+    const signature = cloudinary.utils.api_sign_request({ timestamp }, apiSecret)
+    const payload = {
+        signature,
+        timestamp
+    }
+    res.json(payload)
+})
 
 // Auth0 implementation
 app.get('/auth/callback', (req, res) => {

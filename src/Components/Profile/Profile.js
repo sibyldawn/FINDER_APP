@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import PropTypes from 'prop-types';
+import Dropzone from 'react-dropzone'
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import axios from 'axios'
 import Card from '../Card/Card'
+import './Profile.css'
 
 const styles = theme => ({
     progress: {
@@ -18,6 +19,8 @@ const styles = theme => ({
     },
     container: {
         display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
         flexWrap: 'wrap',
     },
     input: {
@@ -28,7 +31,8 @@ const styles = theme => ({
         borderRadius: 9,
         padding: 8,
         borderColor: '#3f51b5',
-        borderWidth: 2
+        borderWidth: 2,
+        minWidth: '70%'
     },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
@@ -59,6 +63,7 @@ class Profile extends Component {
         picture: '',
         preferred_location: '',
         work_history: '',
+        uploadedFileCloudinaryUrl: '',
         editing: false
     }
 
@@ -78,6 +83,25 @@ class Profile extends Component {
         })
     }
 
+    handleFileUpload = (file) => {
+        axios.get('/api/upload').then(res => {
+            console.log('------------ cloudinary server res', res)
+            console.log('------------ file', file)
+            let formData = new FormData()
+            formData.append('signature', res.data.signature)
+            formData.append('api_key', "473154255243884")
+            formData.append('timestamp', res.data.timestamp)
+            formData.append('file', file[0])
+            console.log('------------ formData', formData)
+            axios.post(process.env.REACT_APP_CLOUDINARY_URL, formData).then(res => {
+                console.log('------------ cloudinary upload res', res)
+                this.setState({
+                    picture: res.data.secure_url
+                })
+            }).catch(error => console.log('------------ error uploading file to cloudinary', error))
+        })
+    }
+
     submitEdit = () => {
         const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
         axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
@@ -86,6 +110,13 @@ class Profile extends Component {
                 editing: false
             })
         }).catch(error => console.log('------------ submitEdit Error', error))
+    }
+    
+    onDrop = (files) => {
+        this.handleFileUpload(files)
+        this.setState({
+            files
+        });
     }
 
     render() {
@@ -101,7 +132,7 @@ class Profile extends Component {
                 <div>
                     {this.state.editing ?
                         <div className={classes.container}>
-                            <img src={this.state.picture} alt="Profile"/>
+                            <img src={this.state.picture} alt="Profile" width='300' />
                             <div>
                                 <FormControl className={classes.FormControl}>
                                     <InputLabel htmlFor='profile-picture'>Profile Picture URL</InputLabel>
@@ -110,9 +141,27 @@ class Profile extends Component {
                                         defaultValue={this.state.picture} 
                                         className={classes.input} 
                                         onChange={(e) => this.handleChange('picture', e.target.value)} />
+                                    <section>
+                                        <div class="dropzone">
+                                            <Dropzone 
+                                                onDrop={this.onDrop}
+                                                style={ {
+                                                    marginLeft: 'auto',
+                                                    marginRight: 'auto',
+                                                    border: 'solid',
+                                                    borderRadius: 9,
+                                                    padding: 8,
+                                                    borderColor: '#3f51b5',
+                                                    borderWidth: 2,
+                                                    minWidth: '70%'
+                                                } }>
+                                                {this.state.files ? this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>) : <p>Try dropping some files here, or click to select files to upload.</p>}
+                                            </Dropzone>
+                                        </div>
+                                    </section>
                                 </ FormControl>
                             </div>
-                            <div>
+                            <div className='textarea-container'>
                                 <TextField
                                     helperText='Bio'
                                     multiline={true}
@@ -133,7 +182,7 @@ class Profile extends Component {
                                         onChange={(e) => this.handleChange('current_zipcode', e.target.value)} />
                                 </ FormControl>
                             </div>
-                            <div>
+                            <div className='textarea-container'>
                                 <TextField
                                     helperText='Work History'
                                     multiline={true}
@@ -143,7 +192,7 @@ class Profile extends Component {
                                     onChange={(e) => this.handleChange('work_history', e.target.value)}
                                     className={classes.textarea} />
                             </div>
-                            <div>
+                            <div className='textarea-container'>
                                 <TextField
                                     helperText='Education Background'
                                     multiline={true}
@@ -153,7 +202,7 @@ class Profile extends Component {
                                     onChange={(e) => this.handleChange('education_background', e.target.value)}
                                     className={classes.textarea} />
                             </div>
-                            <div>
+                            <div className='textarea-container'>
                                 <TextField
                                     helperText='Job Interests'
                                     multiline={true}
