@@ -17,6 +17,15 @@ app.use(session({
     resave: false
 }))
 
+let dbInstance
+
+massive(process.env.CONNECTION_STRING).then(db => {
+    app.set('db', db);
+    dbInstance = db;
+}).catch(error => {
+    console.log('----------- Massive Error', error);
+});
+
 // Session endpoints
 app.get('/api/session/user', (req, res) => {
     req.session.user ?
@@ -32,12 +41,6 @@ app.post('/api/session/user', (req, res) => {
 app.post('/api/user', controller.updateUser)
 app.get('/api/user', controller.getUser)
 app.get('/api/users/filter', controller.getUsersByIndustry)
-
-massive(process.env.CONNECTION_STRING).then(db => {
-    app.set('db', db);
-}).catch(error => {
-    console.log('----------- Massive Error', error);
-});
 
 // Cloudinary endpoints
 app.get('/api/upload', (req, res) => {

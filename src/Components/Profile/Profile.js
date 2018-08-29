@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone'
 import { withStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios'
 import Card from '../Card/Card'
 import './Profile.css'
