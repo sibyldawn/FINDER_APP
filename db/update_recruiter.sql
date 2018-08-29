@@ -1,3 +1,0 @@
-insert into users (active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history)
-values (${active}, ${attachment}, ${bio}, ${current_zipcode}, ${education_background}, ${email}, ${industry_code}, ${job_interest}, ${job_title}, ${picture}, ${preferred_location}, ${work_history})
-returning *;
