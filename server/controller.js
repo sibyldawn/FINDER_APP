@@ -1,9 +1,9 @@
 module.exports = {
     updateUser(req, res) {
         const dbInstance = req.app.get('db')
-        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history } = req.body
+        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = req.body
 
-        dbInstance.update_applicant({
+        dbInstance.update_user({
             auth0_id,
             active, 
             attachment, 
@@ -14,8 +14,8 @@ module.exports = {
             first_name, 
             last_name, 
             industry_code, 
-            job_interest, 
-            job_title, 
+            looking_for, 
+            current_job, 
             picture, 
             preferred_location, 
             work_history
