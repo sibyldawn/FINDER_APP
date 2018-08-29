@@ -1,0 +1,5 @@
+.mapsize > div {
+  width: 100% !important;
+  height: 300px !important;
+  z-index: 0 !important;
+  margin-top: 30%; }
