@@ -1,6 +1,6 @@
 import React from 'react';
 import MapContainer from './Maps/Maps';
-import './JobMaps.css';
+import './JobMap.css';
 
 
 
