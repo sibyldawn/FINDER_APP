@@ -54,8 +54,8 @@ class Profile extends Component {
         first_name: '',
         last_name: '',
         industry_code: '',
-        job_interest: '',
-        job_title: '',
+        looking_for: '',
+        current_job: '',
         picture: '',
         preferred_location: '',
         work_history: '',
@@ -64,10 +64,10 @@ class Profile extends Component {
 
     componentDidMount() {
         axios.get('/api/session/user').then(res => {
-            const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history } = res.data
+            const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = res.data
             console.log('------------ res', res)
             this.setState({
-                auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history
+                auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history
             })
         })
     }
@@ -79,8 +79,8 @@ class Profile extends Component {
     }
 
     submitEdit = () => {
-        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history } = this.state
-        axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, job_interest, job_title, picture, preferred_location, work_history }).then(res => {
+        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
+        axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
             console.log('edit res', res)
             this.setState({
                 editing: false
@@ -159,18 +159,18 @@ class Profile extends Component {
                                     multiline={true}
                                     rows={5}
                                     rowsMad={12}
-                                    value={this.state.job_interest}
-                                    onChange={(e) => this.handleChange('job_interest', e.target.value)}
+                                    value={this.state.looking_for}
+                                    onChange={(e) => this.handleChange('looking_for', e.target.value)}
                                     className={classes.textarea} />
                             </div>
                             <div>
                                 <FormControl className={classes.FormControl}>
                                     <InputLabel htmlFor='job-title'>Job Title</InputLabel>
                                     <Input
-                                    defaultValue={this.state.job_title}
+                                    defaultValue={this.state.current_job}
                                     id='job-title'
                                     className={classes.input}
-                                    onChange={(e) => this.handleChange('job_title', e.target.value)} />
+                                    onChange={(e) => this.handleChange('current_job', e.target.value)} />
                                 </ FormControl>
                             </div>
                             <div>
