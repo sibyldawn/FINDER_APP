@@ -164,7 +164,9 @@ class Profile extends Component {
                                                     padding: 8,
                                                     borderColor: '#3f51b5',
                                                     borderWidth: 2,
-                                                    minWidth: '70%'
+                                                    minWidth: '70%',
+                                                    cursor: 'pointer',
+                                                    color: 'gray'
                                                 } }>
                                                 {this.state.files ? this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>) : <p>Try dropping some files here, or click to select files to upload.</p>}
                                             </Dropzone>
@@ -459,7 +461,7 @@ class Profile extends Component {
                             </div> 
                         </div>
                     :
-                        <Card id={this.state.auth0_id} />
+                        <Card id={this.state.auth0_id} width={'80%'} />
                     }    
                 </div>
                 <div>
