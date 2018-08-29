@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
-import './JobMatched.css';
+import './JobMatched.scss';
 
 const styles = theme => ({
   button: {
