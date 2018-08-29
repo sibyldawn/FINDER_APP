@@ -21,32 +21,18 @@ import axios from 'axios'
 
 const styles = theme => ({
   card: {
-    minWidth: 200,
-    maxWidth: "80%",
-    height: "80vh",
+    minWidth: 300,
+    maxWidth: "80vw",
+    minHeight: 500,
+    maxHeight: "80vh",
+    position: "relative",
+    top: 150,
+    right:30,
     overflow: "scroll",
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: '5%',
-    marginBottom: '5%'
-  },
-  cardheader: {
-    textAlign: 'center'
-  },
-  cardcontent: {
-    textAlign: 'left',
-    paddingLeft: '15%',
-    paddingRight: '15%',
   },
   media: {
-    borderRadius: '50%',
-    width: 300,
-    height: 300,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    display: 'absolute',
-    marginTop: '5%',
-    marginBottom: '5%'
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
   actions: {
     display: 'flex',
@@ -57,9 +43,8 @@ const styles = theme => ({
       duration: theme.transitions.duration.shortest,
     }),
     marginLeft: 'auto',
-    marginRight: 'auto',
     [theme.breakpoints.up('sm')]: {
-      marginRight: 'auto',
+      marginRight: -8,
     },
   },
   expandOpen: {
