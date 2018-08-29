@@ -1,6 +1,8 @@
 import React from 'react';
 import MapContainer from './Maps/Maps';
-// import './JobMaps.css';
+import './JobMap.css';
+
+
 
 const JobMap = () => {
     return (
@@ -10,19 +12,10 @@ const JobMap = () => {
 
         
         <input type="text" className="industrycode" placeholder="industry type"/>
-        <input type="text" className="jobdistance"placeholder="job distance"/>
+      
         <div className="googlemap">
         <MapContainer/>
         </div>
-
-        <div className="joblocation">Job Location</div>
-
-        
-        <div className="joblist">Job List</div>
-
-
-{/* top three to five results */}
-    
 
 
 
@@ -30,6 +23,74 @@ const JobMap = () => {
         </div>
     );
 };
+
+
+
+
+
+
+// export default class JobMap extends Component {
+
+//     constructor(){
+//         super();
+//         this.state = {
+//             industrycode: '',
+//         }
+//     }
+
+
+
+
+//     componentDidMount(){
+//         axios.get(`/api/industycode`).then(response => {
+//             console.log('get job list error', response)
+//             this.setState({
+//                 industrycode: response.data
+//             })
+//         })
+//     }
+
+
+    
+
+//     displayJobIndustryCode = () {
+//         let display = {
+//             industryCode: this.state.industry_code
+//         };
+
+
+//     }
+
+
+
+
+
+
+//     <div className="joblocation">Job Location</div>
+
+       
+//     <div className="joblist">Job List</div>
+
+
+// {/* top three to five results */}
+
+
+
+
+
+// render(){
+//     return(
+
+//         );
+
+//     }
+// }
+
+
+
+
+
+
 
 export default JobMap;
 
