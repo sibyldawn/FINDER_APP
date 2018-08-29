@@ -175,14 +175,3 @@ UserCard.propTypes = {
 };
 
 export default withStyles(styles)(UserCard);
-// import React from 'react';
-
-// const Cards = () => {
-//     return (
-//         <div>
-//             Messages
-//         </div>
-//     );
-// };
-
-// export default Cards;

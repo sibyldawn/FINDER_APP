@@ -7,8 +7,11 @@ import Dropzone from 'react-dropzone'
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import Snackbar from '@material-ui/core/Snackbar';
 import axios from 'axios'
 import Card from '../Card/Card'
 import './Profile.css'
@@ -63,7 +66,7 @@ class Profile extends Component {
         picture: '',
         preferred_location: '',
         work_history: '',
-        uploadedFileCloudinaryUrl: '',
+        snack: false,
         editing: false
     }
 
@@ -82,6 +85,13 @@ class Profile extends Component {
             [field]: val
         })
     }
+
+    handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        this.setState({ snack: false });
+    };
 
     handleFileUpload = (file) => {
         axios.get('/api/upload').then(res => {
@@ -107,7 +117,8 @@ class Profile extends Component {
         axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
             console.log('edit res', res)
             this.setState({
-                editing: false
+                editing: false,
+                snack: true
             })
         }).catch(error => console.log('------------ submitEdit Error', error))
     }
@@ -466,6 +477,31 @@ class Profile extends Component {
                                 Submit Changes
                         </Button>
                     }
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        open={this.state.snack}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<span id="message-id">Profile Updated</span>}
+                        action={[
+                            <IconButton
+                                key="close"
+                                aria-label="Close"
+                                color="inherit"
+                                className={classes.close}
+                                onClick={this.handleClose}
+                            >
+                                <CloseIcon />
+                            </IconButton>,
+                        ]}
+                    />
+
                 </div>
             </div>
         );
