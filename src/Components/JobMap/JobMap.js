@@ -1,6 +1,7 @@
 import React from 'react';
 import MapContainer from './Maps/Maps';
 // import './JobMaps.css';
+
 const JobMap = () => {
     return (
         <div className="jobMapComponent">
