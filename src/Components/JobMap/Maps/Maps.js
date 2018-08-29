@@ -1,6 +1,7 @@
 
 import React,{ Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from "google-maps-react";
+//, withScriptjs, withGoogleMap, GoogleMap
 import './Maps.css';
 
 
@@ -32,7 +33,20 @@ export class MapContainer extends Component {
    }
  };
 
+//  const JobMap = withScriptjs(withGoogleMap((props) =>{
 
+//   const markers = props.doctors.map( job => {
+//     let marker = <JobMarker
+//                     key={doctor.uid}
+//                     uid={doctor.uid}
+//                     closeMarkers={props.closeOtherMarkers}
+//                     toggleShowPage={props.toggleShowPage}
+//                     job={job}
+//                     location={{lat: job.closestPractice.lat, lng: job.closestPractice.lon}}
+//                     activeMarker={job.uid === props.activeMarker ? true : false}
+//                   />
+//     return marker
+//   })
 
  
  render() {
