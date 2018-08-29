@@ -51,10 +51,10 @@ export class MapContainer extends Component {
       //  mapElement={<div style={{ height: `100%` }} />}
    
        initialCenter={{
-         lat: 34.0522,
-         lng: -118.2437
+         lat: 33.4484,
+         lng: -112.0740
        }}
-       zoom={12}
+       zoom={10}
        onClick={this.onMapClicked}
        
      >
@@ -65,6 +65,9 @@ export class MapContainer extends Component {
          title={'the big city'}
          name={'NYC'}
          position={{ lat:40.7128, lng:-74.0060, }} />
+        
+        
+        
         {/* <Marker
          name={'Silicon Valley'}
          position={{lat: 37.759703, lng: -122.428093}} />

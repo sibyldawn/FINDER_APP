@@ -39,6 +39,12 @@ function FloatingActionButtons(props) {
     </div> 
 
 
+      <div className="newbuttons">
+      <Button bsStyle="primary">Messages</Button>
+      <Button bsStyle="primary">Keep Job Matching!</Button>
+      </div>
+
+
       <div className="buttonStyle">
       <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
         <FindInPageSharp />
