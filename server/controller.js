@@ -1,3 +1,5 @@
+// let jobsSearched = []
+
 module.exports = {
     updateUser(req, res) {
         const dbInstance = req.app.get('db')

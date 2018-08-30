@@ -5,16 +5,18 @@ import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import './JobMatched.scss';
+import Hand1 from './hand1.png';
+import Hand2 from './hand2.png';
 
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
-    position: 'fixed',
+    // position: 'absolute',
     // bottom: 90
   },
   button2: {
     margin: theme.spacing.unit,
-    position: 'absolute',
+    // position: 'absolute',
     
   },
 
@@ -27,6 +29,8 @@ const styles = theme => ({
 
 
 
+
+
 function FloatingActionButtons(props) {
   const { classes } = props;
 
@@ -35,22 +39,22 @@ function FloatingActionButtons(props) {
     <div className="backgroundhands">
      
     <div className="handshake">
-     <img src="https://dehayf5mhw1h7.cloudfront.net/wp-content/uploads/sites/714/2018/06/06093841/shutterstock_340774508.jpg" alt="" height={300} width={370}/>
+     <img src={Hand1} alt="" height={150} width={170}/>
     </div> 
 
-
-      <div className="newbuttons">
-      <Button bsStyle="primary">Messages</Button>
-      <Button bsStyle="primary">Keep Job Matching!</Button>
-      </div>
+<div className="handshake2">
+     <img src={Hand2} alt="" height={150} width={170}/>
+    </div>
 
 
       <div className="buttonStyle">
-      <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
+      <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
         Keep Job Matching!
       </Button>
-      <Button variant="extendedFab" aria-label="Delete" className={classes.button2}>
+      
+      
+      <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
         <QuestionAnswer />
         Message
       </Button>
@@ -94,3 +98,4 @@ export default withStyles(styles)(FloatingActionButtons);
 //Instantiate GSDevTools    
 //USE THIS IN CODE PEN TO CONTROL YOUR ANIMATIONS AND SAVE TIME
 //GSDevTools.create();
+
