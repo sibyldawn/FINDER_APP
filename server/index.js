@@ -1,15 +1,16 @@
-const express = require('express');
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
 require('dotenv').config();
-const app = express();
 const axios = require('axios');
-const controller = require('./controller')
+const controller = require('./controller');
+// const SocketManager = require('./SocketManager')
+
 
 app.use(bodyParser.json());
-
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
@@ -102,5 +103,17 @@ app.get('/auth/callback', (req, res) => {
     })
 })
 
+
+//Socket.io Implementation
+io.on('connection', (socket)=> {
+
+    socket.on("sibyl", (message) => {
+        console.log(message)
+        io.emit("message", message)
+    })
+    
+})
+
+
 const PORT =  4000;
-app.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));
+server.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));
