@@ -1,3 +1,5 @@
+// let jobsSearched = []
+
 module.exports = {
     updateUser(req, res) {
         const dbInstance = req.app.get('db')
@@ -19,7 +21,10 @@ module.exports = {
             picture, 
             preferred_location, 
             work_history
-        }).then(user => res.status(200).send(user))
+        }).then(user => {
+            req.session.user = user[0]
+            res.status(200).send(user)
+        })
         .catch(error => {
             res.status(500).send('Error updating applicant!')
             console.log('------------ updateApplicant Error', error)

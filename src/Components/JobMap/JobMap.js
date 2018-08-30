@@ -1,98 +1,120 @@
-import React from 'react';
-import MapContainer from './Maps/Maps';
+import React, { Component } from 'react';
+import axios from 'axios';
+import MapContainer from './Maps/MapContainer';
 import './JobMap.css';
 
+const API_KEY = 'AIzaSyB3nKfynX9Au9uVZb94D-Jb2tks8kwarns'
 
+export default class JobMap extends Component {
 
-const JobMap = () => {
-    return (
-        <div className="jobMapComponent">
-           
-        <div className="jobsearch">Job Search</div>
-
-        
-        <input type="text" className="industrycode" placeholder="industry type"/>
-      
-        <div className="googlemap">
-        <MapContainer/>
-        </div>
-
-
-
-
-        </div>
-    );
-};
+    constructor(){
+        super();
+        this.state = {
+            industrycode: '',
+            jobsSearched: [],
+            selectedJobs: '',
+        }
+    }
 
 
 
 
-
-
-// export default class JobMap extends Component {
-
-//     constructor(){
-//         super();
-//         this.state = {
-//             industrycode: '',
-//         }
-//     }
-
+    // componentDidMount(){
+    //     axios.get(`/api/jobsSearched`).then(response => {
+    //         console.log('get job list error', response)
+    //         this.setState({
+    //             jobsSearched: response.data
+    //         })
+    //     })
+    // }
 
 
 
-//     componentDidMount(){
-//         axios.get(`/api/industycode`).then(response => {
-//             console.log('get job list error', response)
-//             this.setState({
-//                 industrycode: response.data
-//             })
-//         })
-//     }
-
+    handleChange = ( key, val ) => {
+        this.setState({
+            [key]: val
+        })
+    }
 
     
 
-//     displayJobIndustryCode = () {
-//         let display = {
-//             industryCode: this.state.industry_code
-//         };
+    displayJobIndustryCode = () => {
+        let displayIndustryCodes = {
+            industryCode: this.state.industry_code
+        };
+        console.log('looking up industrycodes', displayIndustryCodes)
+            axios.get(`/api/user`,displayIndustryCodes).then(results => {
+                console.log('err on industry code display', results)
+                this.setState({ industry_code: results.data});
+            }).catch(error => {
+                console.log(error)
+            })
+    }
 
 
-//     }
+render(){
+
+    console.log("this.state--------", this.state)
 
 
-
-
-
-
-//     <div className="joblocation">Job Location</div>
+    return(
+        <div>
+    
+        <div className="joblocation">Job Location</div>
 
        
-//     <div className="joblist">Job List</div>
+        
+       <div className="joblist">Job List</div>
+    
+        <div className="jobMapComponent">
+           
+           <div className="jobsearch">Job Search</div>
+   
+            <input onChange={ e => this.handleChange('industrytype',e.target.value)}className="industryType" placeholder="industry type"></input>
+           {/* <input type="text" className="industrycode" placeholder="industry type"/> */}
+         
+           <div className="googlemap">
+           <MapContainer
+          
+                />
+           </div>
+    
+    {/* top three to five results */}
+{/*     
+    function getRandomLatitude = (min, max) => {
+         Math.random() * (max- min)+ min;
+}
+console.log(getRandomLatitude); */}
 
 
-// {/* top three to five results */}
+
+
+        </div>
+
+        </div>
+        );
+
+    }
+}
 
 
 
 
 
-// render(){
-//     return(
-
-//         );
-
-//     }
-// }
 
 
 
 
 
+// export default JobMap;
 
 
-export default JobMap;
+//need lat and long for marker
+//get random numbers with limitations
+//or hardcoded cooridnates
 
-//my api key
-//AIzaSyAn91z_nODvV9TFqNgv5lD3cMBi6_ScsPc
+//or it map over a fake array randomly
+
+//needds to be attached to industry code but not displayed
+
+//then needs to show 3-5 different markers

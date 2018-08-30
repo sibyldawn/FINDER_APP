@@ -28,6 +28,5 @@ export default (
             <Route  path="/ChatWindow" component={ChatWindow}/>
             <Route  path="/JobMatched" component={JobMatched}/>
             <Route  path="/Card" component={Card}/>
-          
         </Switch>
 )

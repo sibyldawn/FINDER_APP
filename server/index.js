@@ -6,15 +6,9 @@ const massive = require('massive');
 const session = require('express-session');
 require('dotenv').config();
 const axios = require('axios');
-<<<<<<< HEAD
 const controller = require('./controller');
 // const SocketManager = require('./SocketManager')
-=======
-const controller = require('./controller')
 const cloudinary = require('cloudinary')
-
-app.use(bodyParser.json());
->>>>>>> 640dc6524f27943e553dfe3dac5f42bcfb6a0ffd
 
 
 app.use(bodyParser.json());

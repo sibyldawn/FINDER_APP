@@ -96,3 +96,45 @@ values
 ('R15','Recruiter15','Last1','https://res.cloudinary.com/djsmw5c9x/image/upload/v1534194670/Products/lmoxafif6cztsdp13gb4.jpg','homer@simpson.com','Safety Inspector','Job ID 21343253: Fulltime','AZ','85004','Springfield Nuclear Plant','BS Nuclear Science','Looking for a country with free beer.','true','resume.png','Law Enforcement','false','true'),
 ('R16','Recruiter16','Last1','https://res.cloudinary.com/djsmw5c9x/image/upload/v1534194379/Products/g9pzkgdbiujkfb6xkyew.jpg','homer@simpson.com','Safety Inspector','Job ID 21343253: Fulltime','AZ','85005','Springfield Nuclear Plant','BS Nuclear Science','Looking for a country with free beer.','true','resume.png','Law Enforcement','false','true');
 
+
+select * from industry_codes
+
+
+alter TABLE industry_codes drop industry_for
+
+insert into industry_codes( industry_name ) values 
+('Airlines/Aviation'),('Alternative Dispute Resolution'),('Alternative Medicine'),('Animation'),('Apparel & Fashion'),('Architecture & Planning'),('Arts and Crafts'),('Automotive'),('Aviation & Aerospace'),('Banking'),('Biotechnology'),('Broadcast Media'),('Building Materials'),('Business Supplies and Equipment'),('Capital Markets'),
+('Capital Markets'),('Chemicals'),('Civic & Social Organization'),('Civil Engineering'),('Commercial Real Estate'),('Computer & Network Security'),('Computer Games'),('Computer Hardware'),('Computer Networking'),('Computer Software'),('Construction'),('Consumer Electronics'),('Consumer Goods'),('Consumer Services'),('Cosmetics'),
+('Dairy'),('Defense & Space'),('Design'),('Education Management'),('E-Learning'),('Electrical/Electronic Manufacturing'),('Entertainment'),('Environmental Services'),('Events Services'),('Executive Office'),('Facilities Services'),('Farming'),('Financial Services'),('Fine Art'),('Fishery'),('Food & Beverages'),
+('Food Production'),('Fund-Raising'),('Furniture'),('Gambling & Casinos'),('Glass, Ceramics & Concrete'),('Government Administration'),('Government Relations'),('Graphic Design'),('Health, Wellness and Fitness'),('Higher Education'),('Hospital & Health Care'),('Hospitality'),('Human Resources'),('Import and Export'),
+('Individual & Family Services'),('Industrial Automation'),('Information Services'),('Information Technology and Services'),('Insurance'),('International Affairs'),('International Trade and Development'),('Internet'),('Investment Banking'),('Investment Management'),
+('Judiciary'),('Law Enforcement'),('Law Practice'),('Legal Services'),('Legislative Office'),('Leisure, Travel & Tourism'),('Libraries'),('Logistics and Supply Chain'),('Luxury Goods & Jewelry'),('Machinery'),('Management Consulting'),('Maritime'),('Market Research'),('Marketing and Advertising'),('Mechanical or Industrial Engineering'),('Media Production'),
+('Medical Devices'),('Medical Practice'),('Mental Health Care'),('Military'),('Mining & Metals'),('Motion Pictures and Film'),('Museums and Institutions'),('Music'),('Nanotechnology'),('Newspapers'),('Non-Profit Organization Management'),('Oil & Energy'),('Online Media'),('Outsourcing/Offshoring'),('Package/Freight Delivery'),('Packaging and Containers'),('Paper & Forest Products'),
+('Performing Arts'),('Pharmaceuticals'),('Philanthropy'),('Photography'),('Plastics'),('Political Organization'),('Primary/Secondary Education'),
+('Printing'),('Professional Training & Coaching'),('Program Development'),('Public Policy'),('Public Relations and Communications'),('Public Safety'),('Publishing'),('Railroad Manufacture'),('Ranching'),('Real Estate'),('Recreational Facilities and Services'),('Religious Institutions'),('Renewables & Environment'),('Research'),('Restaurants'),('Retail'),('Security and Investigations'),('Semiconductors'),
+('Shipbuilding'),('Sporting Goods'),('Sports'),('Staffing and Recruiting'),('Supermarkets'),('Telecommunications'),('Textiles'),('Think Tanks'),('Tobacco'),('Translation and Localization'),('Transportation/Trucking/Railroad'),('Utilities'),('Venture Capital & Private Equity'),('Veterinary'),('Warehousing'),('Wholesale'),('Wine and Spirits'),('Wireless'),('Writing and Editing')
+
+select * from connections
+
+select * from users
+
+
+insert into connections
+( recruiter_id, applicant_id, recruiter_decision, applicant_decision)
+values 
+( '1', '17','yes','no'),
+('2','18','no','no'),
+('3','19','no','yes'),
+('4','20','no','no'),
+('5','21','yes','yes'),
+('6','22','yes','yes'),
+('7','23','no','yes'),
+('8','24','no','no'),
+('9','25','yes','no'),
+('10','26','no','no'),
+('11','27','no','no'),
+('12','28','yes','yes'),
+('13','29','no','no'),
+('14','30','yes','yes'),
+('15','31','no','yes'),
+('16','31','yes','no')
