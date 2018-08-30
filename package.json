@@ -10,7 +10,7 @@
     "body-parser": "^1.18.3",
     "cloudinary": "^1.11.0",
     "dotenv": "^6.0.0",
-    "express": "4.15.2",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
     "google-maps-react": "^2.0.2",
     "massive": "^5.2.0",
@@ -45,5 +45,4 @@
       "target": "http://localhost:4000"
     }
   }
-
 }
