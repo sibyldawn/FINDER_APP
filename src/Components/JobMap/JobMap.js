@@ -80,8 +80,11 @@ render(){
            </div>
     
     {/* top three to five results */}
-    
-    
+{/*     
+    function getRandomLatitude = (min, max) => {
+         Math.random() * (max- min)+ min;
+}
+console.log(getRandomLatitude); */}
 
 
 
@@ -104,3 +107,14 @@ render(){
 
 
 // export default JobMap;
+
+
+//need lat and long for marker
+//get random numbers with limitations
+//or hardcoded cooridnates
+
+//or it map over a fake array randomly
+
+//needds to be attached to industry code but not displayed
+
+//then needs to show 3-5 different markers
