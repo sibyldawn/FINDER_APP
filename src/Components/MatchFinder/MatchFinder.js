@@ -23,7 +23,6 @@ class App extends React.Component {
   constructor(){
     super()
       this.state = {
-        arr: ["card1","card2","card3","card4","card5"],
         industry: '',
         cards: []
       }
@@ -57,6 +56,7 @@ class App extends React.Component {
     console.log('data', data);
   };
  
+
   // renderButtons(props) {
   //   return (
   //     <div className="btn-group">
@@ -65,6 +65,7 @@ class App extends React.Component {
   //     </div>
   //   );
   // }
+
   componentDidUpdate(prevProps, prevState) {
     if(this.state.industry !== prevState.industry) {
       axios.get(`/api/users/filter?industry=${this.state.industry}`).then(res => {
@@ -76,6 +77,13 @@ class App extends React.Component {
     }
   }
  
+
+
+
+
+
+
+
   render() {
     // const data = this.state.arr.map( (e,i) => {
     //   return <div key={i} style={{background:"yellow",height:'80vh',width:'80vw'}}>{e}</div>

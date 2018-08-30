@@ -1,9 +1,12 @@
 @import '../../variables';
 .jobMapComponent{
-    background:$LightBlue;
+    // background:$LightBlue;
+   
+
 }
 
 .joblocation {
+    padding-top: 100px;
     color:$LightBlue;
 
 }
@@ -23,4 +26,8 @@ color:$LightBlue ;
 
 .jobdistance {
     font-size: 40px;
+}
+
+.googlemap {
+    z-index: 5;
 }
