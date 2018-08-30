@@ -1,19 +1,11 @@
-import React, {Component} from 'react';
-import ChatForm from './ChatForm';
-import Message from './Message';
-import './ChatWindow.css';
+import React from 'react';
 
+const ChatWindow = () => {
+    return (
+        <div>
+            ChatWindow
+        </div>
+    );
+};
 
-export default class ChatWindow extends Component{
-    
-
-    render(){
-        
-        return (
-            <div className="chat-window">
-            <Message/>
-            <ChatForm/>
-            </div>
-        )
-    }
-}
+export default ChatWindow;
