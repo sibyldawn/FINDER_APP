@@ -1,7 +1,37 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import axios from 'axios';
 import MapContainer from './Maps/MapContainer';
 import './JobMap.css';
+=======
+import React from 'react';
+import MapContainer from './Maps/Maps';
+import './JobMap.css';
+
+
+
+const JobMap = () => {
+    return (
+        <div className="jobMapComponent">
+           
+        <div className="jobsearch">Job Search</div>
+
+        
+        <input type="text" className="industrycode" placeholder="industry type"/>
+      
+        <div className="googlemap">
+        <MapContainer/>
+        </div>
+
+
+
+
+        </div>
+    );
+};
+
+
+>>>>>>> a225b7c6f465a9de7113c82078990a4bd73a4e8a
 
 const API_KEY = 'AIzaSyB3nKfynX9Au9uVZb94D-Jb2tks8kwarns'
 

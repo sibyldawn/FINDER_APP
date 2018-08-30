@@ -1,20 +1,37 @@
-const express = require('express');
+const app = require('express')();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
 require('dotenv').config();
-const app = express();
 const axios = require('axios');
+<<<<<<< HEAD
+const controller = require('./controller');
+// const SocketManager = require('./SocketManager')
+=======
 const controller = require('./controller')
+const cloudinary = require('cloudinary')
 
 app.use(bodyParser.json());
+>>>>>>> 640dc6524f27943e553dfe3dac5f42bcfb6a0ffd
 
 
+app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false
 }))
+
+let dbInstance
+
+massive(process.env.CONNECTION_STRING).then(db => {
+    app.set('db', db);
+    dbInstance = db;
+}).catch(error => {
+    console.log('----------- Massive Error', error);
+});
 
 // Session endpoints
 app.get('/api/session/user', (req, res) => {
@@ -32,11 +49,17 @@ app.post('/api/user', controller.updateUser)
 app.get('/api/user', controller.getUser)
 app.get('/api/users/filter', controller.getUsersByIndustry)
 
-massive(process.env.CONNECTION_STRING).then(db => {
-    app.set('db', db);
-}).catch(error => {
-    console.log('----------- Massive Error', error);
-});
+// Cloudinary endpoints
+app.get('/api/upload', (req, res) => {
+    const timestamp = Math.round((new Date()).getTime() / 1000)
+    const apiSecret = process.env.CLOUDINARY_SECRET
+    const signature = cloudinary.utils.api_sign_request({ timestamp }, apiSecret)
+    const payload = {
+        signature,
+        timestamp
+    }
+    res.json(payload)
+})
 
 // Auth0 implementation
 app.get('/auth/callback', (req, res) => {
@@ -102,5 +125,17 @@ app.get('/auth/callback', (req, res) => {
     })
 })
 
+
+//Socket.io Implementation
+io.on('connection', (socket)=> {
+
+    socket.on("sibyl", (message) => {
+        console.log(message)
+        io.emit("message", message)
+    })
+    
+})
+
+
 const PORT =  4000;
-app.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));
+server.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));

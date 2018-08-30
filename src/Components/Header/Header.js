@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router';
+import ContextProvider, { AppContext } from '../../ContextAPI/ContextProvider'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -70,9 +71,9 @@ logout = () => {
 
 toggleDrawer = (side, open) => () => {
     this.setState({
-      [side]: open,
+        [side]: open,
     });
-  };
+};
 
 
 handleClose = () => {
@@ -80,7 +81,7 @@ handleClose = () => {
 };
 
 render() {
-    console.log("window",window)
+    console.log('------------ this.props', this.props)
     console.log('------------ this.state.user', this.state.user)
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
@@ -88,75 +89,82 @@ render() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                    <MenuIcon />
-                </IconButton>
-                <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
-                    <div
-                        tabIndex={0}
-                        role="button"
-                        onClick={this.toggleDrawer('left', false)}
-                        onKeyDown={this.toggleDrawer('left', false)}
-                    >
-                        <Aside/>
-                    </div>
-                    </Drawer>
-                <Typography variant="title" color="inherit" className={classes.flex}>
-                    Finder
-                </Typography>
-                {auth && (
-                <div>
-                    <IconButton
-                        aria-owns={open ? 'menu-appbar' : null}
-                        aria-haspopup="true"
-                        onClick={this.state.login ? this.handleMenu : this.login}
-                        color="inherit"
-                    >
-                    {this.state.login ?
-                        <div>
-                            <figure style={{ 
-                                margin: 0, 
-                                padding: 0, 
-                                height: 30, 
-                                width: 30 }}>
-                                <img style={{ 
-                                    borderRadius: "50%", 
-                                    width: 30, 
-                                    height: 30, 
-                                    margin: 0, 
-                                    padding: 0 }} 
-                                    src={this.state.user.picture} alt="Profile"/>
-                            </figure>
-                        </div>
-                        :
-                        <AccountCircle style={{ fontSize: 33 }} />
-                    }
-                    </IconButton>
-                    
-                    <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={open}
-                        onClose={this.handleClose}
-                        >
-                        <MenuItem onClick={this.handleClose}><div onClick={this.logout}>Logout</div></MenuItem>
-                    </Menu>
-                </div>
-                )}
-                </Toolbar>
-            </AppBar>
+            <AppContext.Consumer>
+                { context => {
+                    console.log('------------ context', context)
+                    return (
+                        <AppBar position="static">
+                            <Toolbar>
+                            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
+                                <MenuIcon />
+                            </IconButton>
+                            <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                                <div
+                                    tabIndex={0}
+                                    role="button"
+                                    onClick={this.toggleDrawer('left', false)}
+                                    onKeyDown={this.toggleDrawer('left', false)}
+                                >
+                                    <Aside/>
+                                </div>
+                                </Drawer>
+                            <Typography variant="title" color="inherit" className={classes.flex}>
+                                Finder
+                            </Typography>
+                            {auth && (
+                            <div>
+                                <IconButton
+                                    aria-owns={open ? 'menu-appbar' : null}
+                                    aria-haspopup="true"
+                                    onClick={this.state.login ? this.handleMenu : context.methods.login}
+                                    color="inherit"
+                                >
+                                {this.state.login ?
+                                    <div>
+                                        <figure style={{ 
+                                            margin: 0, 
+                                            padding: 0, 
+                                            height: 30, 
+                                            width: 30 }}>
+                                            <img style={{ 
+                                                borderRadius: "50%", 
+                                                width: 30, 
+                                                height: 30, 
+                                                margin: 0, 
+                                                padding: 0 }} 
+                                                src={this.state.user.picture} alt="Profile"/>
+                                        </figure>
+                                    </div>
+                                    :
+                                    <AccountCircle style={{ fontSize: 33 }} />
+                                }
+                                </IconButton>
+                                
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={open}
+                                    onClose={this.handleClose}
+                                    >
+                                    <MenuItem onClick={this.handleClose}><div onClick={this.logout}>Logout</div></MenuItem>
+                                </Menu>
+                            </div>
+                            )}
+                            </Toolbar>
+                        </AppBar>
+                    )
+                } }
+            </AppContext.Consumer>
         </div>
-    );
+        );
     }
 }
 
@@ -164,4 +172,10 @@ Header.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(Header));
+// export default props => (
+//     <AppContext.Consumer>
+//         {context => withRouter(withStyles(styles)(<Header {...props} context={context} />))}
+//     </AppContext.Consumer>
+// )
+
+export default withRouter(withStyles(styles)(Header))
