@@ -21,14 +21,15 @@ import axios from 'axios'
 
 const styles = theme => ({
   card: {
-    minWidth: 300,
-    maxWidth: "80vw",
+    minWidth: 350,
+    maxWidth: "60%",
+    marginLeft: 'auto',
+    marginRight: 'auto',
     minHeight: 500,
-    maxHeight: "80vh",
-    position: "relative",
     top: 150,
     right:30,
     overflow: "scroll",
+    userSelect: 'none'
   },
   media: {
     height: 0,
@@ -175,14 +176,3 @@ UserCard.propTypes = {
 };
 
 export default withStyles(styles)(UserCard);
-// import React from 'react';
-
-// const Cards = () => {
-//     return (
-//         <div>
-//             Messages
-//         </div>
-//     );
-// };
-
-// export default Cards;
