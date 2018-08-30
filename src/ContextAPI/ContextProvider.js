@@ -6,15 +6,15 @@ export const AppContext = React.createContext()
 export default class ContextProvider extends React.Component {
     state = {
         login: false,
-        update: 0,
         user: '',
         methods: {
-            updateState: () => {
-                this.setState(prevState => {
-                    return {
-                        update: prevState.update + 1
-                    }
-                })
+            checkForLogin: () => {
+                console.log('------------ Context checks for login')
+                axios.get('/api/session/user').then(res => {
+                    console.log('------------ res', res)
+                    res.data.first_name &&
+                    this.setState({ user: res.data, login: true })
+                    })
             },
             login: () => {
                 const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback?prevPath=${window.location.pathname}`)
@@ -32,13 +32,6 @@ export default class ContextProvider extends React.Component {
                     window.location = '/'
                 })
             },
-            getLoggedInUser: () => {
-                axios.get('/api/session/user').then(res => {
-                    console.log('------------ res', res)
-                    res.data.first_name &&
-                    this.setState({ user: res.data, login: true })
-                    })
-            }
         }
     }
 

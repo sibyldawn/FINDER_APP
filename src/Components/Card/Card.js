@@ -152,7 +152,7 @@ class UserCard extends React.Component {
                 Job Title: 
               </Typography>
               <Typography paragraph>
-                {user.job_title}
+                {user.current_job}
               </Typography>
               
               <Typography paragraph variant="body2">

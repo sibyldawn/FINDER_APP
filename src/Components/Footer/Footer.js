@@ -35,11 +35,11 @@ class Footer extends Component {
 
     return (
       <BottomNavigation  showLabels value={value} onChange={this.handleChange} className={classes.root} color="inherit">
-       <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
-       <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
-       <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
-       <Link to="/JobMap"><BottomNavigationAction label="JobMap" value="map" icon={<LocationOnIcon />} /></Link>
-       <Link to="/Settings"><BottomNavigationAction label="Settings" value="settings" icon={<Settings />} /></Link>
+        <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
+        <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
+        <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
+        <Link to="/JobMap"><BottomNavigationAction label="JobMap" value="map" icon={<LocationOnIcon />} /></Link>
+        <Link to="/Settings"><BottomNavigationAction label="Settings" value="settings" icon={<Settings />} /></Link>
       </BottomNavigation>
     );
   }
