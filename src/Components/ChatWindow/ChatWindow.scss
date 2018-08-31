@@ -1,0 +1,147 @@
+
+.chat-window {
+    display: grid;
+    height: 85vh;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
+    grid-template-areas: 
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "f f f f g g";
+}
+
+
+.rooms-list {
+    grid-area: r;
+}
+
+.message-list {
+    grid-area: m;
+}
+
+.send-message-form {
+    grid-area: f;
+}
+
+.submit-button{
+    grid-area: g;
+}
+
+/* REST OF CSS */
+.rooms-list {
+    box-sizing: border-box;
+    padding: 10px;
+    background-color:  #5ea3d0;
+    overflow: scroll;
+    width:20vw;
+    height: 100%;
+
+    ul {
+        list-style-type: none;    
+        padding: 0;
+        overflow: scoll;
+    }
+
+    li {
+        margin: 10px 0;
+    }
+
+    h3 {
+        margin: 5px 0;
+        color: white;
+    }
+
+    .room{
+
+        a {
+            color:#b0c7d6;
+            font-weight: 600;
+            text-decoration: none;
+            
+            .active {
+                color: white;
+            }
+         }
+
+    }
+
+}
+
+
+
+.message {
+    margin: 15px 0;
+
+    .message-username {
+        font-size: 11px;
+        color: #3e5869;
+        opacity: 0.9;
+        margin-bottom: 6px;
+    }
+
+    .message-text {
+        background:  #5ea3d0;
+        color: white;
+        display: inline;
+        padding: 4px 8px;
+        border-radius: 8px;
+    }
+
+    .message-list {
+        box-sizing: border-box;
+        padding-left: 6px;
+        width: 100%;
+        height: 100%;
+        overflow: scroll;
+        background: white;
+
+        .join-room {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 34px;
+            font-weight: 300;
+        }
+    
+    }
+
+   
+
+
+}
+
+
+.send-message-form {
+    background:  #F5F5F5;
+    display: flex;
+    justify-content: space-between;
+
+    input {
+        width: 80vw;
+        height:8vh;
+        margin-top: 5;
+        bottom:44px;
+        font-size:16px;
+        border-style: none;
+        background:  #F5F5F5;
+        font-weight: 200;
+    }
+   
+    .text-input{
+        position: fixed;
+        left:0;
+    }
+
+    .submit-button{
+        position: fixed;
+        right:0;
+    }
+}
+
+
+
+

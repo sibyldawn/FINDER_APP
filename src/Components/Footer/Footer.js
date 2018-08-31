@@ -34,7 +34,7 @@ class Footer extends Component {
     const { value } = this.state;
 
     return (
-      <BottomNavigation  showLabels value={value} onChange={this.handleChange} className={classes.root} color="inherit">
+      <BottomNavigation value={value} onChange={this.handleChange} className={classes.root} color="inherit">
         <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
         <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
         <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
