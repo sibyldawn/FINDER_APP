@@ -139,7 +139,7 @@ class Header extends Component {
                             open={open}
                             onClose={this.handleClose}
                             >
-                            <MenuItem onClick={this.handleClose}><div onClick={context.logout}>Logout</div></MenuItem>
+                            <MenuItem onClick={this.handleClose}><div onClick={context.methods.logout}>Logout</div></MenuItem>
                         </Menu>
                     </div>
                     )}
