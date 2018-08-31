@@ -7,11 +7,13 @@ import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
 import Input from '@material-ui/core/Input';
 import axios from 'axios'
 import Card from '../Card/Card'
@@ -48,6 +50,17 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
     },
+    colorSwitchBase: {
+        color: '#3f51b5',
+        '&$colorChecked': {
+          color: '#3f51b5',
+          '& + $colorBar': {
+            backgroundColor: '#3f51b5',
+            },
+        },
+    },
+    colorBar: {},
+    colorChecked: {},
 });
 
 class Profile extends Component {
@@ -67,21 +80,24 @@ class Profile extends Component {
         picture: '',
         preferred_location: '',
         work_history: '',
+        snackMessage: '',
+        isrecruiter: false,
         snack: false,
         editing: false
     }
 
     componentDidMount() {
         axios.get('/api/session/user').then(res => {
-            const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = res.data
+            const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = res.data
             console.log('------------ res', res)
             this.setState({
-                auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history
+                auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history
             })
         })
     }
 
     handleChange = (field, val) => {
+        console.log('------------ val', val)
         this.setState({
             [field]: val
         })
@@ -114,15 +130,24 @@ class Profile extends Component {
     }
 
     submitEdit = () => {
-        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
-        axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
-            console.log('edit res', res)
-            this.props.context.methods.checkForLogin()
+        const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
+
+        auth0_id && bio && current_zipcode && education_background && industry_code && looking_for && current_job && picture && preferred_location && work_history ?
+
+            axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
+                console.log('edit res', res)
+                this.props.context.methods.checkForLogin()
+                this.setState({
+                    editing: false,
+                    snackMessage: 'Profile updated',
+                    snack: true
+                })
+            }).catch(error => console.log('------------ submitEdit Error', error))
+            :
             this.setState({
-                editing: false,
+                snackMessage: 'Please fill in all profile information',
                 snack: true
             })
-        }).catch(error => console.log('------------ submitEdit Error', error))
     }
     
     onDrop = (files) => {
@@ -460,6 +485,21 @@ class Profile extends Component {
                                             <option value='Wireless'>Wireless</option>
                                             <option value='Writing and Editing'>Writing and Editing</option>
                                         </ Select>
+                                        <FormControlLabel
+                                            control={
+                                            <Switch
+                                                checked={this.state.isrecruiter}
+                                                onChange={() => this.handleChange('isrecruiter', !this.state.isrecruiter)}
+                                                value="isrecruiter"
+                                                classes={{
+                                                    switchBase: classes.colorSwitchBase,
+                                                    checked: classes.colorChecked,
+                                                    bar: classes.colorBar,
+                                                }}
+                                            />
+                                            }
+                                            label='I am a recruiter'
+                                        />
                                     </ FormControl>
                                 </div> 
                             </div>
@@ -493,7 +533,8 @@ class Profile extends Component {
                             ContentProps={{
                                 'aria-describedby': 'message-id',
                             }}
-                            message={<span id="message-id">Profile Updated</span>}
+                            variant='success'
+                            message={<span id="message-id">{this.state.snackMessage}</span>}
                             action={[
                                 <IconButton
                                     key="close"

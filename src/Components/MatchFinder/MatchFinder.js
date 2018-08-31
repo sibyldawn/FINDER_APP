@@ -70,7 +70,7 @@ class App extends React.Component {
   //   );
   // }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
       axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
         console.log('------------ COMPONENT UPDATE GET ID', res)
