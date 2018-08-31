@@ -40,7 +40,7 @@ class App extends React.Component {
       })
     })
     // To get lat/long from zipcode:
-    // axios.get('https://api.promaptools.com/service/us/zip-lat-lng/get/?zip=85234&key=7oe8dysanxdrgv1c').then(res => console.log('------------ Map API res', res))
+    // axios.get('https://api.promaptools.com/service/us/zip-lat-lng/get/?zip={[85234]}&key=7oe8dysanxdrgv1c').then(res => console.log('------------ Map API res', res))
   }
 
   onBeforeSwipe = (swipe, direction, state) => {
