@@ -94,7 +94,7 @@ class App extends React.Component {
     // })
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
-      console.log('------------ this.state.cards.map(e => e.auth0_id)', this.state.cards.map(e => e.auth0_id)[1])
+      // console.log('------------ this.state.cards.map(e => e.auth0_id)', this.state.cards.map(e => e.auth0_id)[1])
       console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,

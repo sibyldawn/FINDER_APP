@@ -53,9 +53,9 @@ const styles = theme => ({
     colorSwitchBase: {
         color: '#3f51b5',
         '&$colorChecked': {
-          color: '#3f51b5',
-          '& + $colorBar': {
-            backgroundColor: '#3f51b5',
+            color: '#3f51b5',
+            '& + $colorBar': {
+                backgroundColor: '#3f51b5',
             },
         },
     },
@@ -132,10 +132,10 @@ class Profile extends Component {
     submitEdit = () => {
         const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
 
-        auth0_id && bio && current_zipcode && education_background && industry_code && looking_for && current_job && picture && preferred_location && work_history ?
+        if( (/\S/.test(auth0_id)) && (/\S/.test(bio)) && (/\S/.test(current_zipcode)) && (/\S/.test(education_background)) && (/\S/.test(industry_code)) && (/\S/.test(looking_for)) && (/\S/.test(current_job)) && (/\S/.test(picture)) && (/\S/.test(preferred_location)) && (/\S/.test(work_history)) ) {
 
             axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
-                console.log('edit res', res)
+                console.log('edit res', res) 
                 this.props.context.methods.checkForLogin()
                 this.setState({
                     editing: false,
@@ -143,11 +143,12 @@ class Profile extends Component {
                     snack: true
                 })
             }).catch(error => console.log('------------ submitEdit Error', error))
-            :
+        } else {
             this.setState({
                 snackMessage: 'Please fill in all profile information',
                 snack: true
             })
+        }
     }
     
     onDrop = (files) => {

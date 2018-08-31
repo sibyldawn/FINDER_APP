@@ -10,7 +10,7 @@ import SwapHorizSharp from '@material-ui/icons/SwapHorizSharp';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Settings from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
-import './Footer.css';
+// import './Footer.css';
 
 
 const styles = {
