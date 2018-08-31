@@ -70,7 +70,7 @@ class App extends React.Component {
   //   );
   // }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
       axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
         console.log('------------ COMPONENT UPDATE GET ID', res)
@@ -94,7 +94,7 @@ class App extends React.Component {
     // })
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
-      console.log('------------ this.state.cards.map(e => e.auth0_id)', this.state.cards.map(e => e.auth0_id)[1])
+      // console.log('------------ this.state.cards.map(e => e.auth0_id)', this.state.cards.map(e => e.auth0_id)[1])
       console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,

@@ -35,12 +35,6 @@ export default class ContextProvider extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if(this.state.update !== prevState.update) {
-            this.getLoggedInUser
-        }
-    }
-
     render() {
         return(
             <AppContext.Provider value={this.state}>
