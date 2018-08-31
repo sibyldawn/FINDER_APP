@@ -89,7 +89,7 @@ class Profile extends Component {
 
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
         this.setState({ snack: false });
     };
@@ -506,7 +506,6 @@ class Profile extends Component {
                                 </IconButton>,
                             ]}
                         />
-
                     </div>
                 </div>
             :

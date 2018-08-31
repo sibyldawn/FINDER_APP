@@ -54,10 +54,10 @@ class MapContainer extends Component {
        
      >
 
-     {this.props.zipcodes.map(e => {
+     {/* {this.props.zipcodes.map(e => {
        return(
          <Marker onClick={this.onMarkerClick} position={} />
-       )
+       ) */}
 
      })}
 
