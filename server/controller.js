@@ -53,6 +53,21 @@ module.exports = {
         .catch(error => {
             res.status(500).send('Error retrieving Users!')
             console.log('------------ getUsersByIndustry error', error)
+        
+        
+        })
+    },
+    
+    getAllUsersZipCodes(req, res) {
+        const dbInstance = req.app.get('db')
+        const { isRecruiter } = req.query
+
+        dbInstance.get_user_by_zipcode([isRecruiter])
+        .then(users => res.status(200).send(users))
+        .catch(error => {
+            res.status(500).send('Error retrieveing Zipcodes!')
+            console.log('------------getAllUsersZipCodes', error)
         })
     }
+        
 }
