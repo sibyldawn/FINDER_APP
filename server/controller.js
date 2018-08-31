@@ -69,6 +69,15 @@ module.exports = {
             res.status(500).send('Error retrieveing Zipcodes!')
             console.log('------------getAllUsersZipCodes', error)
         })
+    },
+
+    createConnection(req, res) {
+        const dbInstance = req.app.get('db')
+        const { direction, userId, cardId } = req.body
+
+        dbInstance.check_connections({ userId, cardId }).then(res => {
+            console.log('------------ res', res)
+        })
     }
         
 }
