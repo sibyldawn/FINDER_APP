@@ -45,10 +45,10 @@ module.exports = {
 
     getUsersByIndustry(req, res) {
         const dbInstance = req.app.get('db')
-        const { industry } = req.query
-        console.log('------------ industry', req.query)
+        const { industry, recruiter } = req.query
+        console.log('------------ req.query', req.query)
 
-        dbInstance.get_user_by_industry([industry])
+        dbInstance.get_user_by_industry([industry, recruiter])
         .then(users => res.status(200).send(users))
         .catch(error => {
             res.status(500).send('Error retrieving Users!')

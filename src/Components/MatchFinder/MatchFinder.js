@@ -19,7 +19,7 @@ const styles = theme => ({
   },
 });
 
- 
+
 class App extends React.Component {
   constructor(){
     super()
@@ -32,8 +32,9 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    axios.get('/api/users/filter/industry', {industry: this.state.industry}).then(res => {
-      console.log('------------ get all usersId res', res)
+    console.log('----------CONTEXT', this.props.context)
+    axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
+      console.log('------------ COMPONENT DID MOUNT GET ID', res)
       this.setState({
         cards: res.data
       })
@@ -45,7 +46,7 @@ class App extends React.Component {
   onBeforeSwipe = (swipe, direction, state) => {
     console.log('direction', direction);
     console.log('state', state);
- 
+
     swipe();
   }
 
@@ -70,9 +71,9 @@ class App extends React.Component {
   // }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.state.industry !== prevState.industry) {
-      axios.get(`/api/users/filter?industry=${this.state.industry}`).then(res => {
-        console.log('------------ get all usersId res', res)
+    if(this.props.context.user !== prevProps.context.user) {
+      axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
+        console.log('------------ COMPONENT UPDATE GET ID', res)
         this.setState({
           cards: res.data
         })
