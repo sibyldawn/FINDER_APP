@@ -135,7 +135,7 @@ class Profile extends Component {
         if( (/\S/.test(auth0_id)) && (/\S/.test(bio)) && (/\S/.test(current_zipcode)) && (/\S/.test(education_background)) && (/\S/.test(industry_code)) && (/\S/.test(looking_for)) && (/\S/.test(current_job)) && (/\S/.test(picture)) && (/\S/.test(preferred_location)) && (/\S/.test(work_history)) ) {
 
             axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
-                console.log('edit res', res) 
+                console.log('edit response', res) 
                 this.props.context.methods.checkForLogin()
                 this.setState({
                     editing: false,

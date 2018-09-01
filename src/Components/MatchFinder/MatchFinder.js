@@ -45,8 +45,11 @@ class App extends React.Component {
 
   onBeforeSwipe = (swipe, direction, state) => {
     console.log('direction', direction);
-    console.log('state', state);
+    console.log('state', state.data[0].element.props.id);
 
+    axios.post('/api/user/matches', {direction, userId: this.props.context.user.auth0_id, cardId: state.data[0].element.props.id, isRecruiter: this.props.context.user.isrecruiter}).then(res => {
+      console.log('------------ res ', res )
+    })
     swipe();
   }
 
@@ -89,12 +92,8 @@ class App extends React.Component {
 
 
   render() {
-    // const data = this.state.arr.map( (e,i) => {
-    //   return <div key={i} style={{background:"yellow",height:'80vh',width:'80vw'}}>{e}</div>
-    // })
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
-      // console.log('------------ this.state.cards.map(e => e.auth0_id)', this.state.cards.map(e => e.auth0_id)[1])
       console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,
