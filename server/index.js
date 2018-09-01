@@ -4,6 +4,7 @@ const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session)
 require('dotenv').config();
 const axios = require('axios');
 const controller = require('./controller');
@@ -13,6 +14,7 @@ const cloudinary = require('cloudinary')
 
 app.use(bodyParser.json());
 app.use(session({
+    store: new RedisStore( {url: process.env.REDIS_URI} ),
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false
@@ -42,6 +44,7 @@ app.post('/api/session/user', (req, res) => {
 app.post('/api/user', controller.updateUser)
 app.get('/api/user', controller.getUser)
 app.get('/api/users/filter', controller.getUsersByIndustry)
+app.get('/api/users/zipcodes',controller.getAllUsersZipCodes)
 
 // Cloudinary endpoints
 app.get('/api/upload', (req, res) => {

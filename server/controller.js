@@ -3,14 +3,15 @@
 module.exports = {
     updateUser(req, res) {
         const dbInstance = req.app.get('db')
-        const { auth0_id, active, attachment, bio, current_zipcode, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = req.body
+        const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = req.body
 
         dbInstance.update_user({
             auth0_id,
             active, 
             attachment, 
             bio, 
-            current_zipcode, 
+            current_zipcode,
+            isrecruiter,
             education_background, 
             email, 
             first_name, 
@@ -45,14 +46,29 @@ module.exports = {
 
     getUsersByIndustry(req, res) {
         const dbInstance = req.app.get('db')
-        const { industry } = req.query
-        console.log('------------ industry', req.query)
+        const { industry, recruiter } = req.query
+        console.log('------------ req.query', req.query)
 
-        dbInstance.get_user_by_industry([industry])
+        dbInstance.get_user_by_industry([industry, recruiter])
         .then(users => res.status(200).send(users))
         .catch(error => {
             res.status(500).send('Error retrieving Users!')
             console.log('------------ getUsersByIndustry error', error)
+        
+        
+        })
+    },
+    
+    getAllUsersZipCodes(req, res) {
+        const dbInstance = req.app.get('db')
+        const { isRecruiter } = req.query
+
+        dbInstance.get_user_by_zipcode([isRecruiter])
+        .then(users => res.status(200).send(users))
+        .catch(error => {
+            res.status(500).send('Error retrieveing Zipcodes!')
+            console.log('------------getAllUsersZipCodes', error)
         })
     }
+        
 }
