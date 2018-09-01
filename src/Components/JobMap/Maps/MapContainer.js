@@ -46,6 +46,7 @@ componentDidMount(){
           zipArray.forEach(e => axios.get(`https://api.promaptools.com/service/us/zip-lat-lng/get/?zip=${e}&key=7oe8dysanxdrgv1c`)
             .then(res => {
               console.log('------------ Map API res', res)
+             res.data.output&&
               this.setState(prevState => {
                 return {
                   latLng: [...prevState.latLng].concat(res.data.output[0])
