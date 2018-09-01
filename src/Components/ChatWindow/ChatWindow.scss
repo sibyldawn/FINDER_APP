@@ -21,7 +21,7 @@ html, body {
 
 .chat-window {
     display: grid;
-    height: 80vh;
+    height: 85vh;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
     grid-template-areas: 
@@ -167,7 +167,7 @@ html, body {
 }
 
 .send-message-form input {
-    width: 100%;
+    width: 100vw;
     padding: 15px 10px;
     margin: 0;
     border-style: none;
