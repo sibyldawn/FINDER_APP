@@ -11,6 +11,7 @@ export default class ChatWindow extends Component {
         super()
 
         this.state = {
+             roomId: null,
              messages:[],
              joinedRooms: []
         }
@@ -27,36 +28,52 @@ export default class ChatWindow extends Component {
         chatManager.connect()
         .then(currentUser => {
             this.currentUser = currentUser
-
-            this.currentUser.getJoinableRooms()
-            .then(joinableRooms => {
-                this.setState({
-                    joinedRooms: this.currentUser.rooms 
-                }) 
-            })
-            .catch( err => console.log("ERROR FINDING ROOM",err))
-
-
-
-            this.currentUser.subscribeToRoom({
-                 roomId:15069282,//newroom for new connection id's
-                 hooks:{
-                     onNewMessage: message => {
-                         console.log('message.text', message.text);
-                         this.setState({
-                             messages:[...this.state.messages,message]
-                         })
-                     }
-                 }
-            })
+            this.getRooms()
+            this.subscribeToRoom()
+            
         })
         .catch( err => console.log("ERROR JOINING ROOM",err))
+    }
+
+    subscribeToRoom=(roomId)=>{
+        this.setState({
+            messages: []
+        })
+        this.currentUser.subscribeToRoom({
+            roomId:roomId,//newroom for new connection id's
+            hooks:{
+                onNewMessage: message => {
+                    console.log('message.text', message.text);
+                    this.setState({
+                        messages:[...this.state.messages,message]
+                    })
+                }
+            }
+       })
+       .then(room => {
+           this.setState({
+               roomId: room.id
+           })
+           this.getRooms()
+       })
+       .catch(err => console.log("ERROR FINDING ROOM",err))
+    }
+
+    getRooms=()=>{
+        this.currentUser.getJoinableRooms()
+        .then(joinableRooms => {
+            this.setState({
+                joinedRooms: this.currentUser.rooms 
+            }) 
+        })
+        .catch( err => console.log("ERROR FINDING ROOM",err))
+
     }
 
     sendMessage=(text)=>{
         this.currentUser.sendMessage({
             text,
-            roomId:15069282
+            roomId:this.state.roomId
         })
     }
 
@@ -64,7 +81,11 @@ export default class ChatWindow extends Component {
        
         return (
             <div className="chat-window">
-                <Rooms rooms={this.state.joinedRooms}/>
+                <Rooms rooms={[...this.state.joinedRooms]}
+                       roomId ={this.state.roomId}
+                       subscribeToRoom={this.subscribeToRoom}
+
+                />
                 <br/> 
                 <MessageFeed messages={this.state.messages}/>
                 <ChatForm sendMessage={this.sendMessage }/>
