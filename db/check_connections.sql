@@ -1,3 +1,3 @@
 select * from connections
-where applicant_id = ${userId}
-and recruiter_id = ${cardId};
+where applicant_id = ${applicantId}
+and recruiter_id = ${recruiterId};

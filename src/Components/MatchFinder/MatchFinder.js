@@ -47,7 +47,7 @@ class App extends React.Component {
     console.log('direction', direction);
     console.log('state', state.data[0].element.props.id);
 
-    axios.post('/api/user/matches', {direction, userId: this.props.context.user.auth0_id, cardId: state.data[0].element.props.id}).then(res => {
+    axios.post('/api/user/matches', {direction, userId: this.props.context.user.auth0_id, cardId: state.data[0].element.props.id, isRecruiter: this.props.context.user.isrecruiter}).then(res => {
       console.log('------------ res ', res )
     })
     swipe();
