@@ -58,6 +58,17 @@ module.exports = {
         
         })
     },
+    getUserIndustryCodes(req, res) {
+        const dbInstance = req.app.get('db')
+        const { industry_code } = req.query
+
+        dbInstance.get_industry_code([industry_code])
+        .then(users => res.status(200).send(users))
+        .catch(error => {
+            res.status(500).send('Error retrieveing industrycode!')
+            console.log('------------getUserIndustryCodes', error)
+        })
+    },
     
     getAllUsersZipCodes(req, res) {
         const dbInstance = req.app.get('db')
