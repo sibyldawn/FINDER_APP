@@ -59,6 +59,11 @@ app.get('/api/upload', (req, res) => {
     res.json(payload)
 })
 
+//ChatKit endpoints
+app.get('/api/rooms/:roomId',controller.getRoom)
+app.get('/api/rooms',controller.getChatRoomUsers)
+app.post('/api/rooms',controller.createRoom)
+
 // Auth0 implementation
 app.get('/auth/callback', (req, res) => {
     // The payload you will be providing to Auth0 for a token
@@ -124,15 +129,7 @@ app.get('/auth/callback', (req, res) => {
 })
 
 
-//Socket.io Implementation
-io.on('connection', (socket)=> {
 
-    socket.on("sibyl", (message) => {
-        console.log(message)
-        io.emit("message", message)
-    })
-    
-})
 
 
 const PORT =  4000;

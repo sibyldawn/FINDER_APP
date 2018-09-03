@@ -21,8 +21,8 @@ html, body {
 
 .chat-window {
     display: grid;
-    height: 85vh;
-    grid-template-columns: repeat(6, 1fr);
+    height: 90vh;
+    grid-template-columns: 30vw 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
     grid-template-areas: 
         "r m m m m m"
@@ -52,7 +52,6 @@ html, body {
 /* REST OF CSS */
 .rooms-list {
     box-sizing: border-box;
-    padding: 10px;
     background-color: var(--main-color);
     overflow: scroll;
     height: 100%;
@@ -98,7 +97,7 @@ html, body {
 }
 
 .new-room-form input {
-    width: 135px;
+    width: 20vw;
     background: var(--secondary-color);
 }
 
@@ -167,7 +166,7 @@ html, body {
 }
 
 .send-message-form input {
-    width: 100vw;
+    width: 60vw;
     padding: 15px 10px;
     margin: 0;
     border-style: none;
@@ -175,6 +174,12 @@ html, body {
     font-weight: 200;
 
 }
+.send-message-form button {
+    width:10vw;
+    background: tomato;
+    color: var(--main-text-color);
+    border: 0;
+} 
 
 .send-message-form input:focus {
     outline-width: 0;

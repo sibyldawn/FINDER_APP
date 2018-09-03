@@ -22,6 +22,7 @@ import axios from 'axios';
 const styles = {
     root: {
         flexGrow: 1,
+        background: '#1F2D44',
     },
     flex: {
         flexGrow: 1,

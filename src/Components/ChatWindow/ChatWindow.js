@@ -5,6 +5,7 @@ import Chatkit from '@pusher/chatkit';
 import Rooms from './Rooms';
 import './ChatWindow.css'
 import NewRoom from './NewRoom';
+import axios from 'axios';
 
 export default class ChatWindow extends Component {
     constructor(){
@@ -13,14 +14,17 @@ export default class ChatWindow extends Component {
         this.state = {
              roomId: null,
              messages:[],
-             joinedRooms: []
+             joinedRooms: [],
+             id:'',
+             name:'',
+             picture:''
         }
     }
     //Connecting to Chat UI Kit 
     componentDidMount(){
-        const chatManager = new Chatkit.ChatManager({
+            const chatManager = new Chatkit.ChatManager({
             instanceLocator:`${process.env.REACT_APP_INSTANCE_LOCATOR}`,
-            userId: 'Admin',//change to user
+            userId: this.state.id,//change to user
             tokenProvider: new Chatkit.TokenProvider({
                 url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' //for testing only
             })
@@ -77,7 +81,20 @@ export default class ChatWindow extends Component {
         })
     }
 
+    createRoom=(name)=>{
+        this.currentUser.createRoom({
+            name,
+            private: true,
+            addUserIds: ['Admin','finder_test1']//Add user 1 and user 2
+        })
+        .then(room => {
+            console.log("new room Id", room.data);
+            this.subscribeToRoom(room.id)})
+        .catch(err => console.log('create room error',err))
+    }
     
+
+
 
     render() {
        
@@ -89,9 +106,9 @@ export default class ChatWindow extends Component {
 
                 />
                 <br/> 
-                <MessageFeed messages={this.state.messages}/>
-                <ChatForm sendMessage={this.sendMessage }/>
-                <NewRoom/>
+                <MessageFeed messages={this.state.messages} roomId={this.state.roomId}/>
+                <ChatForm sendMessage={this.sendMessage } disabled={!this.state.roomId}/>
+                <NewRoom createRoom = {this.createRoom}/>
             </div>
             
         );

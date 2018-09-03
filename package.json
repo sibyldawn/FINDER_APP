@@ -7,6 +7,7 @@
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^2.0.3",
     "@pusher/chatkit": "^0.7.17",
+    "@pusher/chatkit-server": "^0.12.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cloudinary": "^1.11.0",

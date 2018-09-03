@@ -30,10 +30,12 @@ export default class ChatForm extends Component {
                 onSubmit={this.handleSubmit}
                 className="send-message-form">
                 <input
+                    disabled={this.props.disabled}
                     onChange={this.handleChange}
-                    value={this.state.message}
+                    value={this.state.text}
                     placeholder="Type your message and hit ENTER"
                     type="text" />
+                     <button id="send-message-form-btn" type="submit">✉️</button>
             </form>
             </div>
         );

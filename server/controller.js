@@ -112,6 +112,30 @@ module.exports = {
             res.status(500).send('Error retrieving connections')
             console.log('------------ createConnection error', error)
         })
+    },
+    getRoom(req,res){
+        const dbInstance = req.app.get('db')
+        const { roomId } = req.params;
+
+        dbInstance.get_room([roomId]).then( res => {
+            res.status(200).send(res.data)
+        }).catch(err => console.log("Can't find room", err))
+    },
+    getChatRoomUsers(req,res){
+        const dbInstance = req.app.get('db')
+        const { user1,user2 } = req.query;
+        dbInstance.get_chat_users_by_id([user1,user2]).then(res => {
+            res.status(200).send(res.data)
+        }).catch(err => console.log("Error finding users",err))
+
+    },
+    createRoom(req,res){
+        const dbInstance = req.app.get('db')
+        const {connection_id, room_id,room_name} = req.body;
+        dbInstance.add_chatroom([connection_id,room_id,room_name]).then( res => {
+            res.status(200).send(res.data)
+        }).catch(err => console.log("Error adding room",err));
     }
+
     
 }

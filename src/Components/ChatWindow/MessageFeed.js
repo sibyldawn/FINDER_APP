@@ -22,19 +22,23 @@ export default class MessageFeed extends React.Component {
     }
 
 
-    onScroll =()=>{
-        console.log("fetching past messages");
-    }
-
-
 
 
     render() {
+        if(!this.props.roomId){
+            return (
+                <div className="message-list">
+                    <div className="join-room">
+                        &larr; Join a room!
+                    </div>
+                </div>
+            )
+        }
         return (
             <div className='message-list' ref={this.messagelist} onScroll={this.onScroll}>
                 {this.props.messages.map((message,index) => {
                     return(
-                        <Message key={index} username={message.senderId} text={message.text}/>
+                        <Message key={message.id} username={message.senderId} text={message.text}/>
 
                         
                     )
