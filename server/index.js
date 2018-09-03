@@ -1,6 +1,7 @@
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+// const io = require('socket.io')(server);
+const Chatkit = require('@pusher/chatkit-server');
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
@@ -19,7 +20,13 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }))
-
+//CONST for CHATKIT
+const chatkit = new Chatkit.default({
+    instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
+    key: process.env.CHATKIT_SECRET_KEY
+  })
+  
+  
 let dbInstance
 
 massive(process.env.CONNECTION_STRING).then(db => {
@@ -61,8 +68,61 @@ app.get('/api/upload', (req, res) => {
 
 //ChatKit endpoints
 app.get('/api/rooms/:roomId',controller.getRoom)
-app.get('/api/rooms',controller.getChatRoomUsers)
+app.get('/api/rooms/users',controller.getChatRoomUsers)
 app.post('/api/rooms',controller.createRoom)
+
+
+//CHATKIT
+app.post('/users', (req,res) => {
+    const { auth0_id,username,picture } = req.body
+    console.log("hit username", username);
+    
+    chatkit.createUser({
+      name: username,
+      id: auth0_id,
+      avatarURL: picture
+    })
+    .then( newUser => {
+      console.log("chatkit response", newUser);
+      res.status(200).json(newUser)})
+      .catch(error => {
+        if (error.error === 'services/chatkit/user_already_exists') {
+          res.sendStatus(201)
+        } else {
+          res.status(error.status).json(error)
+        }
+    }) 
+  })
+
+
+  
+app.get('/getusers', (req,res) => {
+    chatkit.getUsers()
+    .then( users => {
+      res.status(200).send(users)
+    })
+    .catch( err => console.log("Error gettings users",err))
+  })
+  
+  app.post('/authenticate', (req, res) => {
+    const authData = chatkit.authenticate({ userId: req.query.user_id })
+    res.status(authData.status).send(authData.body)
+  }) 
+
+  app.get('/users/:userId',(req,res)=> {
+    const {userId} = req.params;
+    console.log("userId to get", userId);
+    chatkit.apiRequest({
+      method: 'GET',
+      path:`/users/${userId}`,
+      jwt: chatkit.generateAccessToken({ su: true }).token
+    }).then((user) => {
+        res.status(200).send(user);
+      }).catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  
 
 // Auth0 implementation
 app.get('/auth/callback', (req, res) => {
