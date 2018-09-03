@@ -84,13 +84,6 @@ class App extends React.Component {
     }
   }
 
-
-
-
-
-
-
-
   render() {
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)

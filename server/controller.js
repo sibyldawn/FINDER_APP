@@ -44,18 +44,22 @@ module.exports = {
         })
     },
 
-    getUsersByIndustry(req, res) {
+    getUsersCards(req, res) {
         const dbInstance = req.app.get('db')
-        const { industry, recruiter } = req.query
+        const { industry, recruiter} = req.query
         console.log('------------ req.query', req.query)
-
-        dbInstance.get_user_by_industry([industry, recruiter])
-        .then(users => res.status(200).send(users))
+                
+        dbInstance.query(
+            `select u.*, c.* from users u 
+            left outer join connections c
+            on u.auth0_id = c."${JSON.parse(recruiter) ? 'recruiter_id' : 'applicant_id'}"
+            where "${JSON.parse(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
+            and industry_code = '${industry}' 
+            and isrecruiter = '${recruiter}';`)
+        .then(users => { console.log('------------ users', users); res.status(200).send(users)})
         .catch(error => {
             res.status(500).send('Error retrieving Users!')
-            console.log('------------ getUsersByIndustry error', error)
-        
-        
+            console.log('------------ getUsersCards error', error)
         })
     },
     
