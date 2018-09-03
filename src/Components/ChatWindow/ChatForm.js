@@ -26,9 +26,14 @@ export default class ChatForm extends Component {
     render() {
         return (
             <div>
-            <form className="send-message-form" onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="Type your text and hit Enter..." onChange={this.handleChange} value={this.state.text} className="text-input"/>
-                <input type="submit" value="Submit" style={{ width: 50, background:'tomato'}} className="submit-button"/>
+             <form
+                onSubmit={this.handleSubmit}
+                className="send-message-form">
+                <input
+                    onChange={this.handleChange}
+                    value={this.state.message}
+                    placeholder="Type your message and hit ENTER"
+                    type="text" />
             </form>
             </div>
         );

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import './JobMatched.scss';
+import { Link } from 'react-router-dom';
 import Hand1 from './hand1.png';
 import Hand2 from './hand2.png';
 
@@ -38,26 +39,32 @@ function FloatingActionButtons(props) {
   return (
     <div className="backgroundhands">
      
-    <div className="handshake">
+    <div class="animated infinite slideInLeft"className="handshake">
      <img src={Hand1} alt="" height={150} width={170}/>
     </div> 
 
-<div className="handshake2">
+<div class="animated infinite slideInRight"className="handshake2">
      <img src={Hand2} alt="" height={150} width={170}/>
     </div>
 
 
       <div className="buttonStyle">
+    <Link to ="/">
       <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
-        Keep Job Matching!
+        <a href=""> Keep Job Matching!</a> 
       </Button>
+      </Link>
       
-      
+
+      <Link to ="/Messages">
       <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
         <QuestionAnswer />
         Message
       </Button>
+      </Link>
+
+
       </div>
 
     </div>

@@ -4,7 +4,7 @@ import ChatForm from './ChatForm';
 import Chatkit from '@pusher/chatkit';
 import Rooms from './Rooms';
 import './ChatWindow.css'
-
+import NewRoom from './NewRoom';
 
 export default class ChatWindow extends Component {
     constructor(){
@@ -77,6 +77,8 @@ export default class ChatWindow extends Component {
         })
     }
 
+    
+
     render() {
        
         return (
@@ -89,7 +91,7 @@ export default class ChatWindow extends Component {
                 <br/> 
                 <MessageFeed messages={this.state.messages}/>
                 <ChatForm sendMessage={this.sendMessage }/>
-                
+                <NewRoom/>
             </div>
             
         );

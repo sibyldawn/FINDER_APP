@@ -1,10 +1,37 @@
+
+
+@keyframes slideInRight {
+    from {
+      transform: translate3d(100%, 0, 0);
+      visibility: visible;
+    }
+  
+    to {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  .slideInRight {
+    animation-name: slideInRight;
+  }
+
+
 .handshake{
    -webkit-animation-direction:normal;  
     margin-top: 400px;
     width: 200px;
     height: 200px;
+    animation: 
+        slideInRight 3s;
     
 }
+
+.handshake {
+    animation-duration: 3s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
+  }
+
 
 .backgroundhands{
     background:greenyellow;
