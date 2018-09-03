@@ -1,9 +1,12 @@
-// let jobsSearched = []
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
-module.exports = {
+var self = module.exports = {
+    // This function updates a user's information from the values entered on the Profile component. It also removes connections made to allow for new matching.
     updateUser(req, res) {
         const dbInstance = req.app.get('db')
         const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = req.body
+        console.log('------------ isrecruiter', isrecruiter)
 
         dbInstance.update_user({
             auth0_id,
@@ -23,6 +26,8 @@ module.exports = {
             preferred_location, 
             work_history
         }).then(user => {
+            // Using a database query to delete old connections
+            dbInstance.query(`delete from connections where "${isrecruiter ? 'recruiter_id' : 'applicant_id'}" = '${auth0_id}'`)
             req.session.user = user[0]
             res.status(200).send(user)
         })
@@ -32,11 +37,12 @@ module.exports = {
         })
     },
     
+    // This function returns one user's information when provided an id
     getUser(req, res) {
         const dbInstance = req.app.get('db')
         const { id } = req.query
 
-        dbInstance.get_single_applicant([id])
+        dbInstance.get_single_user([id])
         .then(user => res.status(200).send(user))
         .catch(error => {
             res.status(500).send('Error retrieving applicant!')
@@ -44,16 +50,51 @@ module.exports = {
         })
     },
 
+    // This function utilizes nodemailer to send emails configured for different events on the app
+    sendEmail(user, type) {
+        const {email, first_name} = user
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        })
+
+        const mailOptions = {
+            from: `"Finder" <${process.env.EMAIL}`,
+            to: String(email),
+            subject: type === 'welcome' ? `Welcome to Finder!` : 'New match on Finder!',
+            html: type === 'welcome' ? `<h1>${first_name}, thank you for signing up on Finder!</h1><p>Our mission is to get you in contact with potential employers - in the most simple way possible!</p>` :  `<h1>${first_name}, you have a new match on Finder!</h1><p>Log in now to start chatting!</p>`
+        }
+
+        transporter.sendMail(mailOptions, (error,info) => {
+            error ?
+                console.log('------------ Send mail error', error)
+            :
+                console.log(`Email sent: ${info.response}`)
+        })
+    },
+
+    // This function gives back a list of user who don't already have a connection with the logged in user.
     getUsersCards(req, res) {
         const dbInstance = req.app.get('db')
         const { industry, recruiter} = req.query
-        console.log('------------ req.query', req.query)
-                
+        console.log('------------ req.query', req.query) 
+        const stringToBoolean = (string) => {
+            switch(string.toLowerCase().trim()) {
+                case "false": case "no": case "0": case "": case 'f': return false; 
+                default: return true;
+            }
+        }
+        
+        // Using massive's query method to allow variable column names
         dbInstance.query(
             `select u.*, c.* from users u 
             left outer join connections c
-            on u.auth0_id = c."${JSON.parse(recruiter) ? 'recruiter_id' : 'applicant_id'}"
-            where "${JSON.parse(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
+            on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
+            where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
             and industry_code = '${industry}' 
             and isrecruiter = '${recruiter}';`)
         .then(users => { console.log('------------ users', users); res.status(200).send(users)})
@@ -62,6 +103,8 @@ module.exports = {
             console.log('------------ getUsersCards error', error)
         })
     },
+
+    // This function will return a list of users that are all in the industry provided to it.
     getUserIndustryCodes(req, res) {
         const dbInstance = req.app.get('db')
         const { industry_code } = req.query
@@ -74,6 +117,7 @@ module.exports = {
         })
     },
     
+    // This function returns a list of users based on their recruiter status
     getAllUsersZipCodes(req, res) {
         const dbInstance = req.app.get('db')
         const { isRecruiter } = req.query
@@ -86,9 +130,11 @@ module.exports = {
         })
     },
 
+    // This function is responsible for checking if a connection already exists, then updating it if it does or creating it if it doesn't. It aslo uses the sendEmail function from above to send a notification email to each user.
     createConnection(req, res) {
         const dbInstance = req.app.get('db')
-        const { direction, userId, cardId, isRecruiter } = req.body
+        const { direction, userId, cardId, isRecruiter, email, first_name } = req.body
+        const userInfo = {email, first_name}
         let liked
 
         direction === 'right' ? liked = true : liked = false
@@ -105,13 +151,20 @@ module.exports = {
                     applicantDecision: isRecruiter ? checkedRes[0].applicant_decision : liked
                 }).then(updateRes => {
                     console.log('------------ updateRes', updateRes)
-                    updateRes[0].applicant_decision && updateRes[0].recruiter_decision ?
-                        res.status(200).send(true)
-                    :
+                    if(updateRes[0].applicant_decision && updateRes[0].recruiter_decision){
+                        dbInstance.get_single_user([isRecruiter ? updateRes[0].applicant_id : updateRes[0].recruiter_id])
+                            .then(getUserRes => {
+                                const otherUserInfo = {email: getUserRes[0].email, first_name: getUserRes[0].first_name}
+                                self.sendEmail(otherUserInfo, 'match')
+                            })
+                        self.sendEmail(userInfo, 'match')
+                        res.status(200).send(updateRes)
+                    } else {
                         res.status(200).send(false)
+                    }
                 }).catch(error => {
                     res.status(500).send('Error updating connections')
-                    console.log('------------ createConnection error', error)
+                    console.log('------------ createConnection (update) error', error)
                 })
             :
             dbInstance.create_connection({
@@ -119,14 +172,14 @@ module.exports = {
                 applicantId: isRecruiter ? cardId : userId,
                 recruiterDecision: isRecruiter ? liked : null,
                 applicantDecision: isRecruiter ? null : liked
-            }).then(createRes => res.status(200).send(false)).catch(error => {
+            }).then(createRes => res.status(200).send(false)
+            ).catch(error => {
                 res.status(500).send('Error creating connections')
-                console.log('------------ createConnection error', error)
+                console.log('------------ createConnection (create) error', error)
             })
         }).catch(error => {
             res.status(500).send('Error retrieving connections')
-            console.log('------------ createConnection error', error)
+            console.log('------------ createConnection (check) error', error)
         })
     }
-    
 }
