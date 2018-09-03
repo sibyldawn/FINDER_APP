@@ -23,7 +23,10 @@ class App extends React.Component {
     super()
       this.state = {
         industry: '',
-        cards: []
+        cards: [],
+        user1: {},
+        user2:{},
+        roomName: ''
       }
 
       this.deck = React.createRef();
@@ -54,9 +57,31 @@ class App extends React.Component {
         first_name
     }).then(res => {
       console.log('------------ res ', res )
+      if(res.data !== false ){
+        const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
+
+        this.setState({
+          user1: res.data[0].applicant_id,
+          user2: res.data[0].recruiter_id,
+          roomName: name
+        },()=>{this.createRoom()})
+    }
     })
     swipe();
   }
+
+  createRoom=()=>{
+    const { roomName, user1, user2 } = this.state;
+    this.currentUser.createRoom({
+        name: roomName,
+        private: true,
+        addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
+    })
+    .then(room => {
+        console.log("new room Id", room.data);
+        this.subscribeToRoom(room.id)})
+    .catch(err => console.log('create room error',err))
+}
 
   handleChange = (prop, val) => {
     this.setState({
@@ -80,6 +105,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("CHAT ROOMS=======>", this.state);
+
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
       console.log('------------ userCards', userCards)

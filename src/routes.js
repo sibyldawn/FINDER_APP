@@ -12,6 +12,7 @@ import ChatWindow from './Components/ChatWindow/ChatWindow';
 import JobMatched from './Components/JobMatched/JobMatched';
 import Header from './Components/Header/Header';
 import Card from './Components/Card/Card'
+import MessageFeed from './Components/ChatWindow/MessageFeed';
 
 
 export default (
@@ -28,5 +29,6 @@ export default (
             <Route  path="/ChatWindow" component={ChatWindow}/>
             <Route  path="/JobMatched" component={JobMatched}/>
             <Route  path="/Card" component={Card}/>
+            <Route path="/messagefeed/:room_id" component={MessageFeed}/>
         </Switch>
 )
