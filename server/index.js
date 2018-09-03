@@ -51,8 +51,9 @@ app.post('/api/session/user', (req, res) => {
 app.post('/api/user', controller.updateUser)
 app.post('/api/user/matches', controller.createConnection)
 app.get('/api/user', controller.getUser)
-app.get('/api/users/filter', controller.getUsersByIndustry)
+app.get('/api/users/filter', controller.getUsersCards)
 app.get('/api/users/zipcodes',controller.getAllUsersZipCodes)
+app.get('/api/users/industry_code',controller.getUserIndustryCodes)
 
 // Cloudinary endpoints
 app.get('/api/upload', (req, res) => {
