@@ -70,9 +70,6 @@ app.get('/api/upload', (req, res) => {
 app.get('/api/rooms/:roomId',controller.getRoom)
 app.get('/api/rooms/users',controller.getChatRoomUsers)
 app.post('/api/rooms',controller.createRoom)
-
-
-//CHATKIT
 app.post('/users', (req,res) => {
     const { auth0_id,username,picture } = req.body
     console.log("hit username", username);

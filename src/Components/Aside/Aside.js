@@ -13,13 +13,16 @@ import Divider from '@material-ui/core/Divider';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import './Aside.css';
 
 const styles = theme => ({
   root: {
     textDecoration: 'none',
     width: '100%',
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#A8B4B3',
+    height: '51em',
   },
 });
 

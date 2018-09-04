@@ -38,7 +38,7 @@ export default class MessageFeed extends React.Component {
             <div className='message-list' ref={this.messagelist} onScroll={this.onScroll}>
                 {this.props.messages.map((message,index) => {
                     return(
-                        <Message key={message.id} username={message.senderId} text={message.text}/>
+                        <Message key={message.id} username={message.senderId}  text={message.text}/>
 
                         
                     )

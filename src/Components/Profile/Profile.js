@@ -40,6 +40,10 @@ const styles = theme => ({
         borderWidth: 2,
         minWidth: '70%'
     },
+    // bio: {
+    //    color: '#A8B4B3',
+    //     backgroundColor: '#A8B4B3',
+    // },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },
@@ -166,6 +170,7 @@ class Profile extends Component {
         console.log('------------ this.state', this.state)
         const { classes, context } = this.props
         return (
+            
             context.login ?
                 !this.state.first_name ?
                 <div>
@@ -207,15 +212,15 @@ class Profile extends Component {
                                         </section>
                                     </ FormControl>
                                 </div>
-                                <div className='textarea-container'>
-                                    <TextField
+                                <div className='profileBio'>
+                                    <TextField className={classes.bio}
                                         helperText='Bio'
                                         multiline={true}
                                         rows={8}
                                         rowsMax={12} 
                                         value={this.state.bio}
                                         onChange={(e) => this.handleChange('bio', e.target.value)} 
-                                        className={classes.textarea} />
+                                         />
                                 </div>
                                 <div>
                                     <FormControl className={classes.FormControl}>
@@ -555,7 +560,7 @@ class Profile extends Component {
                     </div>
                 </div>
             :
-            <div> No user logged in! </div>
+            <div className="NoUser"> No user logged in! </div>
         );
     }
 }

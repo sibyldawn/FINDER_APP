@@ -6,18 +6,24 @@ import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import './JobMatched.scss';
 import { Link } from 'react-router-dom';
-import Hand1 from './hand1.png';
-import Hand2 from './hand2.png';
+import handshake from './handshake.png';
 
 const styles = theme => ({
+  root:{
+    height:'100vh',
+    display: 'block',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+  },
   button: {
     margin: theme.spacing.unit,
-    // position: 'absolute',
-    // bottom: 90
+    marginTop: 100,
+    width: 200,
   },
   button2: {
     margin: theme.spacing.unit,
     // position: 'absolute',
+    width: 200,
     
   },
 
@@ -37,32 +43,42 @@ function FloatingActionButtons(props) {
 
 
   return (
-    <div className="backgroundhands">
-     
-    <div class="animated infinite slideInLeft"className="handshake">
-     <img src={Hand1} alt="" height={150} width={170}/>
-    </div> 
+    
+    <div className="backgroundhands" className={classes.root}>
 
-<div class="animated infinite slideInRight"className="handshake2">
-     <img src={Hand2} alt="" height={150} width={170}/>
+
+    <div className="handshake">
+        <div id="handshake"class="animated infinite bounce">
+        <img src={handshake} alt="" height={350} width={350}/>
+        </div> 
     </div>
 
 
-      <div className="buttonStyle">
+{/* <div class="animated infinite slideInRight"className="handshake2">
+     <img src={Hand2} alt="" height={150} width={170}/>
+    </div> */}
+  
+  <div className="buttonStyle">
+
+    <div className="button1">
     <Link to ="/">
       <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
         <a href=""> Keep Job Matching!</a> 
       </Button>
       </Link>
+      </div>
       
 
+
+    <div className="button2">
       <Link to ="/Messages">
       <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
         <QuestionAnswer />
-        Message
+       Send A Message
       </Button>
       </Link>
+      </div>
 
 
       </div>

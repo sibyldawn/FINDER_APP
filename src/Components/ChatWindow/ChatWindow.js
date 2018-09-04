@@ -75,7 +75,7 @@ class ChatWindow extends Component {
     console.log("CONNECT USER ID====>", this.state.user.id)
     const chatManager = new Chatkit.ChatManager({
         instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
-        userId: this.state.user["id"],//change to user
+        userId: this.state.user.id,//change to user
         tokenProvider: new Chatkit.TokenProvider({
             url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
         })
@@ -98,7 +98,7 @@ subscribeToRoom=(roomId)=>{
         roomId:roomId,//newroom for new connection id's
         hooks:{
             onNewMessage: message => {
-                console.log('message.text', message.text);
+                console.log('message props', message);
                 this.setState({
                     messages:[...this.state.messages,message]
                 })
@@ -151,7 +151,8 @@ createRoom=(name)=>{
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
     return (
-      <div className={classes.root}>
+        <div>
+        {this.state.user ? <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
             value={this.state.value}
@@ -185,7 +186,13 @@ createRoom=(name)=>{
    
         </SwipeableViews>
       </div>
-    );
+    :
+        <div>
+        <h1> Log In First</h1>
+        </div>
+     }
+     </div>
+    )
   }
 }
 
@@ -195,4 +202,4 @@ ChatWindow.propTypes = {
 };
 
 
-export default withContext(withStyles(styles, { withTheme: true })(ChatWindow));
+export default withStyles(styles, { withTheme: true })(ChatWindow);

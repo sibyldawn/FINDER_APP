@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Baloo+Bhai|Bangers|Hind|Hind+Siliguri");
 @import '../../variables';
 // .jobMapComponent{
 //     // background:$LightBlue;
@@ -11,16 +12,10 @@
 
 }
 
-.joblist{
- color: $LightBlue;
+.jobList{
+    background-color: $GrenOutline;
 }
 
-.jobsearch{
-padding-top: 50px;
-color:$LightBlue ;
-font-size: 50px;
-
-}
 
 .industrycode{
     font-size: 60px;
@@ -32,4 +27,22 @@ font-size: 50px;
 
 .googlemap {
     z-index: 5;
+    height: 85vh;
+    background-color: $GrenOutline;
 }
+
+
+.jobsearch{
+    
+    font-family: Bangers;
+    padding-top: 50px;
+    color:$LightBlue ;
+    font-size: 40px;
+    background-color: $GrenOutline;
+    }
+
+// .jobMapComponent{
+//     background-color: rgb(227, 234, 245);
+//     height: 45em;
+//     z-index: -1;
+// }

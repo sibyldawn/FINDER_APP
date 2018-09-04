@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
+import Chatkit from '@pusher/chatkit';
 
 const styles = theme => ({
   formControl: {
@@ -26,7 +27,8 @@ class App extends React.Component {
         cards: [],
         user1: {},
         user2:{},
-        roomName: ''
+        roomName: '',
+        connection_id:0 
       }
 
       this.deck = React.createRef();
@@ -57,19 +59,48 @@ class App extends React.Component {
         first_name
     }).then(res => {
       console.log('------------ res ', res )
-      if(res.data !== false ){
-        const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
-
-        this.setState({
-          user1: res.data[0].applicant_id,
-          user2: res.data[0].recruiter_id,
-          roomName: name
-        },()=>{this.createRoom()})
-    }
+    
     })
     swipe();
   }
 
+  onSwipeEnd = ({ data }) => {
+    console.log('data', data);
+    if(data !== false ){
+      const name = `${data[0].applicant_id} + ${data[0].recruiter_id}`
+
+      this.setState({
+      user1: data[0].applicant_id,
+      user2: data[0].recruiter_id,
+      roomName: name,
+      connection_id: data[0].id
+      },()=>{this.connectToChat()})
+      
+  }
+  };
+
+  connectToChat=()=>{
+    console.log("CONNECT USER ID====>", this.props.context.user.auth0_id)
+
+    const chatManager = new Chatkit.ChatManager({
+        instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
+        userId: this.props.context.user.auth0_id,//change to user
+        tokenProvider: new Chatkit.TokenProvider({
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+        })
+    })
+    chatManager.connect()
+    .then(currentUser => {
+        this.currentUser = currentUser
+        this.createRoom()
+        
+        
+    })
+    .catch( err => console.log("ERROR JOINING ROOM",err))
+}
+
+  
+  
   createRoom=()=>{
     const { roomName, user1, user2 } = this.state;
     this.currentUser.createRoom({
@@ -80,8 +111,47 @@ class App extends React.Component {
     .then(room => {
         console.log("new room Id", room.data);
         this.subscribeToRoom(room.id)})
+        this.sendRoomToDB()
     .catch(err => console.log('create room error',err))
 }
+
+subscribeToRoom=(roomId)=>{
+  this.setState({
+      messages: []
+  })
+  this.currentUser.subscribeToRoom({
+      roomId:roomId,//newroom for new connection id's
+      hooks:{
+          onNewMessage: message => {
+              console.log('message props', message);
+              this.setState({
+                  messages:[...this.state.messages,message]
+              })
+          }
+      }
+ })
+ .then(room => {
+     this.setState({
+         roomId: room.id
+     })
+     
+ })
+ .catch(err => console.log("ERROR FINDING ROOM",err))
+}
+
+
+sendRoomToDB=()=>{
+  const newRoom = {
+    connection_id: this.state.connection_id,
+    room_id:this.state.room_id,
+    room_name: this.state.roomName
+}
+  axios.post('/api/rooms',newRoom).then( response => {
+    console.log("new room =====>", response);
+  }).catch( err => console.log("Room not recorded", err))
+}
+
+
 
   handleChange = (prop, val) => {
     this.setState({
@@ -89,9 +159,7 @@ class App extends React.Component {
     })
   }
 
-  onSwipeEnd = ({ data }) => {
-    console.log('data', data);
-  };
+ 
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
@@ -120,6 +188,7 @@ class App extends React.Component {
     console.log(this.deck)
     return (
       context.login ?
+      <div className="matchFinder">
         <div className="demo-wrapper">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor='industry-select'>Industry</ InputLabel>
@@ -288,8 +357,9 @@ class App extends React.Component {
             infinite={false}
           />
         </div>
+        </div>
       :
-      <div>No user logged in.</div>
+      <div className="NoUser">No user logged in.</div>
     );
   }
 }
