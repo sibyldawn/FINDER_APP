@@ -26,6 +26,7 @@ const styles = {
        
         backGroundColor: '#1F2D44',
         flexGrow: 1,
+        background: '#1F2D44',
     },
     flex: {
         fontFamily: 'Baloo Bhai',
@@ -59,7 +60,7 @@ class Header extends Component {
     };
 
     componentDidMount() {
-        this.props.context.methods.checkForLogin()
+        this.props.context.methods.checkForLogin() 
     }
     handleMenu = event => {
             this.setState({ anchorEl: event.currentTarget });

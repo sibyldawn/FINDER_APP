@@ -31,7 +31,7 @@ export default class ContextProvider extends React.Component {
                     })
                     window.location = '/'
                 })
-            },
+            }
         }
     }
 

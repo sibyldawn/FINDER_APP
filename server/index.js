@@ -1,6 +1,7 @@
 const app = require('express')();
 const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+// const io = require('socket.io')(server);
+const Chatkit = require('@pusher/chatkit-server');
 const bodyParser = require('body-parser');
 const massive = require('massive');
 const session = require('express-session');
@@ -13,14 +14,19 @@ const cloudinary = require('cloudinary')
 
 
 app.use(bodyParser.json());
+
+// Redis Implementation
 app.use(session({
     store: new RedisStore( {url: process.env.REDIS_URI} ),
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false
 }))
-
-let dbInstance
+//CONST for CHATKIT
+const chatkit = new Chatkit.default({
+    instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
+    key: process.env.CHATKIT_SECRET_KEY
+})
 
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
@@ -60,6 +66,64 @@ app.get('/api/upload', (req, res) => {
     res.json(payload)
 })
 
+//ChatKit endpoints
+app.get('/api/rooms/:roomId',controller.getRoom)
+app.get('/api/rooms/users',controller.getChatRoomUsers)
+app.post('/api/rooms',controller.createRoom)
+
+
+//CHATKIT
+app.post('/users', (req,res) => {
+    const { auth0_id,username,picture } = req.body
+    console.log("hit username", username);
+    
+    chatkit.createUser({
+      name: username,
+      id: auth0_id,
+      avatarURL: picture
+    })
+    .then( newUser => {
+      console.log("chatkit response", newUser);
+      res.status(200).json(newUser)})
+      .catch(error => {
+        if (error.error === 'services/chatkit/user_already_exists') {
+          res.sendStatus(201)
+        } else {
+          res.status(error.status).json(error)
+        }
+    }) 
+  })
+
+
+  
+app.get('/getusers', (req,res) => {
+    chatkit.getUsers()
+    .then( users => {
+      res.status(200).send(users)
+    })
+    .catch( err => console.log("Error gettings users",err))
+  })
+  
+  app.post('/authenticate', (req, res) => {
+    const authData = chatkit.authenticate({ userId: req.query.user_id })
+    res.status(authData.status).send(authData.body)
+  }) 
+
+  app.get('/users/:userId',(req,res)=> {
+    const {userId} = req.params;
+    console.log("userId to get", userId);
+    chatkit.apiRequest({
+      method: 'GET',
+      path:`/users/${userId}`,
+      jwt: chatkit.generateAccessToken({ su: true }).token
+    }).then((user) => {
+        res.status(200).send(user);
+      }).catch((err) => {
+        res.status(500).send(err);
+      });
+  })
+  
+
 // Auth0 implementation
 app.get('/auth/callback', (req, res) => {
     // The payload you will be providing to Auth0 for a token
@@ -89,10 +153,11 @@ app.get('/auth/callback', (req, res) => {
         // console.log('------------ Auth0 response', response)
         const auth0Id = response.data.sub // .sub is short for 'subject' on Auth0
         const db = req.app.get('db')
-        return db.get_single_applicant(auth0Id).then(users => {
+        return db.get_single_user(auth0Id).then(users => {
             if (users.length) {
                 const user = users[0]
                 req.session.user = user // Using sessions with Auth0
+                controller.sendEmail(user, 'welcome') // Sending welcome email with nodemailer
                 res.redirect(prevPath)
                 console.log('------------ users', users)
                 console.log('------------ req.session.user', req.session.user)
@@ -125,15 +190,7 @@ app.get('/auth/callback', (req, res) => {
 })
 
 
-//Socket.io Implementation
-io.on('connection', (socket)=> {
 
-    socket.on("sibyl", (message) => {
-        console.log(message)
-        io.emit("message", message)
-    })
-    
-})
 
 
 const PORT =  4000;

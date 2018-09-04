@@ -1,5 +1,4 @@
 import React from 'react';
-// import { render } from 'react-dom';
 import MotionStack from 'react-motion-stack';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,6 +10,7 @@ import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
+import Chatkit from '@pusher/chatkit';
 
 const styles = theme => ({
   formControl: {
@@ -19,13 +19,15 @@ const styles = theme => ({
   },
 });
 
-
 class App extends React.Component {
   constructor(){
     super()
       this.state = {
         industry: '',
-        cards: []
+        cards: [],
+        user1: {},
+        user2:{},
+        roomName: ''
       }
 
       this.deck = React.createRef();
@@ -39,39 +41,82 @@ class App extends React.Component {
         cards: res.data
       })
     })
-    // To get lat/long from zipcode:
-    // axios.get('https://api.promaptools.com/service/us/zip-lat-lng/get/?zip={[85234]}&key=7oe8dysanxdrgv1c').then(res => console.log('------------ Map API res', res))
   }
 
+  // Activated after a swipe action on <MotionStack/> is completed. Uses swipe direction.
   onBeforeSwipe = (swipe, direction, state) => {
     console.log('direction', direction);
     console.log('state', state.data[0].element.props.id);
+    const {auth0_id, isrecruiter, email, first_name} = this.props.context.user
 
-    axios.post('/api/user/matches', {direction, userId: this.props.context.user.auth0_id, cardId: state.data[0].element.props.id, isRecruiter: this.props.context.user.isrecruiter}).then(res => {
+    axios.post('/api/user/matches', {
+        direction, 
+        userId: auth0_id, 
+        cardId: state.data[0].element.props.id, 
+        isRecruiter: isrecruiter,
+        email,
+        first_name
+    }).then(res => {
       console.log('------------ res ', res )
+      if(res.data !== false ){
+        const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
+
+        this.setState({
+        user1: res.data[0].applicant_id,
+        user2: res.data[0].recruiter_id,
+        roomName: name
+        })
+        this.createRoom()
+    }
     })
     swipe();
   }
+
+  connectToChat=()=>{
+    console.log("CONNECT USER ID====>", this.props.context.user.auth0_id)
+
+    const chatManager = new Chatkit.ChatManager({
+        instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
+        userId: this.props.context.user.auth0_id,//change to user
+        tokenProvider: new Chatkit.TokenProvider({
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+        })
+    })
+    chatManager.connect()
+    .then(currentUser => {
+        this.currentUser = currentUser
+        this.createRoom()
+        
+        
+    })
+    .catch( err => console.log("ERROR JOINING ROOM",err))
+}
+
+  
+  
+
+  createRoom=()=>{
+    const { roomName, user1, user2 } = this.state;
+    this.currentUser.createRoom({
+        name: roomName,
+        private: true,
+        addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
+    })
+    .then(room => {
+        console.log("new room Id", room.data);
+        this.subscribeToRoom(room.id)})
+    .catch(err => console.log('create room error',err))
+}
 
   handleChange = (prop, val) => {
     this.setState({
       [prop]: val
     })
   }
- 
+
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
   };
- 
-
-  // renderButtons(props) {
-  //   return (
-  //     <div className="btn-group">
-  //       <button children="👎" onClick={props.reject} />
-  //       <button children="👍" onClick={props.accept} />
-  //     </div>
-  //   );
-  // }
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
@@ -85,6 +130,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log("CHAT ROOMS=======>", this.state);
+
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
       console.log('------------ userCards', userCards)

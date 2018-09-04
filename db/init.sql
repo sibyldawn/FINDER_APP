@@ -1,12 +1,12 @@
 drop table if exists users CASCADE;
 drop table if exists connections CASCADE;
-drop table if exists messages CASCADE;
+drop table if exists chat_rooms CASCADE;
 drop table if exists industry_codes CASCADE;
 drop table if exists user_industry_codes CASCADE;
 
 select * from users;
 select * from connections;
-select * from messages;
+select * from chat_rooms;
 select * from industry_codes;
 select * from user_industry_codes;
 
@@ -59,6 +59,13 @@ create table user_industry_codes(
 id serial primary key,
 user_id integer references users(id),
 industry_code integer references industry_codes(id)
+)
+
+create table chat_rooms(
+id serial primary key,
+connection_id integer references connections(id),
+room_id integer,
+room_name text
 )
 
 
@@ -114,16 +121,14 @@ insert into industry_codes( industry_name ) values
 ('Printing'),('Professional Training & Coaching'),('Program Development'),('Public Policy'),('Public Relations and Communications'),('Public Safety'),('Publishing'),('Railroad Manufacture'),('Ranching'),('Real Estate'),('Recreational Facilities and Services'),('Religious Institutions'),('Renewables & Environment'),('Research'),('Restaurants'),('Retail'),('Security and Investigations'),('Semiconductors'),
 ('Shipbuilding'),('Sporting Goods'),('Sports'),('Staffing and Recruiting'),('Supermarkets'),('Telecommunications'),('Textiles'),('Think Tanks'),('Tobacco'),('Translation and Localization'),('Transportation/Trucking/Railroad'),('Utilities'),('Venture Capital & Private Equity'),('Veterinary'),('Warehousing'),('Wholesale'),('Wine and Spirits'),('Wireless'),('Writing and Editing')
 
-select * from connections
 
-select * from users
 
 
 insert into connections
-( recruiter_id, applicant_id, recruiter_decision, applicant_decision)
+( applicant_id, recruiter_id, applicant_decision,recruiter_decision)
 values 
 ( '1', '17','yes','no'),
-('2','18','no','no'),
+('2','18','yes','yes'),
 ('3','19','no','yes'),
 ('4','20','no','no'),
 ('5','21','yes','yes'),
@@ -131,10 +136,10 @@ values
 ('7','23','no','yes'),
 ('8','24','no','no'),
 ('9','25','yes','no'),
-('10','26','no','no'),
+('10','26','yes','yes'),
 ('11','27','no','no'),
 ('12','28','yes','yes'),
-('13','29','no','no'),
+('13','29','yes','yes'),
 ('14','30','yes','yes'),
 ('15','31','no','yes'),
 ('16','32','yes','no')
