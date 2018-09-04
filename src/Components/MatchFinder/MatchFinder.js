@@ -27,6 +27,7 @@ class App extends React.Component {
         cards: [],
         user1: {},
         user2:{},
+        room_id: '',
         roomName: '',
         connection_id:0 
       }
@@ -75,7 +76,7 @@ class App extends React.Component {
       roomName: name,
       connection_id: data[0].id
       },()=>{this.connectToChat()})
-      
+
   }
   };
 
@@ -132,11 +133,11 @@ subscribeToRoom=(roomId)=>{
  })
  .then(room => {
      this.setState({
-         roomId: room.id
+         room_id: room.id
      })
      
  })
- .catch(err => console.log("ERROR FINDING ROOM",err))
+ .catch(err => console.log("ERROR SUBSCRIBING TO ROOM",err))
 }
 
 
@@ -188,7 +189,6 @@ sendRoomToDB=()=>{
     console.log(this.deck)
     return (
       context.login ?
-      <div className="matchFinder">
         <div className="demo-wrapper">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor='industry-select'>Industry</ InputLabel>
@@ -357,9 +357,8 @@ sendRoomToDB=()=>{
             infinite={false}
           />
         </div>
-        </div>
       :
-      <div className="NoUser">No user logged in.</div>
+      <div>No user logged in.</div>
     );
   }
 }
