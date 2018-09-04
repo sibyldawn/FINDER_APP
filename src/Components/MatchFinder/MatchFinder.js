@@ -1,5 +1,4 @@
 import React from 'react';
-// import { render } from 'react-dom';
 import MotionStack from 'react-motion-stack';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
@@ -19,7 +18,6 @@ const styles = theme => ({
       minWidth: 200,
   },
 });
-
 
 class App extends React.Component {
   constructor(){
@@ -43,15 +41,22 @@ class App extends React.Component {
         cards: res.data
       })
     })
-    // To get lat/long from zipcode:
-    // axios.get('https://api.promaptools.com/service/us/zip-lat-lng/get/?zip={[85234]}&key=7oe8dysanxdrgv1c').then(res => console.log('------------ Map API res', res))
   }
 
+  // Activated after a swipe action on <MotionStack/> is completed. Uses swipe direction.
   onBeforeSwipe = (swipe, direction, state) => {
     console.log('direction', direction);
     console.log('state', state.data[0].element.props.id);
+    const {auth0_id, isrecruiter, email, first_name} = this.props.context.user
 
-    axios.post('/api/user/matches', {direction, userId: this.props.context.user.auth0_id, cardId: state.data[0].element.props.id, isRecruiter: this.props.context.user.isrecruiter}).then(res => {
+    axios.post('/api/user/matches', {
+        direction, 
+        userId: auth0_id, 
+        cardId: state.data[0].element.props.id, 
+        isRecruiter: isrecruiter,
+        email,
+        first_name
+    }).then(res => {
       console.log('------------ res ', res )
       if(res.data !== false ){
         const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
@@ -108,20 +113,10 @@ class App extends React.Component {
       [prop]: val
     })
   }
- 
+
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
   };
- 
-
-  // renderButtons(props) {
-  //   return (
-  //     <div className="btn-group">
-  //       <button children="👎" onClick={props.reject} />
-  //       <button children="👍" onClick={props.accept} />
-  //     </div>
-  //   );
-  // }
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {

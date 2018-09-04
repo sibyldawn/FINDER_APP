@@ -14,6 +14,8 @@ const cloudinary = require('cloudinary')
 
 
 app.use(bodyParser.json());
+
+// Redis Implementation
 app.use(session({
     store: new RedisStore( {url: process.env.REDIS_URI} ),
     secret: process.env.SESSION_SECRET,
@@ -24,10 +26,7 @@ app.use(session({
 const chatkit = new Chatkit.default({
     instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
     key: process.env.CHATKIT_SECRET_KEY
-  })
-  
-  
-let dbInstance
+})
 
 massive(process.env.CONNECTION_STRING).then(db => {
     app.set('db', db);
@@ -154,10 +153,11 @@ app.get('/auth/callback', (req, res) => {
         // console.log('------------ Auth0 response', response)
         const auth0Id = response.data.sub // .sub is short for 'subject' on Auth0
         const db = req.app.get('db')
-        return db.get_single_applicant(auth0Id).then(users => {
+        return db.get_single_user(auth0Id).then(users => {
             if (users.length) {
                 const user = users[0]
                 req.session.user = user // Using sessions with Auth0
+                controller.sendEmail(user, 'welcome') // Sending welcome email with nodemailer
                 res.redirect(prevPath)
                 console.log('------------ users', users)
                 console.log('------------ req.session.user', req.session.user)

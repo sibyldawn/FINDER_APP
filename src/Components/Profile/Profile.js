@@ -103,6 +103,7 @@ class Profile extends Component {
         })
     }
 
+    // Responsible for closing MaterialUI elements
     handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -110,6 +111,7 @@ class Profile extends Component {
         this.setState({ snack: false });
     };
 
+    // Cloudinary front end function
     handleFileUpload = (file) => {
         axios.get('/api/upload').then(res => {
             console.log('------------ cloudinary server res', res)
@@ -132,6 +134,7 @@ class Profile extends Component {
     submitEdit = () => {
         const { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history } = this.state
 
+        // Testing user inputs for white space or returns. Valid characters are needed before a profile update is submitted.
         if( (/\S/.test(auth0_id)) && (/\S/.test(bio)) && (/\S/.test(current_zipcode)) && (/\S/.test(education_background)) && (/\S/.test(industry_code)) && (/\S/.test(looking_for)) && (/\S/.test(current_job)) && (/\S/.test(picture)) && (/\S/.test(preferred_location)) && (/\S/.test(work_history)) ) {
 
             axios.post('/api/user', { auth0_id, active, attachment, bio, current_zipcode, isrecruiter, education_background, email, first_name, last_name, industry_code, looking_for, current_job, picture, preferred_location, work_history }).then(res => {
@@ -151,6 +154,7 @@ class Profile extends Component {
         }
     }
     
+    // For the <Dropzone />
     onDrop = (files) => {
         this.handleFileUpload(files)
         this.setState({
