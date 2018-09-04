@@ -23,7 +23,6 @@ import './Header.css';
 
 const styles = {
     root: {
-       
         backGroundColor: '#1F2D44',
         flexGrow: 1,
         background: '#1F2D44',

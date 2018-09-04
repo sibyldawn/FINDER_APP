@@ -220,7 +220,7 @@ class Profile extends Component {
                                         rowsMax={12} 
                                         value={this.state.bio}
                                         onChange={(e) => this.handleChange('bio', e.target.value)} 
-                                         />
+                                        />
                                 </div>
                                 <div>
                                     <FormControl className={classes.FormControl}>

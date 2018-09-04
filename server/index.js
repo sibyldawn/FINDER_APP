@@ -22,6 +22,7 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }))
+
 //CONST for CHATKIT
 const chatkit = new Chatkit.default({
     instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,
