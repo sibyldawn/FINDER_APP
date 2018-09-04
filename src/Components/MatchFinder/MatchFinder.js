@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
+import Chatkit from '@pusher/chatkit';
 
 const styles = theme => ({
   formControl: {
@@ -56,14 +57,38 @@ class App extends React.Component {
         const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
 
         this.setState({
-          user1: res.data[0].applicant_id,
-          user2: res.data[0].recruiter_id,
-          roomName: name
-        },()=>{this.createRoom()})
+        user1: res.data[0].applicant_id,
+        user2: res.data[0].recruiter_id,
+        roomName: name
+        })
+        this.createRoom()
     }
     })
     swipe();
   }
+
+  connectToChat=()=>{
+    console.log("CONNECT USER ID====>", this.props.context.user.auth0_id)
+
+    const chatManager = new Chatkit.ChatManager({
+        instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
+        userId: this.props.context.user.auth0_id,//change to user
+        tokenProvider: new Chatkit.TokenProvider({
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+        })
+    })
+    chatManager.connect()
+    .then(currentUser => {
+        this.currentUser = currentUser
+        this.createRoom()
+        
+        
+    })
+    .catch( err => console.log("ERROR JOINING ROOM",err))
+}
+
+  
+  
 
   createRoom=()=>{
     const { roomName, user1, user2 } = this.state;

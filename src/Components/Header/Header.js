@@ -41,7 +41,7 @@ class Header extends Component {
     };
 
     componentDidMount() {
-        this.props.context.methods.checkForLogin()
+        this.props.context.methods.checkForLogin() 
     }
     handleMenu = event => {
             this.setState({ anchorEl: event.currentTarget });
@@ -92,7 +92,7 @@ class Header extends Component {
                         </div>
                         </Drawer>
                     <Typography variant="title" color="inherit" className={classes.flex}>
-                        Finder
+                        finder
                     </Typography>
                     {auth && (
                     <div>
