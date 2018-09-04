@@ -27,7 +27,8 @@ class App extends React.Component {
         cards: [],
         user1: {},
         user2:{},
-        roomName: ''
+        roomName: '',
+        connection_id:0 
       }
 
       this.deck = React.createRef();
@@ -58,19 +59,25 @@ class App extends React.Component {
         first_name
     }).then(res => {
       console.log('------------ res ', res )
-      if(res.data !== false ){
-        const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
-
-        this.setState({
-        user1: res.data[0].applicant_id,
-        user2: res.data[0].recruiter_id,
-        roomName: name
-        })
-        this.createRoom()
-    }
+    
     })
     swipe();
   }
+
+  onSwipeEnd = ({ data }) => {
+    console.log('data', data);
+    if(data !== false ){
+      const name = `${data[0].applicant_id} + ${data[0].recruiter_id}`
+
+      this.setState({
+      user1: data[0].applicant_id,
+      user2: data[0].recruiter_id,
+      roomName: name,
+      connection_id: data[0].id
+      },()=>{this.connectToChat()})
+      
+  }
+  };
 
   connectToChat=()=>{
     console.log("CONNECT USER ID====>", this.props.context.user.auth0_id)
@@ -94,7 +101,6 @@ class App extends React.Component {
 
   
   
-
   createRoom=()=>{
     const { roomName, user1, user2 } = this.state;
     this.currentUser.createRoom({
@@ -105,8 +111,47 @@ class App extends React.Component {
     .then(room => {
         console.log("new room Id", room.data);
         this.subscribeToRoom(room.id)})
+        this.sendRoomToDB()
     .catch(err => console.log('create room error',err))
 }
+
+subscribeToRoom=(roomId)=>{
+  this.setState({
+      messages: []
+  })
+  this.currentUser.subscribeToRoom({
+      roomId:roomId,//newroom for new connection id's
+      hooks:{
+          onNewMessage: message => {
+              console.log('message props', message);
+              this.setState({
+                  messages:[...this.state.messages,message]
+              })
+          }
+      }
+ })
+ .then(room => {
+     this.setState({
+         roomId: room.id
+     })
+     
+ })
+ .catch(err => console.log("ERROR FINDING ROOM",err))
+}
+
+
+sendRoomToDB=()=>{
+  const newRoom = {
+    connection_id: this.state.connection_id,
+    room_id:this.state.room_id,
+    room_name: this.state.roomName
+}
+  axios.post('/api/rooms',newRoom).then( response => {
+    console.log("new room =====>", response);
+  }).catch( err => console.log("Room not recorded", err))
+}
+
+
 
   handleChange = (prop, val) => {
     this.setState({
@@ -114,9 +159,7 @@ class App extends React.Component {
     })
   }
 
-  onSwipeEnd = ({ data }) => {
-    console.log('data', data);
-  };
+ 
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
