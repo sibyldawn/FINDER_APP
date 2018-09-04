@@ -116,7 +116,7 @@ getRooms=()=>{
   .then(joinableRooms => {
       this.setState({
           joinedRooms: this.currentUser.rooms 
-      }) 
+      },()=>{this.createRoomOrNot()}) 
   })
   .catch( err => console.log("ERROR FINDING ROOM",err))
 
