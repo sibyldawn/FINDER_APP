@@ -27,7 +27,7 @@ class App extends React.Component {
         cards: [],
         user1: {},
         user2:{},
-        room_id: '',
+        room_id: 0,
         roomName: '',
         connection_id:0 
       }
@@ -151,11 +151,13 @@ subscribeToRoom=(roomId)=>{
 
 
 sendRoomToDB=()=>{
+
   const newRoom = {
     connection_id: this.state.connection_id,
-    room_id:this.state.room_id,
+    room_id:+this.state.room_id,
     room_name: this.state.roomName
 }
+console.log("new ROOM=====>", newRoom)
   axios.post('/api/rooms',newRoom).then( response => {
     console.log("new room =====>", response);
   }).catch( err => console.log("Room not recorded", err))
