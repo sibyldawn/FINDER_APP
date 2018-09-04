@@ -10,16 +10,72 @@ import SwapHorizSharp from '@material-ui/icons/SwapHorizSharp';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Settings from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
-// import './Footer.css';
+import './Footer.css';
+
 
 
 const styles = {
   root: {
     position: 'fixed',
     bottom: 0,
+    // height: 50, 
+    fontSize: 50,
     width: '100vw',
   },
-};
+  Messages: {
+  
+   backgroundColor: '#1F2D44',
+   
+  },
+  MessageSharp: {
+    color: '#A8B4B3',
+   
+  }, 
+
+
+  Finder: {
+    backgroundColor: '#1F2D44',
+  },
+  SwapHorizSharp: {
+    color: '#A8B4B3',
+   
+  },
+
+
+
+  Matches: {
+    backgroundColor: '#1F2D44',
+  },
+  SupervisedUserCircle: {
+    color: '#A8B4B3',
+  },
+
+
+
+
+  JobMap: {
+    backgroundColor: '#1F2D44',
+  },
+  LocationOnIcon: {
+    color: '#A8B4B3',
+  },
+
+
+  
+
+
+  SettingsBox: {
+    backgroundColor: '#1F2D44',
+  },
+  SettingsIcon: {
+    color: '#A8B4B3',
+  }
+
+   
+  }
+
+
+
 
 class Footer extends Component {
   state = {
@@ -35,12 +91,12 @@ class Footer extends Component {
     const { value } = this.state;
 
     return (
-      <BottomNavigation value={value} onChange={this.handleChange} className={classes.root} color="inherit">
-        <Link to="/Messages"><BottomNavigationAction label="Messages" value="messages" icon={<MessageSharp />} /></Link>
-        <Link to="/Matches"><BottomNavigationAction label="Matches" value="matches" icon={<SupervisedUserCircle />} /></Link>
-        <Link to="/"><BottomNavigationAction label="Finder" value="finder" icon={<SwapHorizSharp />} /></Link>
-        <Link to="/JobMap"><BottomNavigationAction label="JobMap" value="map" icon={<LocationOnIcon />} /></Link>
-        <Link to="/Settings"><BottomNavigationAction label="Settings" value="settings" icon={<Settings />} /></Link>
+      <BottomNavigation  value={value} onChange={this.handleChange} className={classes.root} color="inherit">
+        <Link to="/Messages"><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 36  }} color='action' />}/></Link>
+        <Link to="/Matches"><BottomNavigationAction className={classes.Matches} label="Matches" value="matches" icon={<SupervisedUserCircle className={classes.SupervisedUserCircle} style={{ fontSize: 36 }}/>} /></Link>
+        <Link to="/"><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp className={classes.SwapHorizSharp} style={{ fontSize: 36 }} />} /></Link>
+        <Link to="/JobMap"><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon className={classes.LocationOnIcon} style={{ fontSize: 36 }}/>} /></Link>
+        <Link to="/Settings"><BottomNavigationAction className={classes.SettingsBox} label="Settings" value="settings" icon={<Settings className={classes.SettingsIcon}style={{ fontSize: 36 }} />}  /></Link>
       </BottomNavigation>
     );
   }
