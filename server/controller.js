@@ -201,8 +201,8 @@ var self = module.exports = {
     createRoom(req,res){
         const dbInstance = req.app.get('db')
         const {connection_id,room_id,room_name} = req.body;
-        dbInstance.add_chatroom([connection_id,room_id,room_name]).then( res => {
-            res.status(200).send(res.data)
+        dbInstance.add_chatroom([connection_id,room_id,room_name]).then( response => {
+            res.status(200).send(response)
         }).catch(err => console.log("Error adding room",err));
     }
 }
