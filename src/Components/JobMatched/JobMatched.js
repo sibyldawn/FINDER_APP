@@ -35,7 +35,27 @@ const styles = theme => ({
 
 
 
+  // constructor(){
+  //   super()
+  //     this.state={
+  //       name: '',
+  //       roomId: [],
+  //       connectionId: [],
+  //       roomName: '' 
+  //     }
+  // }
 
+
+  currentUser.createRoom({
+    name: 'general',
+    private: true,
+    addUserIds: ['recruiter_id', 'applicant_id']
+  }).then(room => {
+    console.log(`Created room called ${room.name}`)
+  })
+  .catch(err => {
+    console.log(`Error creating room ${err}`)
+  })
 
 
 function FloatingActionButtons(props) {
@@ -73,7 +93,8 @@ function FloatingActionButtons(props) {
 
     <div className="button2">
       <Link to ="/Messages">
-      <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
+      {/* onClick={() => this.setState ({ connectionId.createChatRoom })}  */}
+      <Button  variant="extendedFab" aria-label="Message" className={classes.button2}>
         <QuestionAnswer />
        Send A Message
       </Button>

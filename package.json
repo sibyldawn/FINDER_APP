@@ -38,8 +38,8 @@
     "socket.io-client": "^2.1.1"
   },
   "scripts": {
-    "start-js": "react-app-rewired start",
-    "start": "npm-run-all -p watch-css start-js",
+    "start-js": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "npm run build-css && react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
