@@ -1,9 +1,12 @@
 import React from 'react';
+import './Settings.css';
 
 const Settings = () => {
     return (
         <div>
-            Settings
+            <div className="settingsTitle">
+                Settings
+            </div>
         </div>
     );
 };

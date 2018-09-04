@@ -18,18 +18,37 @@ import Menu from '@material-ui/core/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import Aside from '../Aside/Aside';
 import axios from 'axios';
+import './Header.css';
+
 
 const styles = {
     root: {
+       
+        backGroundColor: '#1F2D44',
         flexGrow: 1,
     },
     flex: {
+        fontFamily: 'Baloo Bhai',
+        color: '#5ACCC1',
         flexGrow: 1,
     },
     menuButton: {
+        color: '#5ACCC1',
         marginLeft: -12,
         marginRight: 20,
     },
+    AccountCircle: {
+        color: '#5ACCC1',
+    },
+    AppBar: {
+        color: '#5ACCC1',
+        backGroundColor: '#1F2D44',
+    },
+    ToolBar: {
+        color: '#5ACCC1',
+        backGroundColor: '#1F2D44',
+    }
+
 };
 
 class Header extends Component {
@@ -75,10 +94,10 @@ class Header extends Component {
 
         return (
             <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
+                <AppBar className={classes.AppBar}position="static">
+                    <Toolbar className={classes.ToolBar}>
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon />
+                        <MenuIcon style={{ fontSize: 50  }} />
                     </IconButton>
                     <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                         <div
@@ -90,7 +109,7 @@ class Header extends Component {
                             <Aside/>
                         </div>
                         </Drawer>
-                    <Typography variant="title" color="inherit" className={classes.flex}>
+                    <Typography variant="display3" color="blue" className={classes.flex}>
                         Finder
                     </Typography>
                     {auth && (
@@ -121,7 +140,7 @@ class Header extends Component {
                                 </figure>
                             </div>
                             :
-                            <AccountCircle style={{ fontSize: 38 }} />
+                            <AccountCircle className={classes.AccountCircle}style={{ fontSize: 50 }} />
                         }
                         </IconButton>
                         

@@ -98,6 +98,7 @@ class App extends React.Component {
     console.log(this.deck)
     return (
       context.login ?
+      <div className="matchFinder">
         <div className="demo-wrapper">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor='industry-select'>Industry</ InputLabel>
@@ -266,8 +267,9 @@ class App extends React.Component {
             infinite={false}
           />
         </div>
+        </div>
       :
-      <div>No user logged in.</div>
+      <div className="NoUser">No user logged in.</div>
     );
   }
 }

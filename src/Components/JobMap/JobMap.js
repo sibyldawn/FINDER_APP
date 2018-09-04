@@ -7,6 +7,9 @@ import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import MapMarker from './MapMarker';
+// import InfoBox from "google-maps-infobox/types";
+
 
 // const API_KEY = 'AIzaSyB3nKfynX9Au9uVZb94D-Jb2tks8kwarns'
 
@@ -102,7 +105,8 @@ render(){
         <div className="jobMapComponent">
            
            <div className="jobsearch">Job Search</div>
-           <div className="demo-wrapper">
+           <div className="jobList">
+          {/* <MapMarker/> */}
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor='industry-select'>Industry</ InputLabel>
             <Select

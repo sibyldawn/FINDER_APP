@@ -1,42 +1,67 @@
 
 
-@keyframes slideInRight {
-    from {
-      transform: translate3d(100%, 0, 0);
-      visibility: visible;
-    }
+// @keyframes slideInRight {
+//     from {
+//       transform: translate3d(100%, 0, 0);
+//       visibility: visible;
+//     }
   
-    to {
-      transform: translate3d(0, 0, 0);
-    }
-  }
+//     to {
+//       transform: translate3d(0, 0, 0);
+//     }
+//   }
   
-  .slideInRight {
-    animation-name: slideInRight;
+  // .slideInRight {
+  //   animation-name: slideInRight;
+  // }
+
+  // .shake {
+  //   animation-name: shake;
+  // }
+
+
+  .bounce {
+    animation-name: bounce;
   }
 
 
-.handshake{
-   -webkit-animation-direction:normal;  
-    margin-top: 400px;
-    width: 200px;
-    height: 200px;
-    animation: 
-        slideInRight 3s;
+
+
+
+// .handshake{
+//    -webkit-animation-direction:normal;  
+//     // margin-top: 400px;
+//     // width: 200px;
+//     // height: 200px;
+//     animation: 
+//         shake 4s,
+//         bounce 3s,
+//         slideInRight 3s;
+        
     
-}
+// }
 
-.handshake {
-    animation-duration: 3s;
-    animation-delay: 2s;
+#handshake{
+    margin-top: 200px;
+    animation-duration: 5s;
+    animation-delay: 3s;
     animation-iteration-count: infinite;
   }
 
 
 .backgroundhands{
-    background:greenyellow;
+    margin-top: 150px;
 }
 
-// .buttonStyle {
-//     position: 
-// }
+.buttonStyle {
+    margin-top: 80px;
+    
+}
+
+.button1{
+
+}
+
+.button2 {
+
+}
