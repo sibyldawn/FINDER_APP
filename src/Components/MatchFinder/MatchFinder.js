@@ -29,7 +29,8 @@ class App extends React.Component {
         user2:{},
         room_id: 0,
         roomName: '',
-        connection_id:0 
+        connection_id:0,
+        messages:[]
       }
 
       this.deck = React.createRef();
@@ -100,46 +101,21 @@ class App extends React.Component {
     .catch( err => console.log("ERROR JOINING ROOM",err))
 }
 
-  
-  
-  createRoom=()=>{
-    const { roomName, user1, user2 } = this.state;
-    this.currentUser.createRoom({
-        name: roomName,
-        private: true,
-        addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
-    })
-    .then(room => {
-        console.log("new room Id", room.data);
-        this.subscribeToRoom(room.id)})
-        this.sendRoomToDB()
-    .catch(err => console.log('create room error',err))
-}
-
-subscribeToRoom=(roomId)=>{
-  this.setState({
-      messages: []
+createRoom=()=>{
+  const { roomName, user1, user2 } = this.state;
+  this.currentUser.createRoom({
+      name: roomName,
+      private: true,
+      addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
   })
-  this.currentUser.subscribeToRoom({
-      roomId:roomId,//newroom for new connection id's
-      hooks:{
-          onNewMessage: message => {
-              console.log('message props', message);
-              this.setState({
-                  messages:[...this.state.messages,message]
-              })
-          }
-      }
- })
- .then(room => {
-     this.setState({
-         room_id: room.id
-     })
-     
- })
- .catch(err => console.log("ERROR SUBSCRIBING TO ROOM",err))
+  .then(room => {
+      console.log("new room Id", room.data);
+        this.setState({
+            room_id: room.id
+   },()=>{this.sendRoomToDB()})
+    
+  }) .catch(err => console.log('create room error',err))
 }
-
 
 sendRoomToDB=()=>{
 
@@ -151,9 +127,18 @@ sendRoomToDB=()=>{
 console.log("new ROOM=====>", newRoom)
   axios.post('/api/rooms',newRoom).then( response => {
     console.log("new room =====>", response);
+    this.joinRoom()
   }).catch( err => console.log("Room not recorded", err))
 }
 
+
+joinRoom =()=>{
+  this.currentUser.joinRoom({
+      roomId: this.state.room_id
+    }).then(room => {
+    console.log(`Joined room with ID: ${roomId}`);
+  }).catch(err => console.log("Error joining room", err))
+}
 
 
   handleChange = (prop, val) => {
