@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { MatchAnimation } from '../JobMatched/JobMatched'
 import 'react-motion-stack/build/motion-stack.css';
 import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
@@ -107,18 +108,8 @@ class App extends React.Component {
         
     })
     .catch( err => console.log("ERROR JOINING ROOM",err))
-}
+  }
 
-<<<<<<< HEAD
-createRoom=()=>{
-  const { roomName, user1, user2 } = this.state;
-  this.currentUser.createRoom({
-      name: roomName,
-      private: true,
-      addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
-=======
-  
-  
   createRoom=()=>{
     const { roomName, user1, user2 } = this.state;
     this.currentUser.createRoom({
@@ -128,57 +119,41 @@ createRoom=()=>{
     })
     .then(room => {
         console.log("new room Id", room.data);
-        this.subscribeToRoom(room.id)
-        this.sendRoomToDB()
-    })
-    .catch(err => console.log('create room error',err))
-}
+          this.setState({
+              room_id: room.id
+    },()=>{this.sendRoomToDB()})
+      
+    }) .catch(err => console.log('create room error',err))
+  }
 
-subscribeToRoom=(roomId)=>{
-  this.setState({
-      messages: []
->>>>>>> 3e1cc9d3b95d4343e990f577b1739dab5bc5d2b0
-  })
-  .then(room => {
-      console.log("new room Id", room.data);
-        this.setState({
-            room_id: room.id
-   },()=>{this.sendRoomToDB()})
-    
-  }) .catch(err => console.log('create room error',err))
-}
+  sendRoomToDB=()=>{
 
-sendRoomToDB=()=>{
-
-  const newRoom = {
-    connection_id: this.state.connection_id,
-    room_id:+this.state.room_id,
-    room_name: this.state.roomName
-}
-console.log("new ROOM=====>", newRoom)
-  axios.post('/api/rooms',newRoom).then( response => {
-    console.log("new room =====>", response);
-    this.joinRoom()
-  }).catch( err => console.log("Room not recorded", err))
-}
+    const newRoom = {
+      connection_id: this.state.connection_id,
+      room_id:+this.state.room_id,
+      room_name: this.state.roomName
+  }
+  console.log("new ROOM=====>", newRoom)
+    axios.post('/api/rooms',newRoom).then( response => {
+      console.log("new room =====>", response);
+      this.joinRoom()
+    }).catch( err => console.log("Room not recorded", err))
+  }
 
 
-joinRoom =()=>{
-  this.currentUser.joinRoom({
-      roomId: this.state.room_id
-    }).then(room => {
-    console.log(`Joined room with ID: ${roomId}`);
-  }).catch(err => console.log("Error joining room", err))
-}
-
+  joinRoom =()=>{
+    this.currentUser.joinRoom({
+        roomId: this.state.room_id
+      }).then(room => {
+      console.log(`Joined room with ID: ${this.state.room_id}`);
+    }).catch(err => console.log("Error joining room", err))
+  }
 
   handleChange = (prop, val) => {
     this.setState({
       [prop]: val
     })
   }
-
- 
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
