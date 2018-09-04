@@ -124,8 +124,8 @@ getRooms=()=>{
 
 
 createRoomOrNot=()=>{
-  const { joinableRooms ,roomName} = this.state;
-  const roomExists = this.state.joinedRooms.some(roomName)
+  const { joinedRooms ,roomName} = this.state;
+  const roomExists = joinedRooms.some(roomName)
   if( !roomExists ){
   const { roomName, user1, user2 } = this.state;
   this.currentUser.createRoom({
