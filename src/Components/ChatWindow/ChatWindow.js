@@ -43,19 +43,25 @@ class ChatWindow extends Component {
         super()
 
         this.state = {
-             roomId: null,
+             roomId: 0,
              messages:[],
              joinedRooms: [],
              id:'',
              name:'',
              picture:'',
              user:{},
-             value:0
+             value:0,
+             room_users:[],
+             sender:{}
         }
     }
 
+
+
     componentDidMount(){
-        axios.get('/users/Admin').then(response => {
+    //change to this.props.context.user.auth0_id
+    const name = 'linkedin|c5Bs14lP1I';
+        axios.get(`/users/${name}`).then(response => {
             console.log("FOUND USER", response.data.body);
             this.setState({
                 user: JSON.parse(response.data.body)
@@ -68,9 +74,12 @@ class ChatWindow extends Component {
     this.setState({ value });
   };
 
-  handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+  handleChangeIndex = (index) => {
+    this.setState({
+        value: index 
+    })
+ }
+
 
   connectToChat=()=>{
     console.log("CONNECT USER ID====>", this.state.user.id)
@@ -135,9 +144,11 @@ sendMessage=(text)=>{
 
 
 
+
   render() {
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
+    console.log("CHATWINDOW room_users", this.state.room_users);
     return (
         <div>
         {this.state.user ? <div className={classes.root}>
@@ -164,6 +175,10 @@ sendMessage=(text)=>{
                        roomId ={this.state.roomId}//axios get from db
                        subscribeToRoom={this.subscribeToRoom}
                        handleChangeIndex={this.handleChangeIndex}
+                       roomUsers = {this.state.room_users}
+                       user = {this.state.user}
+                       sender={this.state.sender}
+                       getOtherUser = {this.getOtherUser}
 
                 />
           </TabContainer>
