@@ -87,7 +87,7 @@ app.get('/api/upload', (req, res) => {
 app.get('/api/rooms/:roomId',controller.getRoom)
 app.get('/api/rooms/users',controller.getChatRoomUsers)
 app.post('/api/rooms',controller.createRoom)
-app.post('/users', (req,res) => {
+app.post('/api/users', (req,res) => {
     const { auth0_id,username,picture } = req.body
     console.log("hit username", username);
     
@@ -110,7 +110,7 @@ app.post('/users', (req,res) => {
 
 
   
-app.get('/getusers', (req,res) => {
+app.get('/api/getusers', (req,res) => {
     chatkit.getUsers()
     .then( users => {
       res.status(200).send(users)
@@ -118,12 +118,12 @@ app.get('/getusers', (req,res) => {
     .catch( err => console.log("Error gettings users",err))
   })
   
-  app.post('/authenticate', (req, res) => {
+  app.post('/api/authenticate', (req, res) => {
     const authData = chatkit.authenticate({ userId: req.query.user_id })
     res.status(authData.status).send(authData.body)
   }) 
 
-  app.get('/users/:userId',(req,res)=> {
+  app.get('/api/users/:userId',(req,res)=> {
     const {userId} = req.params;
     console.log("userId to get", userId);
     chatkit.apiRequest({

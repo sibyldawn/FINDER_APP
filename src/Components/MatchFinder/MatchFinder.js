@@ -77,17 +77,6 @@ class App extends React.Component {
 
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
-  //   if(data !== false ){
-  //     const name = `${data[0].applicant_id} + ${data[0].recruiter_id}`
-
-  //     this.setState({
-  //     user1: data[0].applicant_id,
-  //     user2: data[0].recruiter_id,
-  //     roomName: name,
-  //     connection_id: data[0].id
-  //     },()=>{this.connectToChat()})
-      
-  // }
   };
 
   connectToChat=()=>{
@@ -160,13 +149,6 @@ console.log("new ROOM=====>", newRoom)
   }).catch( err => console.log("Room not recorded", err))
 }
 
-  joinRoom =()=>{
-    this.currentUser.joinRoom({
-        roomId: this.state.room_id
-      }).then(room => {
-      console.log(`Joined room with ID: ${this.state.room_id}`);
-    }).catch(err => console.log("Error joining room", err))
-  }
 
   handleChange = (prop, val) => {
     this.setState({
