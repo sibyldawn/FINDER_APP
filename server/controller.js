@@ -93,7 +93,7 @@ var self = module.exports = {
         dbInstance.query(
             `select u.*, c.* from users u 
             left outer join connections c
-            on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
+            on u.id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
             where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
             and industry_code = '${industry}' 
             and isrecruiter = '${recruiter}'
