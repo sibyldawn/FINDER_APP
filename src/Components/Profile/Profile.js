@@ -41,7 +41,7 @@ const styles = theme => ({
         minWidth: '70%'
     },
     // bio: {
-    //    color: '#A8B4B3',
+    //     color: '#A8B4B3',
     //     backgroundColor: '#A8B4B3',
     // },
     selectEmpty: {
@@ -53,18 +53,7 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-    },
-    colorSwitchBase: {
-        color: '#3f51b5',
-        '&$colorChecked': {
-            color: '#3f51b5',
-            '& + $colorBar': {
-                backgroundColor: '#3f51b5',
-            },
-        },
-    },
-    colorBar: {},
-    colorChecked: {},
+    }
 });
 
 class Profile extends Component {
@@ -169,6 +158,7 @@ class Profile extends Component {
     render() {
         console.log('------------ this.state', this.state)
         const { classes, context } = this.props
+        const { isrecruiter } = this.state
         return (
             
             context.login ?
@@ -213,8 +203,8 @@ class Profile extends Component {
                                     </ FormControl>
                                 </div>
                                 <div className='profileBio'>
-                                    <TextField className={classes.bio}
-                                        helperText='Bio'
+                                    <TextField className={classes.textarea}
+                                        helperText={isrecruiter ? 'Company' : 'Bio'}
                                         multiline={true}
                                         rows={8}
                                         rowsMax={12} 
@@ -235,7 +225,7 @@ class Profile extends Component {
                                 </div>
                                 <div className='textarea-container'>
                                     <TextField
-                                        helperText='Work History'
+                                        helperText={isrecruiter ? 'Company Description:' : 'Work History:'}
                                         multiline={true}
                                         rows={8}
                                         rowsMax={12}
@@ -245,7 +235,7 @@ class Profile extends Component {
                                 </div>
                                 <div className='textarea-container'>
                                     <TextField
-                                        helperText='Education Background'
+                                        helperText={isrecruiter ? 'Qualifications:' : 'Education Background:'}
                                         multiline={true}
                                         rows={8}
                                         rowsMad={12}
@@ -255,7 +245,7 @@ class Profile extends Component {
                                 </div>
                                 <div className='textarea-container'>
                                     <TextField
-                                        helperText='Job Interests'
+                                        helperText='Looking for'
                                         multiline={true}
                                         rows={5}
                                         rowsMad={12}
@@ -265,7 +255,7 @@ class Profile extends Component {
                                 </div>
                                 <div>
                                     <FormControl className={classes.FormControl}>
-                                        <InputLabel htmlFor='job-title'>Job Title</InputLabel>
+                                        <InputLabel htmlFor='job-title'>{isrecruiter ? 'Positions Open:' : 'Job Interests:'}</InputLabel>
                                         <Input
                                         defaultValue={this.state.current_job}
                                         id='job-title'
@@ -275,13 +265,13 @@ class Profile extends Component {
                                 </div>
                                 <div>
                                     <FormControl className={classes.formControl}>
-                                        <InputLabel htmlFor='preferred-location-select'>Preferred Location</ InputLabel>
+                                        <InputLabel htmlFor='preferred-location-select'>{isrecruiter ? 'State:' : 'Preferred Location:'}</ InputLabel>
                                         <Select
                                             native
                                             value={this.state.preferred_location}
                                             onChange={(e) => this.handleChange('preferred_location', e.target.value)}
                                             inputProps={{
-                                                name: 'Preferred Location',
+                                                name: isrecruiter ? 'State:' : 'Preferred Location:',
                                                 id: 'preferred-location-select'
                                             }} >
                                             <option value=""/>
@@ -495,21 +485,6 @@ class Profile extends Component {
                                             <option value='Wireless'>Wireless</option>
                                             <option value='Writing and Editing'>Writing and Editing</option>
                                         </ Select>
-                                        <FormControlLabel
-                                            control={
-                                            <Switch
-                                                checked={this.state.isrecruiter}
-                                                onChange={() => this.handleChange('isrecruiter', !this.state.isrecruiter)}
-                                                value="isrecruiter"
-                                                classes={{
-                                                    switchBase: classes.colorSwitchBase,
-                                                    checked: classes.colorChecked,
-                                                    bar: classes.colorBar,
-                                                }}
-                                            />
-                                            }
-                                            label='I am a recruiter'
-                                        />
                                     </ FormControl>
                                 </div> 
                             </div>

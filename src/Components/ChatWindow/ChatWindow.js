@@ -3,6 +3,7 @@ import MessageFeed from './MessageFeed';
 import ChatForm from './ChatForm';
 import Chatkit from '@pusher/chatkit';
 import { withContext } from '../../ContextAPI/Context_HOC'
+import { withRouter } from 'react-router-dom'
 import Rooms from './Rooms';
 import './ChatWindow.css'
 import NewRoom from './NewRoom';

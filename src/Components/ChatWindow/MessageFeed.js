@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 export default class MessageFeed extends React.Component {
     constructor(props){
         super(props);
-     
     }
 
     componentWillUpdate(){
@@ -18,7 +17,6 @@ export default class MessageFeed extends React.Component {
             const node = ReactDOM.findDOMNode(this)
             node.scrollTop = node.scrollHeight;
         }
-      
     }
 
 

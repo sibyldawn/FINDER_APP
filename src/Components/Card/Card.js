@@ -81,6 +81,7 @@ class UserCard extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { isrecruiter } = this.state.user
     console.log('------------ this.state.user', this.state.user)
     const { user } = this.state
     return (
@@ -99,14 +100,14 @@ class UserCard extends React.Component {
           <CardContent className={classes.cardcontent}>
             <Typography paragraph>
               <Typography paragraph variant="body2">
-                Bio:
+                {isrecruiter ? 'Company:' : 'Bio:'}
               </Typography>
               {user.bio}
             </Typography>
 
             <Typography paragraph>
               <Typography paragraph variant="body2">
-                Work History:
+                {isrecruiter ? 'Company Description:' : 'Work History:'}
               </Typography>
               {user.work_history}
             </Typography>
@@ -128,14 +129,14 @@ class UserCard extends React.Component {
             <CardContent className={classes.cardcontent}>
 
               <Typography paragraph variant="body2">
-                Preferred Location:
+                {isrecruiter ? 'State:' : 'Preferred Location:'}
               </Typography>
               <Typography paragraph>
                 {user.preferred_location}
               </Typography>
 
               <Typography paragraph variant="body2">
-                Current Zipcode: 
+                {isrecruiter ? 'Zipcode' : 'Current Zipcode:'}
               </Typography>
               <Typography paragraph>
                 {user.current_zipcode}
@@ -149,14 +150,14 @@ class UserCard extends React.Component {
               </Typography>
 
               <Typography paragraph variant="body2">
-                Job Title: 
+                {isrecruiter ? 'Positions Open:' : 'Job Interests:'}
               </Typography>
               <Typography paragraph>
                 {user.current_job}
               </Typography>
               
               <Typography paragraph variant="body2">
-                Education Background: 
+                {isrecruiter ? 'Qualifications:' : 'Education Background:'}
               </Typography>
               <Typography paragraph>
                 {user.education_background}

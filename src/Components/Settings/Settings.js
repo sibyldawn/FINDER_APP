@@ -1,14 +1,247 @@
 import React from 'react';
+import Switch from '@material-ui/core/Switch';
+import PropTypes from 'prop-types';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withContext } from '../../ContextAPI/Context_HOC'
+import { withStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import axios from 'axios'
 import './Settings.css';
 
-const Settings = () => {
-    return (
-        <div>
-            <div className="settingsTitle">
-                Settings
+const styles = theme => ({
+    colorSwitchBase: {
+        color: '#3f51b5',
+        '&$colorChecked': {
+            color: '#3f51b5',
+            '& + $colorBar': {
+                backgroundColor: '#3f51b5',
+            },
+        },
+    },
+    colorSwitchYellow: {
+        color: '#e6e600',
+        '&$colorChecked': {
+            color: '#e6e600',
+            '& + $colorBar': {
+                backgroundColor: '#e6e600',
+            },
+        },
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 200,
+    },
+    container: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+    },
+    input: {
+        margin: 'none',
+    },
+    colorBar: {},
+    colorChecked: {},
+});
+
+class Settings extends React.Component {
+    state = {
+        isrecruiter: this.props.context.user.isrecruiter || false,
+        active: this.props.context.user.active || false,
+        email: this.props.context.user.email,
+        open: false,
+        confirm: false,
+        snack: false
+    }
+
+    toggleValue = (field) => {
+        this.setState({
+            [field]: !this.state[field]
+        }, () => axios.put('/api/user/toggle', { field, value: this.state[field], id: this.props.context.user.id})
+            .then(res => {
+                this.props.context.methods.checkForLogin()
+                console.log('------------ res', res)
+            })
+        )
+        
+    }
+
+    handleChange = (field, val) => {
+        console.log('------------ val', val)
+        this.setState({
+            [field]: val
+        })
+    }
+
+    deleteProfile = () => {
+        axios.delete(`/api/user?id=${this.props.context.user.id}`).then(res => {
+            console.log('------------ Delete profile response', res)
+            this.props.context.methods.checkForLogin()
+            this.props.history.push('/')
+        }).catch(error => console.log('------------ deleteProfile error', error))
+    }
+
+    submitEmail = () => {
+        const { email } = this.state
+
+        // Test the email for correct formatting
+        if(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
+            axios.put('/api/user/email', { email: this.state.email, id: this.props.context.user.id }).then(res => {
+                console.log('------------ submitEmail res', res.data)
+                this.setState({
+                    open: false
+                }, this.props.context.methods.checkForLogin())
+            }).catch(error => console.log('------------ submitEmail error', error))
+        } else {
+            this.setState({
+                snack: true
+            })
+        }
+    }
+
+    render() {
+        const { classes } = this.props;
+        console.log('------------ this.state', this.state)
+        console.log('------------ this.props.context.user', this.props.context.user)
+        return (
+            <div className={classes.container}>
+                <div className="settingsTitle">
+                    Settings
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={this.state.isrecruiter}
+                                onChange={() => this.toggleValue('isrecruiter')}
+                                value="isrecruiter"
+                                classes={{
+                                    switchBase: classes.colorSwitchBase,
+                                    checked: classes.colorChecked,
+                                    bar: classes.colorBar,
+                                }}
+                            />
+                        }
+                        label='I am a recruiter'
+                    />
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={this.state.active}
+                                onChange={() => this.toggleValue('active')}
+                                value="active"
+                                classes={{
+                                    switchBase: classes.colorSwitchYellow,
+                                    checked: classes.colorChecked,
+                                    bar: classes.colorBar,
+                                }}
+                            />
+                        }
+                        label='Account active'
+                    />
+                    <Button 
+                        onClick={() => this.handleChange('open', true)}
+                        variant='contained' 
+                        className={classes.button}>
+                            Edit Email Address
+                    </Button>
+                    <Dialog
+                        open={this.state.open}
+                        onClose={() => this.handleChange('open', false)}
+                        aria-labelledby="form-dialog-title"
+                    >
+                        <DialogTitle id="form-dialog-title">Edit Email Address</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                autoFocus
+                                margin="dense"
+                                defaultValue={this.state.email}
+                                id="email"
+                                onChange={(e) => this.handleChange('email', e.target.value)}
+                                label="Email Address"
+                                type="email"
+                                fullWidth
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => this.handleChange('open', false)} color="primary">
+                                Cancel
+                            </Button>
+                            <Button onClick={() => this.submitEmail()} color="primary">
+                                Submit
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Button 
+                        variant='contained'
+                        color='secondary'
+                        onClick={() => this.handleChange('confirm', true)}>
+                            Delete Profile
+                    </Button>
+                    <Dialog
+                        open={this.state.confirm}
+                        onClose={() => this.handleChange('confirm', false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Are you sure?"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Warning! Deleting your profile is permanent and can not be undone. Are you sure you wish to continue?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={() => this.handleChange('confirm', false)} color="primary">
+                                Cancel
+                            </Button>
+                            <Button onClick={() => this.deleteProfile()} color="secondary" autoFocus>
+                                Confirm
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            open={this.state.snack}
+                            autoHideDuration={6000}
+                            onClose={() => this.handleChange('snack', false)}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            variant='success'
+                            message={<span id="message-id">Please enter a valid email address</span>}
+                            action={[
+                                <IconButton
+                                    key="close"
+                                    aria-label="Close"
+                                    color="inherit"
+                                    className={classes.close}
+                                    onClick={() => this.handleChange('snack', false)}
+                                >
+                                    <CloseIcon />
+                                </IconButton>,
+                            ]}
+                        />
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
-export default Settings;
+Settings.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withContext(withStyles(styles)(Settings));

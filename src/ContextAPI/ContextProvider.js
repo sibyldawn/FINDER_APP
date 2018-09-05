@@ -27,7 +27,8 @@ export default class ContextProvider extends React.Component {
                     console.log('------------ res', res)
                     this.setState((prevState) => {
                         return {
-                            login: !prevState.login
+                            login: !prevState.login,
+                            user: ''
                         }
                     })
                     window.location = '/'
