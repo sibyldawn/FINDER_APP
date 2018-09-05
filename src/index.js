@@ -10,7 +10,7 @@ import { AppContainer } from 'react-hot-loader';
 const render = () => { 
     ReactDOM.render(
         <AppContainer>
-            <Router>
+                <Router>
                 <ContextProvider>
                     <App /> 
                 </ ContextProvider>

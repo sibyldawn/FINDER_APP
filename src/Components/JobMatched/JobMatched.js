@@ -7,6 +7,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import './JobMatched.scss';
 import { Link } from 'react-router-dom';
 import handshake from './handshake.png';
+import axios from 'axios';
 
 const styles = theme => ({
   root:{
@@ -35,35 +36,53 @@ const styles = theme => ({
 
 
 
-  // constructor(){
-  //   super()
-  //     this.state={
-  //       name: '',
-  //       roomId: [],
-  //       connectionId: [],
-  //       roomName: '' 
-  //     }
-  // }
+class JobMatched extends Component {
 
 
-  currentUser.createRoom({
-    name: 'general',
-    private: true,
-    addUserIds: ['recruiter_id', 'applicant_id']
-  }).then(room => {
-    console.log(`Created room called ${room.name}`)
-  })
-  .catch(err => {
-    console.log(`Error creating room ${err}`)
-  })
+  constructor(){
+    super()
+      this.state={
+        name: '',
+        roomId: [],
+        connectionId: [],
+        roomName: '' 
+      }
+  }
+
+// initial setup for getting two connected users into a chatrom with eachother 
+
+  // currentUser.createRoom({
+  //   name: 'general',
+  //   private: true,
+  //   addUserIds: ['recruiterid', 'applicantId']
+  // }).then(room => {
+  //   console.log(`Created room called ${room.name}`)
+  // })
+  // .catch(err => {
+  //   console.log(`Error creating room ${err}`)
+  // })
 
 
-function FloatingActionButtons(props) {
+// if(this.props.recruiter_decision === this.props.applicant_decision){
+//   axios.get(`/api/rooms/users`)
+//   console.log('-------Get New Connection Room',res)
+// }).then(room => {
+//   console.log(`Created room called ${room.name}`)
+//   }).catch(err => console.log('Error getting room started',err))
+// }
+
+
+
+  render() {
   const { classes } = props;
+
+// handleClick = ()> {
+
+// }
 
 
   return (
-    
+    <div>
     <div className="backgroundhands" className={classes.root}>
 
 
@@ -93,8 +112,9 @@ function FloatingActionButtons(props) {
 
     <div className="button2">
       <Link to ="/Messages">
-      {/* onClick={() => this.setState ({ connectionId.createChatRoom })}  */}
-      <Button  variant="extendedFab" aria-label="Message" className={classes.button2}>
+      
+      <Button onClick={() => this.currentUser.createRoom }  variant="extendedFab" aria-label="Message" className={classes.button2}>
+      {/* <Button onClick={this.currentUser.createRoom} */}
         <QuestionAnswer />
        Send A Message
       </Button>
@@ -105,14 +125,16 @@ function FloatingActionButtons(props) {
       </div>
 
     </div>
+    </div>
   );
 }
+}
 
-FloatingActionButtons.propTypes = {
+JobMatched.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FloatingActionButtons);
+export default withStyles(styles)(JobMatched);
 
 
 
