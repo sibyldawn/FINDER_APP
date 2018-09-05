@@ -191,8 +191,4 @@ ChatWindow.propTypes = {
 };
 
 
-<<<<<<< HEAD
-export default withRouter(withStyles(styles, { withTheme: true })(ChatWindow));
-=======
 export default  withRouter(withStyles(styles, { withTheme: true })(ChatWindow));
->>>>>>> 6975d1074a22b57b1a4eb547c10984d906006b7f
