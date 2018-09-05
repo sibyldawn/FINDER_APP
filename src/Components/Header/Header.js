@@ -28,11 +28,11 @@ const styles = {
         
     },
     flex: {
-        fontFamily: 'Baloo Bhai',
+        fontFamily: 'Baloo Bhai, arial',
         color: '#5ACCC1',
         flexGrow: 1,
         fontSize: '2.5rem',
-        textShadow: '2px 2px 1px rgba(152, 150, 161, 1)',
+        textShadow: '1.5px 1.5px 0px #3fa5b5',
     },
     menuButton: {
         color: '#5ACCC1',
@@ -94,7 +94,7 @@ class Header extends Component {
         return (
             <div className={classes.root}>
                 <AppBar className={classes.root} position="static">
-                    <Toolbar className={classes.flex}>
+                    <Toolbar className={classes.ToolBar}>
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
                         <MenuIcon style={{ fontSize: 30  }} />
                     </IconButton>
