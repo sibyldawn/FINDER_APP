@@ -12,7 +12,7 @@ import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
 import Chatkit from '@pusher/chatkit';
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition ,TransitionGroup } from "react-transition-group";
 
 const styles = theme => ({
   formControl: {
@@ -79,17 +79,6 @@ class App extends React.Component {
 
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
-  //   if(data !== false ){
-  //     const name = `${data[0].applicant_id} + ${data[0].recruiter_id}`
-
-  //     this.setState({
-  //     user1: data[0].applicant_id,
-  //     user2: data[0].recruiter_id,
-  //     roomName: name,
-  //     connection_id: data[0].id
-  //     },()=>{this.connectToChat()})
-      
-  // }
   };
 
   connectToChat=()=>{
@@ -162,13 +151,6 @@ console.log("new ROOM=====>", newRoom)
   }).catch( err => console.log("Room not recorded", err))
 }
 
-  joinRoom =()=>{
-    this.currentUser.joinRoom({
-        roomId: this.state.room_id
-      }).then(room => {
-      console.log(`Joined room with ID: ${this.state.room_id}`);
-    }).catch(err => console.log("Error joining room", err))
-  }
 
   handleChange = (prop, val) => {
     this.setState({
@@ -207,7 +189,10 @@ console.log("new ROOM=====>", newRoom)
     return (
       context.login ?
         <div className="card-container">
-          <CSSTransition
+
+
+        <TransitionGroup>
+            <CSSTransition
           in={appearHome}
           appear={true}
           timeout={600}
@@ -221,7 +206,8 @@ console.log("new ROOM=====>", newRoom)
                   renderButtons={this.renderButtons}
                   infinite={false}
                 />
-          </CSSTransition>
+              </CSSTransition>
+          </TransitionGroup>
         </div>
       :
       <div className="NoUser">No user logged in.</div>
