@@ -11,9 +11,13 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import axios from 'axios'
 import './Settings.css';
 
 const styles = theme => ({
@@ -57,7 +61,21 @@ class Settings extends React.Component {
         isrecruiter: this.props.context.user.isrecruiter || false,
         active: this.props.context.user.active || false,
         email: this.props.context.user.email,
-        open: false
+        open: false,
+        confirm: false,
+        snack: false
+    }
+
+    toggleValue = (field) => {
+        this.setState({
+            [field]: !this.state[field]
+        }, () => axios.put('/api/user/toggle', { field, value: this.state[field], id: this.props.context.user.id})
+            .then(res => {
+                this.props.context.methods.checkForLogin()
+                console.log('------------ res', res)
+            })
+        )
+        
     }
 
     handleChange = (field, val) => {
@@ -67,16 +85,35 @@ class Settings extends React.Component {
         })
     }
 
-    handleClickOpen = () => {
-        this.setState({ open: true });
-    };
-    
-    handleClose = () => {
-        this.setState({ open: false });
-    };
+    deleteProfile = () => {
+        axios.delete(`/api/user?id=${this.props.context.user.id}`).then(res => {
+            console.log('------------ Delete profile response', res)
+            this.props.context.methods.checkForLogin()
+            this.props.history.push('/')
+        }).catch(error => console.log('------------ deleteProfile error', error))
+    }
+
+    submitEmail = () => {
+        const { email } = this.state
+
+        // Test the email for correct formatting
+        if(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
+            axios.put('/api/user/email', { email: this.state.email, id: this.props.context.user.id }).then(res => {
+                console.log('------------ submitEmail res', res.data)
+                this.setState({
+                    open: false
+                }, this.props.context.methods.checkForLogin())
+            }).catch(error => console.log('------------ submitEmail error', error))
+        } else {
+            this.setState({
+                snack: true
+            })
+        }
+    }
 
     render() {
         const { classes } = this.props;
+        console.log('------------ this.state', this.state)
         console.log('------------ this.props.context.user', this.props.context.user)
         return (
             <div className={classes.container}>
@@ -86,7 +123,7 @@ class Settings extends React.Component {
                         control={
                             <Switch
                                 checked={this.state.isrecruiter}
-                                onChange={() => this.handleChange('isrecruiter', !this.state.isrecruiter)}
+                                onChange={() => this.toggleValue('isrecruiter')}
                                 value="isrecruiter"
                                 classes={{
                                     switchBase: classes.colorSwitchBase,
@@ -101,7 +138,7 @@ class Settings extends React.Component {
                         control={
                             <Switch
                                 checked={this.state.active}
-                                onChange={() => this.handleChange('active', !this.state.active)}
+                                onChange={() => this.toggleValue('active')}
                                 value="active"
                                 classes={{
                                     switchBase: classes.colorSwitchYellow,
@@ -113,14 +150,14 @@ class Settings extends React.Component {
                         label='Account active'
                     />
                     <Button 
-                        onClick={this.handleClickOpen}
+                        onClick={() => this.handleChange('open', true)}
                         variant='contained' 
                         className={classes.button}>
                             Edit Email Address
                     </Button>
                     <Dialog
                         open={this.state.open}
-                        onClose={this.handleClose}
+                        onClose={() => this.handleChange('open', false)}
                         aria-labelledby="form-dialog-title"
                     >
                         <DialogTitle id="form-dialog-title">Edit Email Address</DialogTitle>
@@ -137,10 +174,10 @@ class Settings extends React.Component {
                             />
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">
+                            <Button onClick={() => this.handleChange('open', false)} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={this.handleClose} color="primary">
+                            <Button onClick={() => this.submitEmail()} color="primary">
                                 Submit
                             </Button>
                         </DialogActions>
@@ -148,12 +185,12 @@ class Settings extends React.Component {
                     <Button 
                         variant='contained'
                         color='secondary'
-                        onClick={this.handleClickOpen}>
+                        onClick={() => this.handleChange('confirm', true)}>
                             Delete Profile
                     </Button>
                     <Dialog
-                        open={this.state.open}
-                        onClose={this.handleClose}
+                        open={this.state.confirm}
+                        onClose={() => this.handleChange('confirm', false)}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                     >
@@ -164,14 +201,39 @@ class Settings extends React.Component {
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">
+                            <Button onClick={() => this.handleChange('confirm', false)} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={this.handleClose} color="primary" autoFocus>
+                            <Button onClick={() => this.deleteProfile()} color="secondary" autoFocus>
                                 Confirm
                             </Button>
                         </DialogActions>
                     </Dialog>
+                    <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            open={this.state.snack}
+                            autoHideDuration={6000}
+                            onClose={() => this.handleChange('snack', false)}
+                            ContentProps={{
+                                'aria-describedby': 'message-id',
+                            }}
+                            variant='success'
+                            message={<span id="message-id">Please enter a valid email address</span>}
+                            action={[
+                                <IconButton
+                                    key="close"
+                                    aria-label="Close"
+                                    color="inherit"
+                                    className={classes.close}
+                                    onClick={() => this.handleChange('snack', false)}
+                                >
+                                    <CloseIcon />
+                                </IconButton>,
+                            ]}
+                        />
                 </div>
             </div>
         );

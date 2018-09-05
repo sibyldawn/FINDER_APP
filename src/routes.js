@@ -25,8 +25,7 @@ export default (
             <Route  path="/Matches" component={Matches}/>
             <Route  path="/Settings" component={Settings}/>
             <Route  path="/JobMap" component={JobMap}/>
-            <Route  path="/Messages" component={Messages}/>
-            <Route  path="/ChatWindow" component={ChatWindow}/>
+            <Route  path="/Messages" component={ChatWindow}/>
             <Route  path="/JobMatched" component={JobMatched}/>
             <Route  path="/Card" component={Card}/>
             <Route path="/messagefeed/:room_id" component={MessageFeed}/>

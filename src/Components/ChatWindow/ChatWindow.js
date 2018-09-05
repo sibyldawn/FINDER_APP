@@ -15,6 +15,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router-dom';
 
 function TabContainer({ children, dir }) {
   return (
@@ -133,20 +134,7 @@ sendMessage=(text)=>{
     })
 }
 
-createRoom=(name)=>{
-    this.currentUser.createRoom({
-        name,
-        private: true,
-        addUserIds: ['Admin','finder_test1']//Add user 1 and user 2
-    })
-    .then(room => {
-        console.log("new room Id", room.data);
-        this.subscribeToRoom(room.id)})
-    .catch(err => console.log('create room error',err))
-}
 
-
-   
 
   render() {
     const { classes, theme } = this.props;
@@ -203,4 +191,8 @@ ChatWindow.propTypes = {
 };
 
 
+<<<<<<< HEAD
 export default withRouter(withStyles(styles, { withTheme: true })(ChatWindow));
+=======
+export default  withRouter(withStyles(styles, { withTheme: true })(ChatWindow));
+>>>>>>> 6975d1074a22b57b1a4eb547c10984d906006b7f

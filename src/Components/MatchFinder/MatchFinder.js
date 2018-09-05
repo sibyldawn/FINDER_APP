@@ -31,7 +31,7 @@ class App extends React.Component {
         room_id: 0,
         roomName: '',
         connection_id:0,
-        messages:[]
+        joinedRooms:[]
       }
 
       this.deck = React.createRef();
@@ -103,43 +103,62 @@ class App extends React.Component {
     chatManager.connect()
     .then(currentUser => {
         this.currentUser = currentUser
-        this.createRoom()
+        //Check if room has been made
+        this.getRooms()
+
         
         
     })
     .catch( err => console.log("ERROR JOINING ROOM",err))
   }
 
-  createRoom=()=>{
-    const { roomName, user1, user2 } = this.state;
-    this.currentUser.createRoom({
-        name: roomName,
-        private: true,
-        addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
-    })
-    .then(room => {
-        console.log("new room Id", room.data);
-          this.setState({
-              room_id: room.id
-    },()=>{this.sendRoomToDB()})
-      
-    }) .catch(err => console.log('create room error',err))
-  }
+getRooms=()=>{
+  this.currentUser.getJoinableRooms()
+  .then(joinableRooms => {
+      this.setState({
+          joinedRooms: this.currentUser.rooms 
+      },()=>{this.createRoomOrNot()}) 
+  })
+  .catch( err => console.log("ERROR FINDING ROOM",err))
 
-  sendRoomToDB=()=>{
+}
 
-    const newRoom = {
-      connection_id: this.state.connection_id,
-      room_id:+this.state.room_id,
-      room_name: this.state.roomName
-  }
-  console.log("new ROOM=====>", newRoom)
-    axios.post('/api/rooms',newRoom).then( response => {
-      console.log("new room =====>", response);
-      this.joinRoom()
-    }).catch( err => console.log("Room not recorded", err))
-  }
 
+createRoomOrNot=()=>{
+  const { joinedRooms ,roomName} = this.state;
+  const roomExists = joinedRooms.some(roomName)
+  if( !roomExists ){
+  const { roomName, user1, user2 } = this.state;
+  this.currentUser.createRoom({
+      name: roomName,
+      private: true,
+      addUserIds: [`${user1}`,`${user2}`]//Add user 1 and user 2
+  })
+  .then(room => {
+      console.log("new room Id", room.data);
+        this.setState({
+            room_id: room.id
+   },()=>{this.sendRoomToDB()})
+    
+  }) .catch(err => console.log('create room error',err))
+ }else{
+  console.log(`Room ${roomName} already exists`);
+ }
+}
+
+sendRoomToDB=()=>{
+
+  const newRoom = {
+    connection_id: this.state.connection_id,
+    room_id:+this.state.room_id,
+    room_name: this.state.roomName
+}
+console.log("new ROOM=====>", newRoom)
+  axios.post('/api/rooms',newRoom).then( response => {
+    console.log("new room =====>", response);
+
+  }).catch( err => console.log("Room not recorded", err))
+}
 
   joinRoom =()=>{
     this.currentUser.joinRoom({
