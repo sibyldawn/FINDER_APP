@@ -7,6 +7,7 @@ import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
 import './JobMatched.scss';
 import { Link } from 'react-router-dom';
 import handshake from './handshake.png';
+import axios from 'axios';
 
 const styles = theme => ({
   root:{
@@ -35,15 +36,92 @@ const styles = theme => ({
 
 
 
+class JobMatched extends Component {
+
+
+  constructor(){
+    super()
+      this.state={
+        name: '',
+        roomId: [],
+        connectionId: [],
+        roomName: '' 
+      }
+  }
+
+// initial setup for getting two connected users into a chatrom with eachother 
+
+  // currentUser.createRoom({
+  //   name: 'general',
+  //   private: true,
+  //   addUserIds: ['recruiterid', 'applicantId']
+  // }).then(room => {
+  //   console.log(`Created room called ${room.name}`)
+  // })
+  // .catch(err => {
+  //   console.log(`Error creating room ${err}`)
+  // })
+
+
+// if(this.props.recruiter_decision === this.props.applicant_decision){
+//   axios.get(`/api/rooms/users`)
+//   console.log('-------Get New Connection Room',res)
+// }).then(room => {
+//   console.log(`Created room called ${room.name}`)
+//   }).catch(err => console.log('Error getting room started',err))
+// }
+
+
+//Leave a room with ID- someRoomId: pushercode
+//this funcitonality happens inside of the chat room
+
+
+// currentUser.leaveRoom({ roomId: someRoomID })
+//   .then(room => {
+//     console.log(`Left room with ID: ${room.id}`)
+//   })
+//   .catch(err => {
+//     console.log(`Error leaving room ${someRoomID}: ${err}`)
+//   })
+
+// currentUser.leaveRoom(
+//   roomId = someRoomId
+// ).wait().let { result ->
+//   when(result) { // Result<Int, Error>
+//     is Result.Success -> toast("CurrentUser left room: ${result.value.name}.")
+//     is Result.Failure -> toast("Oops, something bad happened: ${result.error}")
+//   }
+// }
+
+//Fetching an attachment
+
+// currentUser.fetchAttachment(
+//   attachmentUrl = message.link
+// ).wait().let { result -> // Future<Result<FetchedAttachment, Error>>
+//   when(result) { // Result<Int, Error>, either the new message id or an error
+//     is Result.Success -> toast("Loaded attachment: ${result.value.link}.")
+//     is Result.Failure -> toast("Oops, something bad happened: ${result.error}")
+//   }
+// }
 
 
 
-function FloatingActionButtons(props) {
-  const { classes } = props;
+
+
+
+
+
+
+  render() {
+  const { classes } = this.props;
+
+// handleClick = ()> {
+
+// }
 
 
   return (
-    
+    <div>
     <div className="backgroundhands" className={classes.root}>
 
 
@@ -73,7 +151,9 @@ function FloatingActionButtons(props) {
 
     <div className="button2">
       <Link to ="/Messages">
-      <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
+      
+      <Button onClick={() => this.currentUser.createRoom }  variant="extendedFab" aria-label="Message" className={classes.button2}>
+      {/* <Button onClick={this.currentUser.createRoom} */}
         <QuestionAnswer />
        Send A Message
       </Button>
@@ -84,20 +164,18 @@ function FloatingActionButtons(props) {
       </div>
 
     </div>
+    </div>
   );
 }
+}
 
-FloatingActionButtons.propTypes = {
+JobMatched.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FloatingActionButtons);
+export default withStyles(styles)(JobMatched);
 
 
-
-//<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/CSSPlugin.min.js"></script>
-//<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/easing/EasePack.min.js"></script>
-//<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenLite.min.js"></script>
 
 
 
@@ -114,8 +192,6 @@ export default withStyles(styles)(FloatingActionButtons);
 
 
 
-//green sock dev tools code
-//<script src="js/gsap/GSDevTools.min.js"></script>
 
 
 //Instantiate GSDevTools    

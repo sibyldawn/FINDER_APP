@@ -34,8 +34,8 @@ attachment text
 
 create table connections(
 id serial primary key,
-recruiter_id text,
-applicant_id text,
+recruiter_id integer,
+applicant_id integer,
 recruiter_decision boolean,
 applicant_decision boolean
 );
