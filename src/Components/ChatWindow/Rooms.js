@@ -10,6 +10,9 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
+import axios from 'axios';
+import { promises } from 'fs';
+import Room from './Room';
 
 const styles = theme => ({
   root: {
@@ -19,20 +22,31 @@ const styles = theme => ({
   },
 });
 class Rooms extends Component {
+    constructor(props){
+      super(props);
 
+      this.state={
+        sender: {}
+      }
+    }
+   
     render() {
-        const rooms =this.props.rooms.map(room => {
-        //     const otherUserId = room.filter( (e => {
-        //      if(e.id !== this.props.chat_user.id){
-        //        return e
-        //       } 
-        //    }))
-             return (
-                 <ListItem button key={room.id} onClick={()=>this.props.handleChangeIndex(1)}>
-                 <ListItemText  primary={`${room.name}`} onClick={() => this.props.subscribeToRoom(room.id)}/>
-                 </ListItem>
-             )
-         })
+      console.log("currentUser", this.props.user.id);
+      const rooms =this.props.rooms.map(room => {
+        const otherUserIndex = room.userIds.findIndex( e => e !== this.props.user.id )
+        const id = room.userIds[otherUserIndex]
+        console.log("otherUSerId", id);
+        return (
+        <div key={room.id} onClick={()=>this.props.handleChangeIndex(1)}>
+        <div onClick={() => this.props.subscribeToRoom(room.id)}>
+        <Room id={room.id} otherUserId={id} />
+        </div>
+        </div>
+        )
+      })
+
+
+        
       
     const { classes } = this.props;
         return (
@@ -43,7 +57,7 @@ class Rooms extends Component {
     </div>
   );
  }
-} 
+}
 
 Rooms.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -57,29 +71,3 @@ export default withStyles(styles)(Rooms);
 
 
 
-
-
-
-
-
-
-// import React, { Component } from 'react';
-
-// export default class Rooms extends Component {
-//     render() {
-//         console.log("rooms", this.props.rooms);
-//         return (
-//             <div className="rooms-list">
-        
-//                 {this.props.rooms.map(room => {
-//                     const active = this.props.roomId === room.id ? "active" : "";
-//                     return (
-//                         <li key={room.id} className={"room" + active}>
-//                             <a  href="#" onClick={() => this.props.subscribeToRoom(room.id)}>#{room.name}</a>
-//                         </li>
-//                     )
-//                 })}
-//             </div>
-//         );
-//     }
-// }

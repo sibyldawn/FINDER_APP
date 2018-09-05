@@ -20,11 +20,17 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     marginTop: 100,
     width: 200,
+    color: 'white',
+    background: 'linear-gradient(to right, #0099ff 0%, #5accc1 100%)',
+    textDecoration: 'none',
   },
   button2: {
     margin: theme.spacing.unit,
     // position: 'absolute',
     width: 200,
+    color: 'white',
+    background: 'linear-gradient(to right, #0099ff 0%, #5accc1 100%)',
+    textDecoration: 'none',
     
   },
 
@@ -143,7 +149,7 @@ class JobMatched extends Component {
     <Link to ="/">
       <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
-        <a href=""> Keep Job Matching!</a> 
+         Keep Job Matching!
       </Button>
       </Link>
       </div>

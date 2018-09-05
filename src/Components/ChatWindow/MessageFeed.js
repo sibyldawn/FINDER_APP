@@ -19,9 +19,6 @@ export default class MessageFeed extends React.Component {
         }
     }
 
-
-
-
     render() {
         if(!this.props.roomId){
             return (
@@ -35,6 +32,7 @@ export default class MessageFeed extends React.Component {
         return (
             <div className='message-list' ref={this.messagelist} onScroll={this.onScroll}>
                 {this.props.messages.map((message,index) => {
+                    console.log("MESSAGE", message);
                     return(
                         <Message key={message.id} username={message.senderId}  text={message.text}/>
 
