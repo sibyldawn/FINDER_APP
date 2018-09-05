@@ -54,6 +54,22 @@ app.get('/api/user', controller.getUser)
 app.get('/api/users/filter', controller.getUsersCards)
 app.get('/api/users/zipcodes',controller.getAllUsersZipCodes)
 app.get('/api/users/industry_code',controller.getUserIndustryCodes)
+app.put('/api/user/email', controller.updateEmail)
+app.put('/api/user/toggle', controller.userToggle)
+app.delete('/api/user', (req, res) => {
+    const dbInstance = req.app.get('db')
+    const { id } = req.query
+
+    dbInstance.query(`delete from users where id = ${id}`)
+    .then(user => {
+        req.session.destroy()
+        res.status(200).send('User delete success!')
+    })
+    .catch(error => {
+        console.log('------------ deeteUser error', error)
+        res.status(500).send('Delete User Error!')
+    })
+})
 
 // Cloudinary endpoints
 app.get('/api/upload', (req, res) => {
@@ -168,7 +184,7 @@ app.get('/auth/callback', (req, res) => {
                     picture: picture,
                     email: email
                 }
-                return db.add_applicant(createUserData).then(newUsers => {
+                return db.add_user(createUserData).then(newUsers => {
                     const user = newUsers[0]
                     console.log('------------ newUsers', newUsers)
                     req.session.user = user // Here is session again

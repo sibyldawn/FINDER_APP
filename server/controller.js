@@ -96,7 +96,8 @@ var self = module.exports = {
             on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
             where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
             and industry_code = '${industry}' 
-            and isrecruiter = '${recruiter}';`)
+            and isrecruiter = '${recruiter}'
+            and active = 'true';`)
         .then(users => { console.log('------------ users', users); res.status(200).send(users)})
         .catch(error => {
             res.status(500).send('Error retrieving Users!')
@@ -204,5 +205,35 @@ var self = module.exports = {
         dbInstance.add_chatroom([connection_id,room_id,room_name]).then( response => {
             res.status(200).send(response)
         }).catch(err => console.log("Error adding room",err));
+    },
+
+    updateEmail(req, res) {
+        const dbInstance = req.app.get('db')
+        const { email, id } = req.body;
+
+        dbInstance.update_email({ email, id })
+        .then(user => {
+            req.session.user = user[0]
+            res.status(200).send(user)
+        })
+        .catch(error => {
+            console.log('------------ updateEmail error', error)
+            res.status(500).send('Error updating email!')
+        })
+    },
+
+    userToggle(req, res) {
+        const dbInstance = req.app.get('db')
+        const { field, value, id } = req.body;
+
+        dbInstance.query(`update users set "${field}" = ${value} where id = ${id} returning *`)
+        .then(user => {
+            req.session.user = user[0]
+            res.status(200).send(user)
+        })
+        .catch(error => {
+            console.log('------------ userToggle error', error)
+            res.status(500).send('Error Toggling Value!')
+        })
     }
 }

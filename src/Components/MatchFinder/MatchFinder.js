@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { MatchAnimation } from '../JobMatched/JobMatched'
 import 'react-motion-stack/build/motion-stack.css';
 import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
@@ -109,7 +110,7 @@ class App extends React.Component {
         
     })
     .catch( err => console.log("ERROR JOINING ROOM",err))
-}
+  }
 
 getRooms=()=>{
   this.currentUser.getJoinableRooms()
@@ -159,14 +160,19 @@ console.log("new ROOM=====>", newRoom)
   }).catch( err => console.log("Room not recorded", err))
 }
 
+  joinRoom =()=>{
+    this.currentUser.joinRoom({
+        roomId: this.state.room_id
+      }).then(room => {
+      console.log(`Joined room with ID: ${this.state.room_id}`);
+    }).catch(err => console.log("Error joining room", err))
+  }
 
   handleChange = (prop, val) => {
     this.setState({
       [prop]: val
     })
   }
-
- 
 
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {

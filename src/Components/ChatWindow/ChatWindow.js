@@ -3,6 +3,7 @@ import MessageFeed from './MessageFeed';
 import ChatForm from './ChatForm';
 import Chatkit from '@pusher/chatkit';
 import { withContext } from '../../ContextAPI/Context_HOC'
+import { withRouter } from 'react-router-dom'
 import Rooms from './Rooms';
 import './ChatWindow.css'
 import NewRoom from './NewRoom';
@@ -14,7 +15,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
-import { withRouter } from 'react-router-dom';
 
 function TabContainer({ children, dir }) {
   return (
