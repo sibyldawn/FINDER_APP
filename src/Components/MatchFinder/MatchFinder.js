@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import { MatchAnimation } from '../JobMatched/JobMatched'
+import JobMatched from '../JobMatched/JobMatched'
 import 'react-motion-stack/build/motion-stack.css';
 import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
@@ -31,7 +31,8 @@ class App extends React.Component {
         room_id: 0,
         roomName: '',
         connection_id:0,
-        joinedRooms:[]
+        joinedRooms:[],
+        match: false
       }
 
       this.deck = React.createRef();
@@ -66,6 +67,7 @@ class App extends React.Component {
         const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
   
         this.setState({
+        matched: true,
         user1: res.data[0].applicant_id,
         user2: res.data[0].recruiter_id,
         roomName: name,
@@ -211,6 +213,7 @@ console.log("new ROOM=====>", newRoom)
             renderButtons={this.renderButtons}
             infinite={false}
           />
+          {this.state.matched && <JobMatched />}
         </div>
       :
       <div>No user logged in.</div>

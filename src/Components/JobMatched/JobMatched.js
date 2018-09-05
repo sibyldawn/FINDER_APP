@@ -36,7 +36,7 @@ const styles = theme => ({
 
 
 
-class JobMatched extends Component {
+class JobMatched extends React.Component {
 
 
   constructor(){
