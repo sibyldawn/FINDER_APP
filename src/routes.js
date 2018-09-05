@@ -7,7 +7,6 @@ import ProfileSettings from './Components/ProfileSettings/ProfileSettings';
 import Matches from './Components/Matches/Matches';
 import Settings from './Components/Settings/Settings';
 import JobMap from './Components/JobMap/JobMap';
-import Messages from './Components/Messages/Messages';
 import ChatWindow from './Components/ChatWindow/ChatWindow';
 import JobMatched from './Components/JobMatched/JobMatched';
 import Header from './Components/Header/Header';

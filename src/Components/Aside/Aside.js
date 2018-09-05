@@ -32,7 +32,7 @@ class Aside extends Component {
   const { classes } = this.props;
   return (
     <div className={classes.root}>
-     
+
       <List>
         <Link to="/profile"><ListItem>
           <Avatar>
@@ -62,14 +62,6 @@ class Aside extends Component {
         </ListItem>
         </Link>
       </List>
-      <div><FormGroup>
-          <FormControlLabel
-            control={
-              <Switch /*checked={active}*/ onChange={this.handleChange} aria-label="ActiveSwitch" />
-            }
-            label='Active'
-          />
-        </FormGroup></div>
     </div>
   );
  }

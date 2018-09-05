@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,6 +19,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import axios from 'axios'
+import helpIcon from '../../assets/help-icon.svg'
 import './Settings.css';
 
 const styles = theme => ({
@@ -63,7 +65,18 @@ class Settings extends React.Component {
         email: this.props.context.user.email,
         open: false,
         confirm: false,
-        snack: false
+        snack: false,
+        snackMessage: ''
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.context.user !== prevProps.context.user) {
+            this.setState({
+                email: this.props.context.user.email,
+                isrecruiter: this.props.context.user.isrecruiter,
+                active: this.props.context.user.active
+            })
+        }
     }
 
     toggleValue = (field) => {
@@ -96,16 +109,19 @@ class Settings extends React.Component {
     submitEmail = () => {
         const { email } = this.state
 
-        // Test the email for correct formatting
+        // Test the email input for correct formatting
         if(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
             axios.put('/api/user/email', { email: this.state.email, id: this.props.context.user.id }).then(res => {
                 console.log('------------ submitEmail res', res.data)
                 this.setState({
+                    snackMessage: 'Email updated',
+                    snack: true,
                     open: false
                 }, this.props.context.methods.checkForLogin())
             }).catch(error => console.log('------------ submitEmail error', error))
         } else {
             this.setState({
+                snackMessage: 'Please enter a valid email address',
                 snack: true
             })
         }
@@ -134,6 +150,9 @@ class Settings extends React.Component {
                         }
                         label='I am a recruiter'
                     />
+                    <Tooltip title='If you represent a company and are looking for applicants, turn this on.'>
+                        <img src={ helpIcon } alt='Help' />
+                    </Tooltip>
                     <FormControlLabel
                         control={
                             <Switch
@@ -149,6 +168,9 @@ class Settings extends React.Component {
                         }
                         label='Account active'
                     />
+                    <Tooltip title="When toggled off, this account will cease to show up in other users' match queue.">
+                        <img src={ helpIcon } alt='Help' />
+                    </Tooltip>
                     <Button 
                         onClick={() => this.handleChange('open', true)}
                         variant='contained' 
@@ -221,7 +243,7 @@ class Settings extends React.Component {
                                 'aria-describedby': 'message-id',
                             }}
                             variant='success'
-                            message={<span id="message-id">Please enter a valid email address</span>}
+                            message={<span id="message-id">{this.state.snackMessage}</span>}
                             action={[
                                 <IconButton
                                     key="close"
