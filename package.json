@@ -33,6 +33,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-swipeable-views": "^0.12.17",
+    "react-transition-group": "^2.4.0",
     "reactjs-popup": "^1.2.0",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1"
@@ -41,7 +42,6 @@
     "start-js": "react-scripts start",
     "start": "react-app-rewired start",
     "build": "npm run build-css && react-app-rewired build",
-    "test": "react-app-rewired jest --env=jsdom",
     "test": "jest",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar src/ -o src/",

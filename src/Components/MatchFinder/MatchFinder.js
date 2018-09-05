@@ -12,6 +12,7 @@ import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
 import Chatkit from '@pusher/chatkit';
+import { CSSTransition } from "react-transition-group";
 
 const styles = theme => ({
   formControl: {
@@ -31,7 +32,8 @@ class App extends React.Component {
         room_id: 0,
         roomName: '',
         connection_id:0,
-        joinedRooms:[]
+        joinedRooms:[],
+        appearHome: true
       }
 
       this.deck = React.createRef();
@@ -188,6 +190,9 @@ console.log("new ROOM=====>", newRoom)
   render() {
     console.log("CHAT ROOMS=======>", this.state);
 
+    const {appearHome} = this.state;
+
+
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
       console.log('------------ userCards', userCards)
@@ -201,19 +206,25 @@ console.log("new ROOM=====>", newRoom)
     console.log(this.deck)
     return (
       context.login ?
-        <div className="demo-wrapper">
- 
-          <MotionStack
-            data={data}
-            onSwipeEnd={this.onSwipeEnd}
-            onBeforeSwipe={this.onBeforeSwipe}
-            render={props => props.element}
-            renderButtons={this.renderButtons}
-            infinite={false}
-          />
+        <div className="card-container">
+          <CSSTransition
+          in={appearHome}
+          appear={true}
+          timeout={600}
+          classNames="fade">
+            
+                <MotionStack
+                  data={data}
+                  onSwipeEnd={this.onSwipeEnd}
+                  onBeforeSwipe={this.onBeforeSwipe}
+                  render={props => props.element}
+                  renderButtons={this.renderButtons}
+                  infinite={false}
+                />
+          </CSSTransition>
         </div>
       :
-      <div>No user logged in.</div>
+      <div className="NoUser">No user logged in.</div>
     );
   }
 }
