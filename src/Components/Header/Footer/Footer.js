@@ -18,7 +18,8 @@ const styles = {
   root: {
     position: 'fixed',
     bottom: 0,
-    // height: 50, 
+    width:"100vw",
+    background: "#1F2D44",
     fontSize: 50,
     width: '100vw',
     backgroundColor: '#1F2D44',
