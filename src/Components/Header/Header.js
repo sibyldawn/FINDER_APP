@@ -24,11 +24,10 @@ import logo from '../../Assets/finder.png';
 
 
 const styles = {
+ 
     root: {
         background: '#1F2D44',
         width:'100vw',
-        position: 'fixed',
-        top:0,
         display:'flex',
         justifyContent:"space-evenly",
         flexDirection: "column",
@@ -45,7 +44,7 @@ const styles = {
     menuButton: {
         color: '#5ACCC1',
         position:'fixed',
-        left: 20
+        left: '20px'
     },
     AccountCircle: {
         color: '#5ACCC1',
@@ -106,12 +105,14 @@ class Header extends Component {
         const open = Boolean(anchorEl);
 
         return (
-            <div className={classes.root}>
+            <div className={classes.wrapper}>
                 <AppBar className={classes.root} position="static">
-                    <Toolbar className={classes.ToolBar}>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon style={{ fontSize: 30  }} />
+                    <Toolbar >
+                        <div onClick={this.toggleDrawer('left', true)} className="menu-icon">
+                    <IconButton  color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
+                        <MenuIcon style={{ fontSize: 30, position:'fixed',top:15,color:'#5ACCC1'}} />
                     </IconButton>
+                    </div>
                     <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                         <div
                             tabIndex={0}
@@ -143,8 +144,8 @@ class Header extends Component {
                         <IconButton
                             aria-owns={open ? 'menu-appbar' : null}
                             aria-haspopup="true"
-                            onClick={context.login ? this.handleMenu : context.methods.login}
                             color="inherit"
+                            
                         >
                         {context.login ?
                             <div>
@@ -154,10 +155,12 @@ class Header extends Component {
                                     height: 33, 
                                     width: 33,
                                     position: 'fixed',
-                                    top:12,
-                                    right: 30,
+                                    top:'12px',
+                                    right: '30px',
                                     overflow: 'hidden',
-                                    borderRadius: '50%' }}>
+                                    borderRadius: '50%' }}
+                                    onClick={this.handleMenu}
+                                    >
                                     <img style={{ 
                                         display: 'inline',
                                         height: '100%',
@@ -170,10 +173,9 @@ class Header extends Component {
                                 </figure>
                             </div>
                             :
-                            <AccountCircle className={classes.AccountCircle} />
+                            <AccountCircle className={classes.AccountCircle} onClick={ context.methods.login}/>
                         }
                         </IconButton>
-                        
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -188,8 +190,9 @@ class Header extends Component {
                             open={open}
                             onClose={this.handleClose}
                             >
-                            <MenuItem onClick={this.handleClose}><div onClick={context.methods.logout}>Logout</div></MenuItem>
-                        </Menu>
+                             <MenuItem onClick={this.handleClose}><div onClick={context.methods.logout}>Logout</div></MenuItem>
+                            </Menu>
+                     
                     </div>
                     )}
                     </Toolbar>
@@ -204,3 +207,5 @@ Header.propTypes = {
 };
 
 export default withContext(withRouter(withStyles(styles)(Header)))
+
+
