@@ -31,8 +31,31 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     width: '100vw',
+    position:'fixed',
+    top:60,
+    color:'white'
+  },
+  container: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  roomListContainer: {
+    width: '15%',
+    padding: 20,
+    backgroundColor: '#2c303b',
+    color: 'white',
+  },
+  chatContainer: {
+    display: 'flex',
+    flex: 1
+  },
+  chatListContainer: {
+    padding: 20,
+    width: '85%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -149,8 +172,16 @@ sendMessage=(text)=>{
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
     console.log("CHATWINDOW room_users", this.state.room_users);
+    const styles = {
+       
+        
+        
+       
+      }
+  
     return (
-        <div>
+        <div className={classes.container}>
+        
         {this.state.user ? <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
@@ -165,12 +196,13 @@ sendMessage=(text)=>{
 
           </Tabs>
         </AppBar>
+        <div className={classes.chatContainer}>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>
+          <TabContainer dir={theme.direction} className={classes.roomListContainer}>
           <Rooms rooms={[...this.state.joinedRooms]}
                        roomId ={this.state.roomId}//axios get from db
                        subscribeToRoom={this.subscribeToRoom}
@@ -182,12 +214,13 @@ sendMessage=(text)=>{
 
                 />
           </TabContainer>
-          <TabContainer dir={theme.direction}>
+          <TabContainer dir={theme.direction} className={classes.chatListContainer}>
           <MessageFeed messages={this.state.messages} roomId={this.state.roomId}/>
           <ChatForm sendMessage={this.sendMessage } disabled={!this.state.roomId}/>
           </TabContainer>
    
         </SwipeableViews>
+        </div>
       </div>
     :
         <div>

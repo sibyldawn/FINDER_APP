@@ -19,12 +19,19 @@ import Drawer from '@material-ui/core/Drawer';
 import Aside from '../Aside/Aside';
 import axios from 'axios';
 import './Header.css';
+import logo from '../../Assets/finder.png'
 
 
 const styles = {
     root: {
         background: '#1F2D44',
-        flexGrow: 1,
+        width:'100vw',
+        position: 'fixed',
+        top:0,
+        display:'flex',
+        justifyContent:"space-evenly",
+        flexDirection: "column",
+        flexGrow: 1
         
     },
     flex: {
@@ -36,16 +43,22 @@ const styles = {
     },
     menuButton: {
         color: '#5ACCC1',
-        marginLeft: -12,
-        marginRight: 20,
+        position:'fixed',
+        left: 20
     },
     AccountCircle: {
         color: '#5ACCC1',
         fontSize: 30,
+        position:'fixed',
+        right: 20
     },
     ToolBar: {
         color: '#5ACCC1',
         background: '#1F2D44',
+    },
+    logo: {
+        width: 500,
+        margin:'0 auto'
     }
 
 };
@@ -108,9 +121,22 @@ class Header extends Component {
                             <Aside/>
                         </div>
                         </Drawer>
-                    <Typography variant="display3"  className={classes.flex}>
-                        finder
-                    </Typography>
+                    <figure style={{ 
+                                    margin: 0, 
+                                    padding: 0, 
+                                    height: 50, 
+                                    position: 'fixed',
+                                    top:0,
+                                    left: 100,
+                                    overflow: 'hidden'
+                                     }}>
+                    <img src={logo} alt="finder logo" style={{ 
+                                        display: 'inline',
+                                        height: '100%',
+                                        width: 'auto', 
+                                        margin: 0, 
+                                        padding: 0 }}  className={classes.logo} />
+                    </figure>
                     {auth && (
                     <div>
                         <IconButton

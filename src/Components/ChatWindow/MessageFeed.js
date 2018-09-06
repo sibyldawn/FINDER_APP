@@ -20,17 +20,23 @@ export default class MessageFeed extends React.Component {
     }
 
     render() {
+        const styles={
+                height: '65vh'
+            
+        }
+
+
         if(!this.props.roomId){
             return (
-                <div className="message-list">
+                <div className="message-list" style={styles}>
                     <div className="join-room">
-                        &larr; Join a room!
+                        &larr; Pick a contact
                     </div>
                 </div>
             )
         }
         return (
-            <div className='message-list' ref={this.messagelist} onScroll={this.onScroll}>
+            <div className='message-list' ref={this.messagelist} onScroll={this.onScroll} style={styles}>
                 {this.props.messages.map((message,index) => {
                     console.log("MESSAGE", message);
                     return(
