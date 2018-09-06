@@ -21,6 +21,8 @@ const styles = {
     width:"100vw",
     background: "#1F2D44",
     fontSize: 50,
+    display:'flex',
+    justifyContent:'space-evenly'
   },
   Messages: {
   

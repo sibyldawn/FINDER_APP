@@ -50,7 +50,7 @@ const styles = {
         color: '#5ACCC1',
         fontSize: 30,
         position:'fixed',
-        right: 20
+        right: 30
     },
     ToolBar: {
         color: '#5ACCC1',
@@ -124,10 +124,10 @@ class Header extends Component {
                     <figure style={{ 
                                     margin: 0, 
                                     padding: 0, 
-                                    height: 50, 
+                                    height: 45, 
                                     position: 'fixed',
                                     top:0,
-                                    left: 100,
+                                    left:100,
                                     overflow: 'hidden'
                                      }}>
                     <img src={logo} alt="finder logo" style={{ 
@@ -152,7 +152,9 @@ class Header extends Component {
                                     padding: 0, 
                                     height: 33, 
                                     width: 33,
-                                    position: 'relative',
+                                    position: 'fixed',
+                                    top:12,
+                                    right: 30,
                                     overflow: 'hidden',
                                     borderRadius: '50%' }}>
                                     <img style={{ 
@@ -160,7 +162,9 @@ class Header extends Component {
                                         height: '100%',
                                         width: 'auto', 
                                         margin: 0, 
-                                        padding: 0 }} 
+                                        padding: 0,
+                                         }} 
+
                                         src={context.user.picture} alt="Profile"/>
                                 </figure>
                             </div>
