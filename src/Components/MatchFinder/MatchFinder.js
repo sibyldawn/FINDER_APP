@@ -12,6 +12,7 @@ import UserCard from '../Card/Card';
 import './MatchFinder.css';
 import axios from 'axios'
 import Chatkit from '@pusher/chatkit';
+import { CSSTransition ,TransitionGroup } from "react-transition-group";
 
 const styles = theme => ({
   formControl: {
@@ -32,14 +33,14 @@ class App extends React.Component {
         roomName: '',
         connection_id:0,
         joinedRooms:[],
-        match: false
+        appearHome: true
       }
 
       this.deck = React.createRef();
   }
 
   componentDidMount(){
-    console.log('----------CONTEXT', this.props.context)
+    // console.log('----------CONTEXT', this.props.context)
     axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
       console.log('------------ COMPONENT DID MOUNT GET ID', res)
       this.setState({
@@ -50,8 +51,8 @@ class App extends React.Component {
 
   // Activated after a swipe action on <MotionStack/> is completed. Uses swipe direction.
   onBeforeSwipe = (swipe, direction, state) => {
-    console.log('direction', direction);
-    console.log('state', state.data[0].element.props.id);
+    // console.log('direction', direction);
+    // console.log('state', state.data[0].element.props.id);
     const {auth0_id, isrecruiter, email, first_name} = this.props.context.user
 
     axios.post('/api/user/matches', {
@@ -65,13 +66,13 @@ class App extends React.Component {
       console.log('------------ res ', res )
       if(res.data !== false ){
         const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
-  
+        
+        this.props.context.methods.toggleMatchEvent()
         this.setState({
-        matched: true,
-        user1: res.data[0].applicant_id,
-        user2: res.data[0].recruiter_id,
-        roomName: name,
-        connection_id: res.data[0].id
+          user1: res.data[0].applicant_id,
+          user2: res.data[0].recruiter_id,
+          roomName: name,
+          connection_id: res.data[0].id
         },()=>{this.connectToChat()})
     }})
     swipe();
@@ -79,17 +80,6 @@ class App extends React.Component {
 
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
-  //   if(data !== false ){
-  //     const name = `${data[0].applicant_id} + ${data[0].recruiter_id}`
-
-  //     this.setState({
-  //     user1: data[0].applicant_id,
-  //     user2: data[0].recruiter_id,
-  //     roomName: name,
-  //     connection_id: data[0].id
-  //     },()=>{this.connectToChat()})
-      
-  // }
   };
 
   connectToChat=()=>{
@@ -128,7 +118,7 @@ getRooms=()=>{
 
 createRoomOrNot=()=>{
   const { joinedRooms ,roomName} = this.state;
-  const roomExists = joinedRooms.some(roomName)
+  const roomExists = joinedRooms.includes(roomName)
   if( !roomExists ){
   const { roomName, user1, user2 } = this.state;
   this.currentUser.createRoom({
@@ -162,13 +152,6 @@ console.log("new ROOM=====>", newRoom)
   }).catch( err => console.log("Room not recorded", err))
 }
 
-  joinRoom =()=>{
-    this.currentUser.joinRoom({
-        roomId: this.state.room_id
-      }).then(room => {
-      console.log(`Joined room with ID: ${this.state.room_id}`);
-    }).catch(err => console.log("Error joining room", err))
-  }
 
   handleChange = (prop, val) => {
     this.setState({
@@ -190,6 +173,9 @@ console.log("new ROOM=====>", newRoom)
   render() {
     console.log("CHAT ROOMS=======>", this.state);
 
+    const {appearHome} = this.state;
+
+
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
       console.log('------------ userCards', userCards)
@@ -203,20 +189,27 @@ console.log("new ROOM=====>", newRoom)
     console.log(this.deck)
     return (
       context.login ?
-        <div className="demo-wrapper">
- 
-          <MotionStack
-            data={data}
-            onSwipeEnd={this.onSwipeEnd}
-            onBeforeSwipe={this.onBeforeSwipe}
-            render={props => props.element}
-            renderButtons={this.renderButtons}
-            infinite={false}
-          />
-          {this.state.matched && <JobMatched />}
+        <div className="card-container">
+          <TransitionGroup>
+            <CSSTransition
+              in={appearHome}
+              appear={true}
+              timeout={600}
+              classNames="fade">
+                <MotionStack
+                  data={data}
+                  onSwipeEnd={this.onSwipeEnd}
+                  onBeforeSwipe={this.onBeforeSwipe}
+                  render={props => props.element}
+                  renderButtons={this.renderButtons}
+                  infinite={false}
+                />
+              </CSSTransition>
+          </TransitionGroup>
+          {this.props.context.matchEvent && <JobMatched/>}
         </div>
       :
-      <div>No user logged in.</div>
+        <div className="NoUser">No user logged in.</div>
     );
   }
 }

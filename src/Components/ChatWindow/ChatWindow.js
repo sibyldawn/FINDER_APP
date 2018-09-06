@@ -43,16 +43,16 @@ class ChatWindow extends Component {
         super()
 
         this.state = {
-             roomId: 0,
-             messages:[],
-             joinedRooms: [],
-             id:'',
-             name:'',
-             picture:'',
-             user:{},
-             value:0,
-             room_users:[],
-             sender:{}
+            roomId: 0,
+            messages:[],
+            joinedRooms: [],
+            id:'',
+            name:'',
+            picture:'',
+            user:{},
+            value:0,
+            room_users:[],
+            sender:{}
         }
     }
 
@@ -61,7 +61,7 @@ class ChatWindow extends Component {
     componentDidMount(){
     //change to this.props.context.user.auth0_id
     const name = 'linkedin|c5Bs14lP1I';
-        axios.get(`/users/${name}`).then(response => {
+        axios.get(`/api/users/${name}`).then(response => {
             console.log("FOUND USER", response.data.body);
             this.setState({
                 user: JSON.parse(response.data.body)

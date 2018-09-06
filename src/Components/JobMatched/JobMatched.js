@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
-import './JobMatched.scss';
+import './JobMatched.css';
 import { Link } from 'react-router-dom';
 import handshake from './handshake.png';
+import { withContext } from '../../ContextAPI/Context_HOC'
 import axios from 'axios';
 
 const styles = theme => ({
@@ -20,11 +21,17 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     marginTop: 100,
     width: 200,
+    color: 'white',
+    background: 'linear-gradient(to right, #0099ff 0%, #5accc1 100%)',
+    textDecoration: 'none',
   },
   button2: {
     margin: theme.spacing.unit,
     // position: 'absolute',
     width: 200,
+    color: 'white',
+    background: 'linear-gradient(to right, #0099ff 0%, #5accc1 100%)',
+    textDecoration: 'none',
     
   },
 
@@ -120,29 +127,25 @@ class JobMatched extends React.Component {
 // }
 
 
+
   return (
-    <div>
-    <div className="backgroundhands" className={classes.root}>
-
-
-    <div className="handshake">
-        <div id="handshake"class="animated infinite bounce">
-        <img src={handshake} alt="" height={350} width={350}/>
-        </div> 
-    </div>
-
-
-{/* <div class="animated infinite slideInRight"className="handshake2">
-     <img src={Hand2} alt="" height={150} width={170}/>
-    </div> */}
-  
-  <div className="buttonStyle">
+    <div className='jobmatched-container'>
+      <div className="backgroundhands" className={classes.root}>
+        <div className="handshake">
+            <div id="handshake"class="animated infinite bounce">
+              <img src={handshake} alt="" height={350} width={350}/>
+            </div> 
+        </div>
+    {/* <div class="animated infinite slideInRight"className="handshake2">
+        <img src={Hand2} alt="" height={150} width={170}/>
+        </div> */}
+        <div className="buttonStyle">
 
     <div className="button1">
     <Link to ="/">
-      <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
+      <Button onClick={() => this.props.context.methods.toggleMatchEvent()} variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
-        <a href=""> Keep Job Matching!</a> 
+          Keep Job Matching!
       </Button>
       </Link>
       </div>
@@ -152,7 +155,7 @@ class JobMatched extends React.Component {
     <div className="button2">
       <Link to ="/Messages">
       
-      <Button onClick={() => this.currentUser.createRoom }  variant="extendedFab" aria-label="Message" className={classes.button2}>
+      <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
       {/* <Button onClick={this.currentUser.createRoom} */}
         <QuestionAnswer />
        Send A Message
@@ -173,7 +176,7 @@ JobMatched.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(JobMatched);
+export default withContext(withStyles(styles)(JobMatched));
 
 
 

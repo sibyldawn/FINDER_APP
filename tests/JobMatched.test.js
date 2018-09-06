@@ -6,7 +6,11 @@ const styles = {
       display: 'block',
       justifyContent: 'space-evenly',
       alignContent: 'center',
-    }
+    },
+    button: {
+      marginTop: 100,
+      width: 200,
+    },
 }
 
 test('oh it has to be ALL THE WAY UP! ', () => {
@@ -16,17 +20,10 @@ test('oh it has to be ALL THE WAY UP! ', () => {
 
 
 //test 2 - Eric
-  const styles1 = {
-    button: {
-        // margin: theme.spacing.unit,
-        marginTop: 100,
-        width: 200,
-      },
-}
-
+  
 
 test('the button has to be exact, buttons matter', () => {
-    expect(styles1.button.width).toBeGreaterThanOrEqual(200);
+    expect(styles.button.width).toBeGreaterThanOrEqual(200);
   });
 
 

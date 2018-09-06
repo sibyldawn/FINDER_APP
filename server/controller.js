@@ -93,8 +93,8 @@ var self = module.exports = {
         dbInstance.query(
             `select u.*, c.* from users u 
             left outer join connections c
-            on u.id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
-            where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
+            on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
+            where "${stringToBoolean(recruiter) ? 'applicant_decision' : 'recruiter_decision'}" is null 
             and industry_code = '${industry}' 
             and isrecruiter = '${recruiter}'
             and active = 'true';`)
@@ -144,7 +144,6 @@ var self = module.exports = {
             recruiterId: isRecruiter ? userId : cardId,
             applicantId: isRecruiter ? cardId : userId
         }).then(checkedRes => {
-            console.log('------------ checkedRes', checkedRes)
             checkedRes[0] ?
                 dbInstance.update_connection({
                     id: checkedRes[0].id,

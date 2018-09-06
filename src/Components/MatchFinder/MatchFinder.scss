@@ -16,6 +16,84 @@
     font-size: 50px;
     padding-top: 300px;
     background-color: $GrenOutline;
-    height: 85vh;
+    height: 90vh;
    
+}
+
+
+
+//apear on page load
+
+.fade-appear {
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade-appear.fade-appear-active {
+    opacity: 1;
+    transition: opacity 600ms linear;
+}
+
+
+
+//exit
+.fade-exit{
+    opacity: 1;   
+}
+
+.fade-exit.fade-exit-active {
+    opacity:0; 
+    transition: opacity 5000ms linear;
+}
+
+.fade-exit-done {
+    opacity: 0;
+}
+
+
+
+
+
+//enter
+
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+    opacity: 1; 
+    transition: opacity 300ms linear;
+}
+
+
+
+
+//slide enter
+.slide-endter {
+    opacity: 0;
+    transform: scale(0.97) translate(5px);
+    z-index: 1;
+}
+
+.slide-enter.slide-enter-active {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: opacity 3000ms linear 1000ms, transform 3000ms ease-in-out 1000ms;
+}
+
+//slide exit 
+
+.slide-exit {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.slide-exit.slide-exit-active {
+    opacity: 0;
+    transform: scale(0.97) translate(5px);
+    transition: opacity 1500ms linear, transform 1500ms ease-out
+}
+.slide-exit-done {
+    opacity: 0;
 }

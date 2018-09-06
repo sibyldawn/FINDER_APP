@@ -99,7 +99,7 @@ console.log('------------ MAPCONTAINTER this.state', this.state)
    
      return (
       
-       <div className="mapsize">
+      <div className="mapsize">
      
      <Map
        google={this.props.google}

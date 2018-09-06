@@ -23,14 +23,16 @@ import './Header.css';
 
 const styles = {
     root: {
-        backGroundColor: '#1F2D44',
-        flexGrow: 1,
         background: '#1F2D44',
+        flexGrow: 1,
+        
     },
     flex: {
-        fontFamily: 'Baloo Bhai',
+        fontFamily: 'Baloo Bhai, arial',
         color: '#5ACCC1',
         flexGrow: 1,
+        fontSize: '2.5rem',
+        textShadow: '1.5px 1.5px 0px #3fa5b5',
     },
     menuButton: {
         color: '#5ACCC1',
@@ -39,14 +41,11 @@ const styles = {
     },
     AccountCircle: {
         color: '#5ACCC1',
-    },
-    AppBar: {
-        color: '#5ACCC1',
-        backGroundColor: '#1F2D44',
+        fontSize: 30,
     },
     ToolBar: {
         color: '#5ACCC1',
-        backGroundColor: '#1F2D44',
+        background: '#1F2D44',
     }
 
 };
@@ -87,17 +86,17 @@ class Header extends Component {
     }
 
     render() {
-        console.log('------------ this.props', this.props)
+        // console.log('------------ this.props', this.props)
         const { classes, context } = this.props;
         const { auth, anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
         return (
             <div className={classes.root}>
-                <AppBar className={classes.AppBar}position="static">
+                <AppBar className={classes.root} position="static">
                     <Toolbar className={classes.ToolBar}>
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon style={{ fontSize: 50  }} />
+                        <MenuIcon style={{ fontSize: 30  }} />
                     </IconButton>
                     <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                         <div
@@ -109,8 +108,8 @@ class Header extends Component {
                             <Aside/>
                         </div>
                         </Drawer>
-                    <Typography variant="display3" color="blue" className={classes.flex}>
-                        Finder
+                    <Typography variant="display3"  className={classes.flex}>
+                        finder
                     </Typography>
                     {auth && (
                     <div>
@@ -140,7 +139,7 @@ class Header extends Component {
                                 </figure>
                             </div>
                             :
-                            <AccountCircle className={classes.AccountCircle}style={{ fontSize: 50 }} />
+                            <AccountCircle className={classes.AccountCircle} />
                         }
                         </IconButton>
                         
