@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import Avatar from '@material-ui/core/Avatar';
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 
 const styles = theme => ({
@@ -58,21 +58,19 @@ const styles = theme => ({
     render(){
         const { classes } = this.props;
         console.log("otherUser", this.state.otherUser);
+        const { name, avatar_url } = this.state.otherUser;
         return (
-            <Paper className={classes.root}>
-              <Grid container spacing={8}>
-                <Grid item xs={6}>
-                  <ButtonBase className={classes.image}>
-                    <Avatar className={classes.bigAvatar} alt={this.state.otherUser.name} src={this.state.otherUser.avatar_url} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item xs={6} sm container>
-                  <Grid item xs container direction="column" spacing={16} className={classes.typography}>
-                      <Typography  align="center" variant="title">{this.state.otherUser.name}</Typography>
-                </Grid>
-                </Grid>
-              </Grid>
-            </Paper>
+          <div className={classes.root}>
+            <List component="nav">
+              <ListItem button>
+                <ListItemIcon>
+                  <Avatar className={classes.bigAvatar} src={avatar_url} alt=""/>
+                </ListItemIcon>
+                <ListItemText primary={name} />
+              </ListItem>
+              <Divider />
+              </List>
+             </div>
           );
         }
         

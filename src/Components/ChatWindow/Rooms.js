@@ -1,14 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
 import { Link } from 'react-router-dom';
+import List from '@material-ui/core/List';
 import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios';
 import { promises } from 'fs';
@@ -17,7 +11,7 @@ import Room from './Room';
 const styles = theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
+    maxWidth: '100vw',
     backgroundColor: theme.palette.background.paper,
   },
 });

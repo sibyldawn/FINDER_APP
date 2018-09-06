@@ -28,6 +28,8 @@ const styles = {
     root: {
         background: '#1F2D44',
         width:'100vw',
+        position:'fixed',
+        top:0,
         display:'flex',
         justifyContent:"space-evenly",
         flexDirection: "column",
