@@ -19,7 +19,8 @@ import Drawer from '@material-ui/core/Drawer';
 import Aside from '../Aside/Aside';
 import axios from 'axios';
 import './Header.css';
-import logo from '../../Assets/finder.png'
+import logo from '../../Assets/finder.png';
+
 
 
 const styles = {

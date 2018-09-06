@@ -26,32 +26,86 @@ const styles = theme => ({
         alignItems: 'center',
         flexDirection: 'column',
         flexWrap: 'wrap',
+        backgroundColor: '#dce4e3',
     },
-    input: {
-        margin: 'none',
+    profilePicture: {
+        border: 'solid',
+        borderRadius: 9,
+        borderColor: '#5ACCC1',
+        borderWidth: 6,
+        marginTop: theme.spacing.unit * 4,
+
+    },
+
+    dropZone: {
+        margin: theme.spacing.unit * 4,
+        width: '350px',
+        backgroundColor: 'white',
+        borderColor: '#5ACCC1',
+    },
+
+    inputBox: {
+        margin: '10px',
+        borderColor: '#5ACCC1',
     },
     textarea: {
         border: 'solid',
         borderRadius: 9,
         padding: 8,
-        borderColor: '#3f51b5',
+        borderColor: '#5ACCC1',
         borderWidth: 2,
-        minWidth: '70%'
+        minWidth: '70%',
+        fontSize: '20px',
+        color: '#1F2D44',
+        backgroundColor: 'white',
+        marginTop: theme.spacing.unit * 4,
+
     },
-    // bio: {
-    //     color: '#A8B4B3',
-    //     backgroundColor: '#A8B4B3',
-    // },
+    bio: {
+        border: 'solid',
+        borderRadius: 9,
+        padding: 8,
+        borderColor: '#5ACCC1',
+        borderWidth: 2,
+        minWidth: '70%',
+        fontSize: '20px',
+        color: '#1F2D44',
+        backgroundColor: 'white',
+       
+    },
     selectEmpty: {
         marginTop: theme.spacing.unit * 2,
     },
     formControl: {
-        margin: theme.spacing.unit,
-        minWidth: 200,
+        margin: theme.spacing.unit  * 2,
+        minWidth: 180,
     },
     button: {
-        margin: theme.spacing.unit,
+        margin: theme.spacing.unit  * 4,
+        marginBottom: theme.spacing.unit  * 14,
+        background: 'linear-gradient(to right, #0099ff 0%, #5accc1 100%)',
+       
+    },
+
+
+    industry: {
+        margin: theme.spacing.unit * 4,
+        width:'200px',
+    },
+
+    location: {
+        margin: theme.spacing.unit * 4,
+    },
+
+    positions: {
+        margin: theme.spacing.unit * 4,
+    },
+
+    buttonStyle: {
+        backgroundColor: '#dce4e3',
     }
+
+    
 });
 
 class Profile extends Component {
@@ -169,18 +223,18 @@ class Profile extends Component {
                     <div>
                         {this.state.editing ?
                             <div className={classes.container}>
-                                <img src={this.state.picture} alt="Profile" width='300' />
+                                <img src={this.state.picture} className={classes.profilePicture}alt="Profile" width='300' />
                                 <div>
                                     <FormControl className={classes.FormControl}>
                                         <InputLabel htmlFor='profile-picture'>Profile Picture URL</InputLabel>
-                                        <Input 
+                                        <Input className={classes.inputBox}
                                             id='profile-picture'
                                             defaultValue={this.state.picture} 
                                             className={classes.input} 
                                             onChange={(e) => this.handleChange('picture', e.target.value)} />
                                         <section>
                                             <div className="dropzone">
-                                                <Dropzone 
+                                                <Dropzone className={classes.dropZone}
                                                     onDrop={this.onDrop}
                                                     style={ {
                                                         marginLeft: 'auto',
@@ -201,7 +255,7 @@ class Profile extends Component {
                                     </ FormControl>
                                 </div>
                                 <div className='profileBio'>
-                                    <TextField className={classes.textarea}
+                                    <TextField className={classes.bio}
                                         helperText={isrecruiter ? 'Company' : 'Bio'}
                                         multiline={true}
                                         rows={8}
@@ -210,17 +264,7 @@ class Profile extends Component {
                                         onChange={(e) => this.handleChange('bio', e.target.value)} 
                                         />
                                 </div>
-                                <div>
-                                    <FormControl className={classes.FormControl}>
-                                        <InputLabel htmlFor='zipcode'>Zipcode</InputLabel>
-                                        <Input 
-                                            id='zipcode'
-                                            defaultValue={this.state.current_zipcode}
-                                            className={classes.input}
-                                            type='number'
-                                            onChange={(e) => this.handleChange('current_zipcode', e.target.value)} />
-                                    </ FormControl>
-                                </div>
+                                
                                 <div className='textarea-container'>
                                     <TextField
                                         helperText={isrecruiter ? 'Company Description:' : 'Work History:'}
@@ -253,6 +297,17 @@ class Profile extends Component {
                                 </div>
                                 <div>
                                     <FormControl className={classes.FormControl}>
+                                        <InputLabel htmlFor='zipcode'>Zipcode</InputLabel>
+                                        <Input 
+                                            id='zipcode'
+                                            defaultValue={this.state.current_zipcode}
+                                            className={classes.input}
+                                            type='number'
+                                            onChange={(e) => this.handleChange('current_zipcode', e.target.value)} />
+                                    </ FormControl>
+                                </div>
+                                <div>
+                                    <FormControl className={classes.positions}>
                                         <InputLabel htmlFor='job-title'>{isrecruiter ? 'Positions Open:' : 'Job Interests:'}</InputLabel>
                                         <Input
                                         defaultValue={this.state.current_job}
@@ -262,7 +317,7 @@ class Profile extends Component {
                                     </ FormControl>
                                 </div>
                                 <div>
-                                    <FormControl className={classes.formControl}>
+                                    <FormControl className={classes.location}>
                                         <InputLabel htmlFor='preferred-location-select'>{isrecruiter ? 'State:' : 'Preferred Location:'}</ InputLabel>
                                         <Select
                                             native
@@ -326,7 +381,7 @@ class Profile extends Component {
                                             <option value='WY'>Wyoming</option>
                                         </ Select>
                                     </ FormControl>
-                                    <FormControl className={classes.formControl}>
+                                    <FormControl className={classes.industry}>
                                         <InputLabel htmlFor='industry-select'>Industry</ InputLabel>
                                         <Select
                                             native
@@ -490,7 +545,10 @@ class Profile extends Component {
                             <Card id={this.state.auth0_id} width={'80%'} />
                         }    
                     </div>
-                    <div>
+
+
+
+                    <div className={classes.buttonStyle}>
                         <Button 
                             onClick={() => this.setState({ editing: !this.state.editing })} 
                             variant='contained' 
@@ -501,6 +559,7 @@ class Profile extends Component {
                             <Button 
                                 variant='contained' 
                                 color='primary' 
+                                className={classes.button}
                                 onClick={this.submitEdit}>
                                     Submit Changes
                             </Button>

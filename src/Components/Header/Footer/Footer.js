@@ -22,7 +22,7 @@ const styles = {
     background: "#1F2D44",
     fontSize: 50,
     display:'flex',
-    justifyContent:'space-evenly'
+    justifyContent: 'space-evenly'
   },
   Messages: {
   

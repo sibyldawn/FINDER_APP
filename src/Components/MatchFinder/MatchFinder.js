@@ -191,12 +191,12 @@ console.log("new ROOM=====>", newRoom)
         <div className="card-container">
 
 
-        <TransitionGroup>
+         <TransitionGroup className="card-container">
             <CSSTransition
-          in={appearHome}
-          appear={true}
-          timeout={600}
-          classNames="fade">
+           in={appearHome}
+           appear={true}
+           timeout={600}
+           classNames="fade">
             
                 <MotionStack
                   data={data}
@@ -206,8 +206,8 @@ console.log("new ROOM=====>", newRoom)
                   renderButtons={this.renderButtons}
                   infinite={false}
                 />
-              </CSSTransition>
-          </TransitionGroup>
+               </CSSTransition>
+          </TransitionGroup> 
         </div>
       :
       <div className="NoUser">No user logged in.</div>
