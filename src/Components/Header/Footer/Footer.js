@@ -21,6 +21,7 @@ const styles = {
     // height: 50, 
     fontSize: 50,
     width: '100vw',
+    backgroundColor: '#1F2D44',
   },
   Messages: {
   
