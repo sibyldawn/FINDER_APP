@@ -24,22 +24,33 @@ import './Settings.css';
 
 const styles = theme => ({
     colorSwitchBase: {
-        color: '#3f51b5',
+        color: '#2699FB',
         '&$colorChecked': {
-            color: '#3f51b5',
+            color: '#1F2D44',
             '& + $colorBar': {
-                backgroundColor: '#3f51b5',
+                backgroundColor: '#2699FB',
             },
         },
     },
     colorSwitchYellow: {
-        color: '#e6e600',
+        color: '#5ACCC1',
         '&$colorChecked': {
-            color: '#e6e600',
+            color: '#4063fc',
             '& + $colorBar': {
-                backgroundColor: '#e6e600',
+                backgroundColor: '#5ACCC1',
             },
         },
+    },
+
+    recruiterSwitch: {
+        
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
+    activeSwitch: {
+      
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     formControl: {
         margin: theme.spacing.unit,
@@ -49,10 +60,18 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
     },
     input: {
         margin: 'none',
+    },
+    editEmailButton: {
+        margin: '20px',
+        background: 'linear-gradient(to right, #2699FB 0%, #A8B4B3 100%)',
+    },
+    deleteProfileButton: {
+          margin: '20px',
+        background: 'linear-gradient(to right, #fb2634 0%, #4063fc 100%)',
     },
     colorBar: {},
     colorChecked: {},
@@ -133,11 +152,14 @@ class Settings extends React.Component {
         console.log('------------ this.props.context.user', this.props.context.user)
         return (
             <div className={classes.container}>
-                <div className="settingsTitle">
-                    Settings
+            <div className="settingsTitle">
+                 Settings
+            </div>
+            <div className="settings">
+                   
                     <FormControlLabel
                         control={
-                            <Switch
+                            <Switch className={classes.recruiterSwitch}
                                 checked={this.state.isrecruiter}
                                 onChange={() => this.toggleValue('isrecruiter')}
                                 value="isrecruiter"
@@ -155,7 +177,7 @@ class Settings extends React.Component {
                     </Tooltip>
                     <FormControlLabel
                         control={
-                            <Switch
+                            <Switch className={classes.activeSwitch}
                                 checked={this.state.active}
                                 onChange={() => this.toggleValue('active')}
                                 value="active"
@@ -171,10 +193,10 @@ class Settings extends React.Component {
                     <Tooltip title="When toggled off, this account will cease to show up in other users' match queue.">
                         <img src={ helpIcon } alt='Help' />
                     </Tooltip>
-                    <Button 
+                    <Button className={classes.editEmailButton}
                         onClick={() => this.handleChange('open', true)}
                         variant='contained' 
-                        className={classes.button}>
+                        >
                             Edit Email Address
                     </Button>
                     <Dialog
@@ -204,9 +226,9 @@ class Settings extends React.Component {
                             </Button>
                         </DialogActions>
                     </Dialog>
-                    <Button 
+                    <Button className={classes.deleteProfileButton}
                         variant='contained'
-                        color='secondary'
+                       
                         onClick={() => this.handleChange('confirm', true)}>
                             Delete Profile
                     </Button>
