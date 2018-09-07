@@ -55,6 +55,7 @@ html, body {
     background-color: var(--main-color);
     overflow: scroll;
     height: 100%;
+    z-index:0;
 }
 
 .rooms-list ul {
@@ -74,6 +75,7 @@ html, body {
 
 .rooms-list .room a {
     color: var(--secondary-text-color);
+    overflow: scroll!important;
     font-weight: 600;
     text-decoration: none;
     

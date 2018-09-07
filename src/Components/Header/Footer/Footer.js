@@ -16,6 +16,7 @@ import './Footer.css';
 
 const styles = {
   root: {
+    zIndex: 2,
     position: 'fixed',
     bottom: 0,
     width:"100vw",

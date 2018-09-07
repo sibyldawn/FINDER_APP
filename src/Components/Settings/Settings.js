@@ -57,6 +57,7 @@ const styles = theme => ({
         minWidth: 200,
     },
     container: {
+        backgroundColor: '#eff4fc',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',

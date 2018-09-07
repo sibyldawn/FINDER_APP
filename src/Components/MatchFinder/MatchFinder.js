@@ -14,6 +14,9 @@ import './MatchFinder.css';
 import axios from 'axios'
 import Chatkit from '@pusher/chatkit';
 import { CSSTransition ,TransitionGroup } from "react-transition-group";
+import men from '../../Assets/men.mp4';
+import Popup from 'reactjs-popup';
+import finder from '../../Assets/finder.gif';
 
 const styles = theme => ({
   formControl: {
@@ -21,7 +24,13 @@ const styles = theme => ({
       minWidth: 200,
   },
   loginButton: {
-    marginTop: '200px',
+    marginTop: '10px',
+    background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
+    width: '150px',
+    height: '60px',
+  },
+  howToButton: {
+    marginTop: '600px',
     background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
     width: '150px',
     height: '60px',
@@ -43,7 +52,8 @@ class App extends React.Component {
         roomName: '',
         connection_id:0,
         joinedRooms:[],
-        appearHome: true
+        appearHome: true,
+        open: false
       }
 
       this.deck = React.createRef();
@@ -179,6 +189,19 @@ console.log("new ROOM=====>", newRoom)
     }
   }
 
+  openModal=()=>{
+    this.setState({
+        open:true
+    })
+}
+
+closeModal=()=>{
+    this.setState({
+        open:false
+    })
+}
+
+
   render() {
     console.log("CHAT ROOMS=======>", this.state);
 
@@ -221,25 +244,66 @@ console.log("new ROOM=====>", newRoom)
         </div>
       :
       <div>
-      <div className="NoUser">No user logged in.
-      {/* <video  className = "video "  autoPlay loop controls>
+      <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe&Connect
+      <figure style={{ 
+                          margin: 0, 
+                          padding: 0, 
+                          width: '100vw', 
+                          height:'800px',
+                          position: 'fixed',
+                          top:0,
+                          overflow: 'hidden'
+                                     }}>
+                     <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
            
-           <source src ={}/>
+                     <source src ={men} style={{ 
+
+                                        display: 'inline-block',
+                                        height: '50vh',
+                                        width: '100vw', 
+                                        margin: 0, 
+                                        padding: 0 }}/>
          
-        </video> */}
-         
+                     </video>
+                    </figure>
+      
+         </div>
+         <div>
+         <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
+         <Popup 
+                open = {this.state.open}
+                closeOnDocumentClick
+                onClose = {this.closeModal}
+                position="top center"
+                >
+               <figure style={{    
+                                    margin: 0, 
+                                    padding: 0,
+                                     }}>
+                 <img src={finder} alt="swipe left to pass,swipe right to like"
+                 style={{ 
+                  display: 'inline',
+                  height: '50%',
+                  width: 'auto', 
+                  margin: 0, 
+                  padding: 0,
+                   }} />
+                </figure>
+               </Popup>
+
+        </div>
+
+
+         <div>
          <Button className={classes.loginButton}
-              onClick={() => this.handleChange('open', true)}
+              onClick={() => context.login()}
               variant='contained' 
               >
               Login
           </Button>
 
-      
-      
-      
-      
-              </div>
+        </div>
         
         </div>
 

@@ -20,6 +20,7 @@ import Aside from '../Aside/Aside';
 import axios from 'axios';
 import './Header.css';
 import logo from '../../Assets/finder.png';
+import { Link } from 'react-router-dom';
 
 
 
@@ -112,7 +113,7 @@ class Header extends Component {
                     <Toolbar >
                         <div onClick={this.toggleDrawer('left', true)} className="menu-icon">
                     <IconButton  color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon style={{ fontSize: 30, position:'fixed',top:15,color:'#5ACCC1'}} />
+                        <MenuIcon style={{ fontSize: 30, position:'fixed',top:15, left: 50,color:'#5ACCC1'}} />
                     </IconButton>
                     </div>
                     <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
@@ -125,22 +126,24 @@ class Header extends Component {
                             <Aside/>
                         </div>
                         </Drawer>
-                    <figure style={{ 
+                    <Link to='/'>
+                      <figure style={{ 
                                     margin: 0, 
                                     padding: 0, 
                                     height: 45, 
                                     position: 'fixed',
-                                    top:0,
+                                    top:3,
                                     left:100,
                                     overflow: 'hidden'
                                      }}>
-                    <img src={logo} alt="finder logo" style={{ 
+                     <img src={logo} alt="finder logo" style={{ 
                                         display: 'inline',
                                         height: '100%',
                                         width: 'auto', 
                                         margin: 0, 
                                         padding: 0 }}  className={classes.logo} />
                     </figure>
+                    </Link>
                     {auth && (
                     <div>
                         <IconButton

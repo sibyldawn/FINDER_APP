@@ -34,7 +34,8 @@ const styles = theme => ({
     width: '100vw',
     position:'fixed',
     top:60,
-    color:'white'
+    color:'white',
+    overflow: 'scroll',
   },
   container: {
     height: '100vh',
