@@ -20,7 +20,7 @@ export default class ContextProvider extends React.Component {
                 // console.log('------------ Context checks for login')
                 axios.get('/api/session/user').then(res => {
                     console.log('------------ res', res)
-                    res.data.first_name &&
+                    res.data.auth0_id &&
                     this.setState({ user: res.data, login: true })
                     })
             },

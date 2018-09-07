@@ -160,8 +160,8 @@ class Profile extends Component {
         return (
         
             context.login ?
-                !this.state.first_name ?
-                <div>
+                !this.state.auth0_id ?
+                <div className='loading-circle'>
                     <CircularProgress className={classes.progress} size={50} color='primary' />
                 </div>
                 :
@@ -487,7 +487,9 @@ class Profile extends Component {
                                 </div> 
                             </div>
                         :
-                            <Card id={this.state.auth0_id} width={'80%'} />
+                            <div className='user-card'>
+                                <Card id={this.state.auth0_id} width={'80%'} />\
+                            </div>
                         }    
                     </div>
                     <div>
@@ -533,7 +535,7 @@ class Profile extends Component {
                     </div>
                 </div>
             :
-            <div className="NoUser"> No user logged in! </div>
+            <div className="no-user"> No user logged in! </div>
         );
     }
 }

@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "7f60c171-6ca9-4d73-bb4d-9df90336cfe0",
+		"name": "Finder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create New Connection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b3b7253-0f68-44ad-bf23-11dc63a41729",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Connection is made but returns false\", function () {",
+							"    pm.expect(response).to.be.false",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direction\": \"right\",\n\t\"userId\": \"postman|2|\",\n\t\"cardId\": \"postman|1|\",\n\t\"isRecruiter\": \"true\",\n\t\"email\": \"freeps@postman.test\",\n\t\"first_name\": \"Freeple\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/matches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"matches"
+					]
+				},
+				"description": "Endpoint hit when user swipes right or left on another user's card."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Successful Connection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "740560dc-de88-4763-92b3-165b2eb1a7c3",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Successful connection is made\", function () {",
+							"    pm.expect(response[0]).to.have.property(\"id\")",
+							"})"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"direction\": \"right\",\n\t\"userId\": \"postman|2|\",\n\t\"cardId\": \"postman|3|\",\n\t\"isRecruiter\": \"true\",\n\t\"email\": \"freeps@postman.test\",\n\t\"first_name\": \"Freeple\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/user/matches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user",
+						"matches"
+					]
+				},
+				"description": "Endpoint hit when user swipes right or left on another user's card."
+			},
+			"response": []
+		}
+	]
+}
