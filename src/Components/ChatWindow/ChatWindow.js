@@ -236,7 +236,7 @@ sendMessage=(text)=>{
                 />
           </TabContainer>
           <TabContainer dir={theme.direction} className={classes.chatListContainer}>
-          <MessageFeed messages={this.state.messages} roomId={this.state.roomId}/>
+          <MessageFeed messages={this.state.messages} roomId={this.state.roomId} user={this.state.user}/>
           <ChatForm sendMessage={this.sendMessage } disabled={!this.state.roomId}/>
           </TabContainer>
    

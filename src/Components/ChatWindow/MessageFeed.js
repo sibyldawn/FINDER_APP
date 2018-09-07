@@ -1,6 +1,7 @@
 import React from 'react';
 import Message from './Message';
 import ReactDOM from 'react-dom';
+import List from '@material-ui/core/List';
 
 export default class MessageFeed extends React.Component {
     constructor(props){
@@ -37,15 +38,16 @@ export default class MessageFeed extends React.Component {
         }
         return (
             <div className='message-list' ref={this.messagelist} onScroll={this.onScroll} style={styles}>
+            <List>
                 {this.props.messages.map((message,index) => {
                     console.log("MESSAGE", message);
                     return(
-                        <Message key={message.id} username={message.senderId}  text={message.text}/>
+                        <Message key={message.id} username={message.senderId}  text={message.text} user={this.props.user} time = {message.createdAt}/>
 
                         
                     )
                 })}
-              
+              </List>
             </div>
         );
     }

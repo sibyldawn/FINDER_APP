@@ -144,6 +144,11 @@ html, body {
     border-radius: 8px;
 }
 
+.message .message-time{
+    color: 'gray';
+    font-size: 12;
+} 
+
 .message-list {
     box-sizing: border-box;
     padding-left: 6px;
@@ -194,4 +199,9 @@ html, body {
 .help-text {
     position: absolute;
     top: 10px;
+}
+
+
+.MuiTypography-body1-122{
+    font-size: xx-small!important;
 }
