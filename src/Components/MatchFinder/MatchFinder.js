@@ -30,7 +30,7 @@ const styles = theme => ({
     height: '60px',
   },
   howToButton: {
-    marginTop: '600px',
+    marginTop: '550px',
     background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
     width: '150px',
     height: '60px',
@@ -244,8 +244,9 @@ closeModal=()=>{
         </div>
       :
       <div>
-      <div className="NoUser" style={{position: 'fixed',
-                          top:0,color: 'gray'}}>Swipe&Connect
+        <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe & Connect </div>
+      
       <figure style={{ 
                           margin: 0, 
                           padding: 0, 
@@ -255,7 +256,7 @@ closeModal=()=>{
                           top:0,
                           overflow: 'hidden'
                                      }}>
-                     <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
+                     <video  className = "video"  autoPlay loop muted height={'100%'} width={'100%'}>
            
                      <source src ={men} style={{ 
 
@@ -268,7 +269,7 @@ closeModal=()=>{
                      </video>
                     </figure>
       
-         </div>
+         
          <div>
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 

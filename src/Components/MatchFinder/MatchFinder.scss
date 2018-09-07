@@ -14,10 +14,11 @@
 .NoUser{
     width:100vw;
     color: whitesmoke;
-    font-size: 50px;
+    font-size: 40px;
     text-align: center;
-    padding-top: 0px;
+    padding-top: 80px;
     margin-bottom: 60px;
+    font-family: Baloo Bhai;
     background-color: #1F2D44;
     height: 100vh;
    
@@ -28,59 +29,67 @@
 
 .video{
  
-    width: 100% ;
-    height : 60%;
+    width: 90% ;
+    height : 80%;
      position: center;
      margin:0;
      top: 0;
      left: 0; 
-     padding: 0;
+    
   }
   
 
-//apear on page load
-
-.fade-appear {
-    opacity: 0;
-    z-index: 1;
-}
-
-.fade-appear.fade-appear-active {
-    opacity: 1;
-    transition: opacity 600ms linear;
+.card-container{
+    padding-Top: 110px;
+    position: center;
+    height: 300px;
+    font-family: Baloo Bhai;
 }
 
 
+// //apear on page load
 
-//exit
-.fade-exit{
-    opacity: 1;   
-}
+// .fade-appear {
+//     opacity: 0;
+//     z-index: 1;
+// }
 
-.fade-exit.fade-exit-active {
-    opacity:0; 
-    transition: opacity 5000ms linear;
-}
-
-.fade-exit-done {
-    opacity: 0;
-}
+// .fade-appear.fade-appear-active {
+//     opacity: 1;
+//     transition: opacity 600ms linear;
+// }
 
 
 
+// //exit
+// .fade-exit{
+//     opacity: 1;   
+// }
+
+// .fade-exit.fade-exit-active {
+//     opacity:0; 
+//     transition: opacity 5000ms linear;
+// }
+
+// .fade-exit-done {
+//     opacity: 0;
+// }
 
 
-//enter
 
-.fade-enter {
-    opacity: 0;
-    z-index: 1;
-}
 
-.fade-enter.fade-enter-active {
-    opacity: 1; 
-    transition: opacity 300ms linear;
-}
+
+// //enter
+
+// .fade-enter {
+//     opacity: 0;
+//     z-index: 1;
+// }
+
+// .fade-enter.fade-enter-active {
+//     opacity: 1; 
+//     transition: opacity 300ms linear;
+// }
 
 
 
