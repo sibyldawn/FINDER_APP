@@ -158,7 +158,7 @@ class Profile extends Component {
         const { classes, context } = this.props
         const { isrecruiter } = this.state
         return (
-            
+        
             context.login ?
                 !this.state.first_name ?
                 <div>
@@ -541,5 +541,7 @@ class Profile extends Component {
 Profile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+
+export { Profile }
 
 export default withContext(withStyles(styles)(Profile));
