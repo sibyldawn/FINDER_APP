@@ -285,7 +285,7 @@ closeModal=()=>{
                  style={{ 
                   display: 'inline',
                   height: '50%',
-                  width: 'auto', 
+                  width: '100vw', 
                   margin: 0, 
                   padding: 0,
                    }} />
@@ -297,7 +297,7 @@ closeModal=()=>{
 
          <div>
          <Button className={classes.loginButton}
-              onClick={() => context.login()}
+              onClick={() => context.methods.login()}
               variant='contained' 
               >
               Login
