@@ -19,14 +19,20 @@ const styles = theme => ({
   card: {
     minWidth: 350,
     maxWidth: "60%",
+    marginTop: '80px',
     marginLeft: 'auto',
     marginRight: 'auto',
     minHeight: 500,
     top: 150,
     right:30,
     overflow: "scroll",
-    userSelect: 'none'
+    userSelect: 'none',
+    padding: '20px',
   },
+   cardheader: {
+    fontSize: '40px',
+    color: '#1F2D44',
+   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9

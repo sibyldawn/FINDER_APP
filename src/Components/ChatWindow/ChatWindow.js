@@ -31,8 +31,32 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     width: '100vw',
+    position:'fixed',
+    top:60,
+    color:'white',
+    overflow: 'scroll',
+  },
+  container: {
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  roomListContainer: {
+    width: '15%',
+    padding: 20,
+    backgroundColor: '#2c303b',
+    color: 'white',
+  },
+  chatContainer: {
+    display: 'flex',
+    flex: 1
+  },
+  chatListContainer: {
+    padding: 20,
+    width: '85%',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 
@@ -43,16 +67,18 @@ class ChatWindow extends Component {
         super()
 
         this.state = {
-            roomId: 0,
-            messages:[],
-            joinedRooms: [],
-            id:'',
-            name:'',
-            picture:'',
-            user:{},
-            value:0,
-            room_users:[],
-            sender:{}
+          roomId: 0,
+          messages:[],
+          joinedRooms: [],
+          id:'',
+          name:'',
+          picture:'',
+          user:{},
+          value:0,
+          room_users:[],
+          sender:{},
+          usersWhoAreTyping: [],
+          currentRoom: {}
         }
     }
 
@@ -106,18 +132,35 @@ subscribeToRoom=(roomId)=>{
     })
     this.currentUser.subscribeToRoom({
         roomId:roomId,//newroom for new connection id's
+        messageLimit:100,
         hooks:{
             onNewMessage: message => {
                 console.log('message props', message);
                 this.setState({
                     messages:[...this.state.messages,message]
                 })
-            }
+            },
+            onUserStartedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
+              })
+            },
+            onUserStoppedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                  username => username !== user.name
+                ),
+              })
+            },
+            onUserCameOnline: () => this.forceUpdate(),
+            onUserWentOffline: () => this.forceUpdate(),
+            onUserJoined: () => this.forceUpdate(),
         }
    })
    .then(room => {
        this.setState({
-           roomId: room.id
+           roomId: room.id,
+           currentRoom: room
        })
        this.getRooms()
    })
@@ -149,8 +192,16 @@ sendMessage=(text)=>{
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
     console.log("CHATWINDOW room_users", this.state.room_users);
+    const styles = {
+       
+        
+        
+       
+      }
+  
     return (
-        <div>
+        <div className={classes.container}>
+        
         {this.state.user ? <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
@@ -165,12 +216,14 @@ sendMessage=(text)=>{
 
           </Tabs>
         </AppBar>
+        <div className={classes.chatContainer}>
         <SwipeableViews
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>
+          <TabContainer dir={theme.direction} className={classes.roomListContainer}>
+          {/* <OnlineStatus user={this.state.user} users ={this.state.currentRoom.users}/> */}
           <Rooms rooms={[...this.state.joinedRooms]}
                        roomId ={this.state.roomId}//axios get from db
                        subscribeToRoom={this.subscribeToRoom}
@@ -182,12 +235,13 @@ sendMessage=(text)=>{
 
                 />
           </TabContainer>
-          <TabContainer dir={theme.direction}>
-          <MessageFeed messages={this.state.messages} roomId={this.state.roomId}/>
+          <TabContainer dir={theme.direction} className={classes.chatListContainer}>
+          <MessageFeed messages={this.state.messages} roomId={this.state.roomId} user={this.state.user}/>
           <ChatForm sendMessage={this.sendMessage } disabled={!this.state.roomId}/>
           </TabContainer>
    
         </SwipeableViews>
+        </div>
       </div>
     :
         <div>

@@ -2,6 +2,7 @@ import React from 'react';
 import MotionStack from 'react-motion-stack';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -13,12 +14,31 @@ import './MatchFinder.css';
 import axios from 'axios'
 import Chatkit from '@pusher/chatkit';
 import { CSSTransition ,TransitionGroup } from "react-transition-group";
+import men from '../../Assets/men.mp4';
+import Popup from 'reactjs-popup';
+import finder from '../../Assets/finder.gif';
+import TryAgainLater from './TryAgainLater';
 
 const styles = theme => ({
   formControl: {
       margin: theme.spacing.unit,
       minWidth: 200,
   },
+  loginButton: {
+    marginTop: '10px',
+    background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
+    width: '150px',
+    height: '60px',
+  },
+  howToButton: {
+    marginTop: '600px',
+    background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
+    width: '150px',
+    height: '60px',
+  }
+ 
+
+
 });
 
 class App extends React.Component {
@@ -27,13 +47,16 @@ class App extends React.Component {
       this.state = {
         industry: '',
         cards: [],
+        showAnimation: false,
         user1: {},
         user2:{},
         room_id: 0,
         roomName: '',
         connection_id:0,
         joinedRooms:[],
-        appearHome: true
+        appearHome: true,
+        open: false,
+        onSwipeEnded: false,
       }
 
       this.deck = React.createRef();
@@ -42,9 +65,10 @@ class App extends React.Component {
   componentDidMount(){
     // console.log('----------CONTEXT', this.props.context)
     axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-      console.log('------------ COMPONENT DID MOUNT GET ID', res)
+      // console.log('------------ COMPONENT DID MOUNT GET ID', res)
       this.setState({
-        cards: res.data
+        cards: res.data,
+        cardQueue: res.data
       })
     })
   }
@@ -75,11 +99,20 @@ class App extends React.Component {
           connection_id: res.data[0].id
         },()=>{this.connectToChat()})
     }})
+    // const newState = [...this.state.cardQueue]
+    // newState.pop()
+    // this.setState({
+    //   cardQueue: newState
+    // })
     swipe();
   }
 
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
+    if(data.length <= 0){
+      this.setState({ showAnimation: true })
+    }
+   
   };
 
   connectToChat=()=>{
@@ -147,7 +180,7 @@ sendRoomToDB=()=>{
 }
 console.log("new ROOM=====>", newRoom)
   axios.post('/api/rooms',newRoom).then( response => {
-    console.log("new room =====>", response);
+    // console.log("new room =====>", response);
 
   }).catch( err => console.log("Room not recorded", err))
 }
@@ -162,23 +195,37 @@ console.log("new ROOM=====>", newRoom)
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
       axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-        console.log('------------ COMPONENT UPDATE GET ID', res)
+        // console.log('------------ COMPONENT UPDATE GET ID', res)
         this.setState({
-          cards: res.data
+          cards: res.data,
+          cardQueue: res.data
         })
       })
     }
   }
 
+  openModal=()=>{
+    this.setState({
+        open:true
+    })
+}
+
+closeModal=()=>{
+    this.setState({
+        open:false
+    })
+}
+
+
   render() {
     console.log("CHAT ROOMS=======>", this.state);
 
-    const {appearHome} = this.state;
+    const {appearHome,onSwipeEnded} = this.state;
 
 
       const { classes, context } = this.props
       let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
-      console.log('------------ userCards', userCards)
+      // console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,
         element: (
@@ -186,30 +233,98 @@ console.log("new ROOM=====>", newRoom)
         )
       }));
     console.log("data",data);
-    console.log(this.deck)
+    // console.log(this.deck)
     return (
       context.login ?
-        <div className="card-container">
-          <TransitionGroup>
-            <CSSTransition
-              in={appearHome}
-              appear={true}
-              timeout={600}
-              classNames="fade">
-                <MotionStack
-                  data={data}
-                  onSwipeEnd={this.onSwipeEnd}
-                  onBeforeSwipe={this.onBeforeSwipe}
-                  render={props => props.element}
-                  renderButtons={this.renderButtons}
-                  infinite={false}
-                />
-              </CSSTransition>
-          </TransitionGroup>
-          {this.props.context.matchEvent && <JobMatched/>}
-        </div>
+        !this.state.showAnimation ?
+          <div className="card-container">
+
+          <TransitionGroup className="card-container">
+              <CSSTransition
+            in={appearHome}
+            appear={true}
+            timeout={600}
+            classNames="fade">
+          
+                  <MotionStack
+                    data={data}
+                    onSwipeEnd={this.onSwipeEnd}
+                    onBeforeSwipe={this.onBeforeSwipe}
+                    render={props => props.element}
+                    renderButtons={this.renderButtons}
+                    infinite={false}
+                  />
+                </CSSTransition>
+            </TransitionGroup> 
+            </div>
+          :
+           <div><TryAgainLater /></div>
       :
-        <div className="NoUser">No user logged in.</div>
+      <div>
+      <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe&Connect
+      <figure style={{ 
+                          margin: 0, 
+                          padding: 0, 
+                          width: '100vw', 
+                          height:'800px',
+                          position: 'fixed',
+                          top:0,
+                          overflow: 'hidden'
+                                     }}>
+                     <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
+           
+                     <source src ={men} style={{ 
+
+                                        display: 'inline-block',
+                                        height: '50vh',
+                                        width: '100vw', 
+                                        margin: 0, 
+                                        padding: 0 }}/>
+         
+                     </video>
+                    </figure>
+      
+         </div>
+      
+         <div>
+         <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
+         <Popup 
+                open = {this.state.open}
+                closeOnDocumentClick
+                onClose = {this.closeModal}
+                position="top center"
+                >
+               <figure style={{    
+                                    margin: 0, 
+                                    padding: 0,
+                                     }}>
+                 <img src={finder} alt="swipe left to pass,swipe right to like"
+                 style={{ 
+                  display: 'inline',
+                  height: '50%',
+                  width: '100vw', 
+                  margin: 0, 
+                  padding: 0,
+                   }} />
+                </figure>
+               </Popup>
+
+        </div>
+
+
+         <div>
+         <Button className={classes.loginButton}
+              onClick={() => context.methods.login()}
+              variant='contained' 
+              >
+              Login
+          </Button>
+
+        </div>
+        
+        </div>
+
     );
   }
 }

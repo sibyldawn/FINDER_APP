@@ -1,12 +1,25 @@
 @import url("https://fonts.googleapis.com/css?family=Baloo+Bhai|Bangers|Hind|Hind+Siliguri");
 @import '../../variables';
 
-.settingsTitle {
+.settingsTitle{
     color: $LightBlue;
-    background-color: $GrenOutline;
-    height: 85vh;
+    background: $GrenOutline;
     font-size: 40px;
-    padding-top: 20px;
+    padding-top: 80px;
+    
+    width: 100vw;
     font-family: Bangers;
     text-align: center;
 }
+
+
+
+.settings {
+   
+    background: $GrenOutline;
+    padding-top: 100px;
+    height: 85vh
+   
+    
+}
+

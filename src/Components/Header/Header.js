@@ -19,12 +19,22 @@ import Drawer from '@material-ui/core/Drawer';
 import Aside from '../Aside/Aside';
 import axios from 'axios';
 import './Header.css';
+import logo from '../../Assets/finder.png';
+import { Link } from 'react-router-dom';
+
 
 
 const styles = {
+ 
     root: {
         background: '#1F2D44',
-        flexGrow: 1,
+        width:'100vw',
+        position:'fixed',
+        top:0,
+        display:'flex',
+        justifyContent:"space-evenly",
+        flexDirection: "column",
+        flexGrow: 1
         
     },
     flex: {
@@ -36,16 +46,22 @@ const styles = {
     },
     menuButton: {
         color: '#5ACCC1',
-        marginLeft: -12,
-        marginRight: 20,
+        position:'fixed',
+        left: '20px'
     },
     AccountCircle: {
         color: '#5ACCC1',
         fontSize: 30,
+        position:'fixed',
+        right: 30
     },
     ToolBar: {
         color: '#5ACCC1',
         background: '#1F2D44',
+    },
+    logo: {
+        width: 500,
+        margin:'0 auto'
     }
 
 };
@@ -92,12 +108,14 @@ class Header extends Component {
         const open = Boolean(anchorEl);
 
         return (
-            <div className={classes.root}>
+            <div className={classes.wrapper}>
                 <AppBar className={classes.root} position="static">
-                    <Toolbar className={classes.ToolBar}>
-                    <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
-                        <MenuIcon style={{ fontSize: 30  }} />
+                    <Toolbar >
+                        <div onClick={this.toggleDrawer('left', true)} className="menu-icon">
+                    <IconButton  color="inherit" aria-label="Menu" onClick={this.toggleDrawer('left', true)}>
+                        <MenuIcon style={{ fontSize: 30, position:'fixed',top:15, left: 50,color:'#5ACCC1'}} />
                     </IconButton>
+                    </div>
                     <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                         <div
                             tabIndex={0}
@@ -108,16 +126,31 @@ class Header extends Component {
                             <Aside/>
                         </div>
                         </Drawer>
-                    <Typography variant="display3"  className={classes.flex}>
-                        finder
-                    </Typography>
+                    <Link to='/'>
+                      <figure style={{ 
+                                    margin: 0, 
+                                    padding: 0, 
+                                    height: 45, 
+                                    position: 'fixed',
+                                    top:3,
+                                    left:100,
+                                    overflow: 'hidden'
+                                     }}>
+                     <img src={logo} alt="finder logo" style={{ 
+                                        display: 'inline',
+                                        height: '100%',
+                                        width: 'auto', 
+                                        margin: 0, 
+                                        padding: 0 }}  className={classes.logo} />
+                    </figure>
+                    </Link>
                     {auth && (
                     <div>
                         <IconButton
                             aria-owns={open ? 'menu-appbar' : null}
                             aria-haspopup="true"
-                            onClick={context.login ? this.handleMenu : context.methods.login}
                             color="inherit"
+                            
                         >
                         {context.login ?
                             <div>
@@ -126,23 +159,28 @@ class Header extends Component {
                                     padding: 0, 
                                     height: 33, 
                                     width: 33,
-                                    position: 'relative',
+                                    position: 'fixed',
+                                    top:'12px',
+                                    right: '30px',
                                     overflow: 'hidden',
-                                    borderRadius: '50%' }}>
+                                    borderRadius: '50%' }}
+                                    onClick={this.handleMenu}
+                                    >
                                     <img style={{ 
                                         display: 'inline',
                                         height: '100%',
                                         width: 'auto', 
                                         margin: 0, 
-                                        padding: 0 }} 
+                                        padding: 0,
+                                         }} 
+
                                         src={context.user.picture} alt="Profile"/>
                                 </figure>
                             </div>
                             :
-                            <AccountCircle className={classes.AccountCircle} />
+                            <AccountCircle className={classes.AccountCircle} onClick={ context.methods.login}/>
                         }
                         </IconButton>
-                        
                         <Menu
                             id="menu-appbar"
                             anchorEl={anchorEl}
@@ -157,8 +195,9 @@ class Header extends Component {
                             open={open}
                             onClose={this.handleClose}
                             >
-                            <MenuItem onClick={this.handleClose}><div onClick={context.methods.logout}>Logout</div></MenuItem>
-                        </Menu>
+                             <MenuItem onClick={this.handleClose}><div onClick={context.methods.logout}>Logout</div></MenuItem>
+                            </Menu>
+                     
                     </div>
                     )}
                     </Toolbar>
@@ -173,3 +212,5 @@ Header.propTypes = {
 };
 
 export default withContext(withRouter(withStyles(styles)(Header)))
+
+

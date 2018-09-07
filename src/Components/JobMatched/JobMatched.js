@@ -17,6 +17,9 @@ const styles = theme => ({
     justifyContent: 'space-evenly',
     alignContent: 'center',
   },
+  hands: {
+    marginTop: 100,
+  },
   button: {
     margin: theme.spacing.unit,
     marginTop: 100,
@@ -129,17 +132,22 @@ class JobMatched extends React.Component {
 
 
   return (
-    <div className='jobmatched-container'>
-      <div className="backgroundhands" className={classes.root}>
-        <div className="handshake">
-            <div id="handshake"class="animated infinite bounce">
-              <img src={handshake} alt="" height={350} width={350}/>
-            </div> 
-        </div>
-    {/* <div class="animated infinite slideInRight"className="handshake2">
-        <img src={Hand2} alt="" height={150} width={170}/>
-        </div> */}
-        <div className="buttonStyle">
+    <div>
+    <div className="backgroundhands" className={classes.root}>
+
+
+    <div className={classes.hands}>
+        <div id="handshake"class="animated infinite bounce">
+        <img src={handshake} alt="" height={350} width={350}/>
+        </div> 
+    </div>
+
+
+{/* <div class="animated infinite slideInRight"className="handshake2">
+     <img src={Hand2} alt="" height={150} width={170}/>
+    </div> */}
+  
+  <div className="buttonStyle">
 
     <div className="button1">
     <Link to ="/">

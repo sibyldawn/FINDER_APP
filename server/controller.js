@@ -94,7 +94,11 @@ var self = module.exports = {
             `select u.*, c.* from users u 
             left outer join connections c
             on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
+<<<<<<< HEAD
             where "${stringToBoolean(recruiter) ? 'applicant_decision' : 'recruiter_decision'}" is null 
+=======
+            where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
+>>>>>>> 7050674d542a8eda9a187af06c3317d51c534ef5
             and industry_code = '${industry}' 
             and isrecruiter = '${recruiter}'
             and active = 'true';`)
