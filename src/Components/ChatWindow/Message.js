@@ -10,12 +10,20 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
-    root: {
-      fontSize: '-0.125rem',
+    rootMyself: {
       width: '100%',
       maxWidth: 360,
+      position: 'relative',
+      right:0,
       backgroundColor: theme.palette.background.paper,
     },
+    rootOther: {
+        width: '100%',
+        maxWidth: 360,
+        position: 'relative',
+        left:0,
+        backgroundColor: theme.palette.background.paper,
+      },
     chip: {
         margin: theme.spacing.unit,
         fontSize: 15
@@ -47,17 +55,18 @@ class Message extends Component{
 
     render(){
         const { classes } = this.props;
-
+      
         const timestamp =  Date.parse(this.props.time);
         const date= new Date(timestamp).toLocaleString();
         console.log('SENDER DETAILS', this.state.sender);
-
+        console.log('Props Details', this.props);
+        let style = this.state.sender.id !== this.props.user.id ? 'classes. rootOther' : 'classes.rootMyself' ;
     return (
-        <div className={classes.root}>
+        <div className={style}>
              <ListItem>
                 <Avatar src={this.state.sender.avatar_url} height={60} width={60} className={classes.avatar}/>
                 <div className={classes.container}>
-                <Chip label={this.props.text} className={classes.chip} color="primary"/>
+                <Chip label={this.props.text} className={classes.chip} color={this.state.sender.id !== this.props.user.id ? "secondary" : "primary"}/>
                 <ListItemText  secondary={`${this.state.sender.name} ${date}`} className={classes.secondary} style={{fontSize:'xx-small'}} />
                 </div>
             </ListItem>

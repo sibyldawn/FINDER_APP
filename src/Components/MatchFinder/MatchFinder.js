@@ -55,8 +55,8 @@ class App extends React.Component {
         connection_id:0,
         joinedRooms:[],
         appearHome: true,
-        open: false,
-        onSwipeEnded: false,
+        open: false
+      
       }
 
       this.deck = React.createRef();
@@ -68,7 +68,7 @@ class App extends React.Component {
       // console.log('------------ COMPONENT DID MOUNT GET ID', res)
       this.setState({
         cards: res.data,
-        cardQueue: res.data
+        cardQueue: res.data,
       })
     })
   }
@@ -235,7 +235,7 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-        !this.state.showAnimation ?
+      data.length >0 || !this.state.showAnimation    ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">
