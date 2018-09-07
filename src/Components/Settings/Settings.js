@@ -188,6 +188,7 @@ class Settings extends React.Component {
                                 }}
                             />
                         }
+                        // the label and tool tip image need to be syled and positioned with the toggle switch
                         label='Account active'
                     />
                     <Tooltip title="When toggled off, this account will cease to show up in other users' match queue.">

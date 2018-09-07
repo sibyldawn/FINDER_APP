@@ -16,6 +16,9 @@ const styles = theme => ({
     justifyContent: 'space-evenly',
     alignContent: 'center',
   },
+  hands: {
+    marginTop: 100,
+  },
   button: {
     margin: theme.spacing.unit,
     marginTop: 100,
@@ -132,7 +135,7 @@ class JobMatched extends Component {
     <div className="backgroundhands" className={classes.root}>
 
 
-    <div className="handshake">
+    <div className={classes.hands}>
         <div id="handshake"class="animated infinite bounce">
         <img src={handshake} alt="" height={350} width={350}/>
         </div> 

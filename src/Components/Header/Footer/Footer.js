@@ -45,12 +45,12 @@ const styles = {
 
 
 
-  Matches: {
-    backgroundColor: '#1F2D44',
-  },
-  SupervisedUserCircle: {
-    color: '#A8B4B3',
-  },
+  // Matches: {
+  //   backgroundColor: '#1F2D44',
+  // },
+  // SupervisedUserCircle: {
+  //   color: '#A8B4B3',
+  // },
 
 
 
@@ -66,12 +66,12 @@ const styles = {
   
 
 
-  SettingsBox: {
-    backgroundColor: '#1F2D44',
-  },
-  SettingsIcon: {
-    color: '#A8B4B3',
-  }
+  // SettingsBox: {
+  //   backgroundColor: '#1F2D44',
+  // },
+  // SettingsIcon: {
+  //   color: '#A8B4B3',
+  // }
 
    
   }
@@ -95,10 +95,10 @@ class Footer extends Component {
     return (
       <BottomNavigation  value={value} onChange={this.handleChange} className={classes.root} color="inherit">
         <Link to="/Messages"><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 30 }} color='action' />}/></Link>
-        <Link to="/Matches"><BottomNavigationAction className={classes.Matches} label="Matches" value="matches" icon={<SupervisedUserCircle className={classes.SupervisedUserCircle} style={{ fontSize: 30}}/>} /></Link>
+        {/* <Link to="/Matches"><BottomNavigationAction className={classes.Matches} label="Matches" value="matches" icon={<SupervisedUserCircle className={classes.SupervisedUserCircle} style={{ fontSize: 30}}/>} /></Link> */}
         <Link to="/"><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp className={classes.SwapHorizSharp} style={{ fontSize: 30}} />} /></Link>
         <Link to="/JobMap"><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon className={classes.LocationOnIcon} style={{ fontSize: 30}}/>} /></Link>
-        <Link to="/Settings"><BottomNavigationAction className={classes.SettingsBox} label="Settings" value="settings" icon={<Settings className={classes.SettingsIcon}style={{ fontSize: 30}} />}  /></Link>
+        {/* <Link to="/Settings"><BottomNavigationAction className={classes.SettingsBox} label="Settings" value="settings" icon={<Settings className={classes.SettingsIcon}style={{ fontSize: 30}} />}  /></Link> */}
       </BottomNavigation>
     );
   }

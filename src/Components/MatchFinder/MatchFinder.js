@@ -2,6 +2,7 @@ import React from 'react';
 import MotionStack from 'react-motion-stack';
 import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -19,6 +20,15 @@ const styles = theme => ({
       margin: theme.spacing.unit,
       minWidth: 200,
   },
+  loginButton: {
+    marginTop: '200px',
+    background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
+    width: '150px',
+    height: '60px',
+  }
+ 
+
+
 });
 
 class App extends React.Component {
@@ -210,7 +220,29 @@ console.log("new ROOM=====>", newRoom)
           </TransitionGroup> 
         </div>
       :
-      <div className="NoUser">No user logged in.</div>
+      <div>
+      <div className="NoUser">No user logged in.
+      {/* <video  className = "video "  autoPlay loop controls>
+           
+           <source src ={}/>
+         
+        </video> */}
+         
+         <Button className={classes.loginButton}
+              onClick={() => this.handleChange('open', true)}
+              variant='contained' 
+              >
+              Login
+          </Button>
+
+      
+      
+      
+      
+              </div>
+        
+        </div>
+
     );
   }
 }
