@@ -21,7 +21,7 @@ const styles = theme => ({
     width: '100%',
     maxWidth: 360,
     // backgroundColor: theme.palette.background.paper,
-    backgroundColor: '#A8B4B3',
+    backgroundColor: '#eff4fc',
     height: '51em',
   },
 });
@@ -34,7 +34,7 @@ class Aside extends Component {
     <div className={classes.root}>
 
       <List>
-        <Link to="/profile"><ListItem>
+        <Link to="/profile" style={{textDecoration:'none'}}><ListItem>
           <Avatar>
             <Face />
           </Avatar>
@@ -44,16 +44,8 @@ class Aside extends Component {
         <li>
           <Divider inset />
         </li>
-        <Link to="/Matches">
-        <ListItem>
-          <Avatar>
-            <SupervisedUserCircle />
-          </Avatar>
-          <ListItemText primary="Match List" />
-        </ListItem>
-        </Link>
         <Divider inset component="li" />
-        <Link to="/Settings">
+        <Link to="/Settings" style={{textDecoration:'none'}}>
         <ListItem>
           <Avatar>
             <Settings />
