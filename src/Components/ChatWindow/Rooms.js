@@ -10,6 +10,7 @@ import Room from './Room';
 
 const styles = theme => ({
   root: {
+    overflowY:'scroll',
     width: '100%',
     maxWidth: '100vw',
     backgroundColor: theme.palette.background.paper,
@@ -31,7 +32,7 @@ class Rooms extends Component {
         const id = room.userIds[otherUserIndex]
         console.log("otherUSerId", id);
         return (
-        <div key={room.id} onClick={()=>this.props.handleChangeIndex(1)}>
+        <div key={room.id} onClick={()=>this.props.handleChangeIndex(1)} >
         <div onClick={() => this.props.subscribeToRoom(room.id)}>
         <Room id={room.id} otherUserId={id} />
         </div>
@@ -45,7 +46,7 @@ class Rooms extends Component {
     const { classes } = this.props;
         return (
              <div className={classes.root}>
-             <List>
+             <List className={classes.root} style={{overflow: 'scroll!important'}}>
                  {rooms}
             </List>
     </div>

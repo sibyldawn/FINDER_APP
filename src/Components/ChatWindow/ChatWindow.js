@@ -224,6 +224,7 @@ sendMessage=(text)=>{
         >
           <TabContainer dir={theme.direction} className={classes.roomListContainer}>
           {/* <OnlineStatus user={this.state.user} users ={this.state.currentRoom.users}/> */}
+         
           <Rooms rooms={[...this.state.joinedRooms]}
                        roomId ={this.state.roomId}//axios get from db
                        subscribeToRoom={this.subscribeToRoom}
@@ -234,6 +235,7 @@ sendMessage=(text)=>{
                        getOtherUser = {this.getOtherUser}
 
                 />
+            
           </TabContainer>
           <TabContainer dir={theme.direction} className={classes.chatListContainer}>
           <MessageFeed messages={this.state.messages} roomId={this.state.roomId} user={this.state.user}/>
