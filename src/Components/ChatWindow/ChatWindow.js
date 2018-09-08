@@ -76,7 +76,9 @@ class ChatWindow extends Component {
              user:{},
              value:0,
              room_users:[],
-             sender:{}
+             sender:{},
+             usersWhoAreTyping: [],
+             currentRoom: {}
         }
     }
 
@@ -130,18 +132,35 @@ subscribeToRoom=(roomId)=>{
     })
     this.currentUser.subscribeToRoom({
         roomId:roomId,//newroom for new connection id's
+        messageLimit:100,
         hooks:{
             onNewMessage: message => {
                 console.log('message props', message);
                 this.setState({
                     messages:[...this.state.messages,message]
                 })
-            }
+            },
+            onUserStartedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name],
+              })
+            },
+            onUserStoppedTyping: user => {
+              this.setState({
+                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                  username => username !== user.name
+                ),
+              })
+            },
+            onUserCameOnline: () => this.forceUpdate(),
+            onUserWentOffline: () => this.forceUpdate(),
+            onUserJoined: () => this.forceUpdate(),
         }
    })
    .then(room => {
        this.setState({
-           roomId: room.id
+           roomId: room.id,
+           currentRoom: room
        })
        this.getRooms()
    })
@@ -204,6 +223,7 @@ sendMessage=(text)=>{
           onChangeIndex={this.handleChangeIndex}
         >
           <TabContainer dir={theme.direction} className={classes.roomListContainer}>
+          {/* <OnlineStatus user={this.state.user} users ={this.state.currentRoom.users}/> */}
           <Rooms rooms={[...this.state.joinedRooms]}
                        roomId ={this.state.roomId}//axios get from db
                        subscribeToRoom={this.subscribeToRoom}

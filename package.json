@@ -29,6 +29,7 @@
     "react-dropzone": "^5.0.1",
     "react-google-maps": "^9.4.5",
     "react-hot-loader": "^4.3.6",
+    "react-lottie": "^1.2.3",
     "react-motion-stack": "0.0.4",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",

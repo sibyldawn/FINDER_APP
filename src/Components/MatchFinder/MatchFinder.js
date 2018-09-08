@@ -17,6 +17,7 @@ import { CSSTransition ,TransitionGroup } from "react-transition-group";
 import men from '../../Assets/men.mp4';
 import Popup from 'reactjs-popup';
 import finder from '../../Assets/finder.gif';
+import TryAgainLater from './TryAgainLater.js';
 
 const styles = theme => ({
   formControl: {
@@ -34,6 +35,11 @@ const styles = theme => ({
     background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
     width: '150px',
     height: '60px',
+  },
+  userCard: {
+    fontFamily: 'Baloo Bhai',
+    backgroundColor: '#1F2D44', 
+
   }
  
 
@@ -46,6 +52,7 @@ class App extends React.Component {
       this.state = {
         industry: '',
         cards: [],
+        showAnimation: false,
         user1: {},
         user2:{},
         room_id: 0,
@@ -53,7 +60,8 @@ class App extends React.Component {
         connection_id:0,
         joinedRooms:[],
         appearHome: true,
-        open: false
+        open: false,
+        onSwipeEnded: false,
       }
 
       this.deck = React.createRef();
@@ -62,9 +70,10 @@ class App extends React.Component {
   componentDidMount(){
     console.log('----------CONTEXT', this.props.context)
     axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-      console.log('------------ COMPONENT DID MOUNT GET ID', res)
+      // console.log('------------ COMPONENT DID MOUNT GET ID', res)
       this.setState({
-        cards: res.data
+        cards: res.data,
+        cardQueue: res.data
       })
     })
   }
@@ -94,11 +103,20 @@ class App extends React.Component {
         connection_id: res.data[0].id
         },()=>{this.connectToChat()})
     }})
+    // const newState = [...this.state.cardQueue]
+    // newState.pop()
+    // this.setState({
+    //   cardQueue: newState
+    // })
     swipe();
   }
 
   onSwipeEnd = ({ data }) => {
     console.log('data', data);
+    if(data.length <= 0){
+      this.setState({ showAnimation: true })
+    }
+   
   };
 
   connectToChat=()=>{
@@ -166,7 +184,7 @@ sendRoomToDB=()=>{
 }
 console.log("new ROOM=====>", newRoom)
   axios.post('/api/rooms',newRoom).then( response => {
-    console.log("new room =====>", response);
+    // console.log("new room =====>", response);
 
   }).catch( err => console.log("Room not recorded", err))
 }
@@ -181,9 +199,10 @@ console.log("new ROOM=====>", newRoom)
   componentDidUpdate(prevProps) {
     if(this.props.context.user !== prevProps.context.user) {
       axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-        console.log('------------ COMPONENT UPDATE GET ID', res)
+        // console.log('------------ COMPONENT UPDATE GET ID', res)
         this.setState({
-          cards: res.data
+          cards: res.data,
+          cardQueue: res.data
         })
       })
     }
@@ -205,12 +224,12 @@ closeModal=()=>{
   render() {
     console.log("CHAT ROOMS=======>", this.state);
 
-    const {appearHome} = this.state;
+    const {appearHome,onSwipeEnded} = this.state;
 
 
       const { classes, context } = this.props
-      let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
-      console.log('------------ userCards', userCards)
+      let userCards = this.state.cards.map(user => <UserCard className={classes.userCard} id={user.auth0_id} draggable={false} />)
+      // console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,
         element: (
@@ -218,30 +237,32 @@ closeModal=()=>{
         )
       }));
     console.log("data",data);
-    console.log(this.deck)
+    // console.log(this.deck)
     return (
       context.login ?
-        <div className="card-container">
+        !this.state.showAnimation ?
+          <div className="card-container">
 
-
-         <TransitionGroup className="card-container">
-            <CSSTransition
-           in={appearHome}
-           appear={true}
-           timeout={600}
-           classNames="fade">
-            
-                <MotionStack
-                  data={data}
-                  onSwipeEnd={this.onSwipeEnd}
-                  onBeforeSwipe={this.onBeforeSwipe}
-                  render={props => props.element}
-                  renderButtons={this.renderButtons}
-                  infinite={false}
-                />
-               </CSSTransition>
-          </TransitionGroup> 
-        </div>
+          <TransitionGroup className="card-container">
+              <CSSTransition
+            in={appearHome}
+            appear={true}
+            timeout={600}
+            classNames="fade">
+          
+                  <MotionStack
+                    data={data}
+                    onSwipeEnd={this.onSwipeEnd}
+                    onBeforeSwipe={this.onBeforeSwipe}
+                    render={props => props.element}
+                    renderButtons={this.renderButtons}
+                    infinite={false}
+                  />
+                </CSSTransition>
+            </TransitionGroup> 
+            </div>
+          :
+           <div><TryAgainLater /></div>
       :
       <div>
         <div className="NoUser" style={{position: 'fixed',
