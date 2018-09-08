@@ -105,7 +105,7 @@ render(){
     
         <div className="jobMapComponent">
            
-           <div className="jobsearch">Job Search</div>
+           <div className="jobsearch">Map</div>
            <div className="jobList">
           {/* <MapMarker/> */}
           <FormControl className={classes.formControl}>
