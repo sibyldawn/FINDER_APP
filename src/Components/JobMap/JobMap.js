@@ -30,6 +30,7 @@ class JobMap extends Component {
             jobsSearched: [],
             selectedJobs: '',
             isRecruiter: '',
+            isApplicant: '',
             industry: ''
         }
     }

@@ -15,23 +15,28 @@ import red from '@material-ui/core/colors/red';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios'
 
+
+
 const styles = theme => ({
   card: {
-    minWidth: 350,
+    minWidth: 300,
     maxWidth: "60%",
-    marginTop: '80px',
+    marginTop: '20px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    minHeight: 500,
-    top: 150,
-    right:30,
+    minHeight: 300,
+    // top: 150,
+    // right:60,
     overflow: "scroll",
     userSelect: 'none',
-    padding: '20px',
+    padding: '5px',
+    fontFamily: 'Baloo Bhai',
+    marginTop: '120px',
   },
-   cardheader: {
-    fontSize: '40px',
+   cardheader1: {
+    fontSize: '20px',
     color: '#1F2D44',
+    fontFamily: 'Baloo Bhai',
    },
   media: {
     height: 0,
@@ -51,6 +56,7 @@ const styles = theme => ({
     },
   },
   expandOpen: {
+    marginTop: '90px',
     transform: 'rotate(180deg)',
   },
   avatar: {
@@ -90,7 +96,8 @@ class UserCard extends React.Component {
       user ? 
         <Card className={classes.card}>
           <CardHeader
-            className={classes.cardheader}
+            
+            className={classes.cardheader1}
             title={`${user.first_name} ${user.last_name}`}
             subheader={user.job_interest}
           />
