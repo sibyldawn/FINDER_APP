@@ -55,7 +55,6 @@ html, body {
     background-color: var(--main-color);
     overflow: scroll;
     height: 100%;
-    z-index:0;
 }
 
 .rooms-list ul {
@@ -168,8 +167,11 @@ html, body {
 }
 
 .send-message-form {
-    background: var(--send-message-form);
     display: flex;
+    width:100vw;
+    position: fixed;
+    bottom: 50px;
+
 }
 
 .send-message-form input {

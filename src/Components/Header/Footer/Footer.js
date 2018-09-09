@@ -16,66 +16,43 @@ import './Footer.css';
 
 const styles = {
   root: {
-    zIndex: 2,
     position: 'fixed',
     bottom: 0,
     width:"100vw",
     background: "#1F2D44",
+    color:'#A8B4B3',
     fontSize: 50,
     display:'flex',
     justifyContent: 'space-evenly'
-  },
-  Messages: {
+  // },
+  // Messages: {
   
-   backgroundColor: '#1F2D44',
+  //  backgroundColor: '#1F2D44',
    
-  },
-  MessageSharp: {
-    color: '#A8B4B3',
+  // },
+  // MessageSharp: {
+  //   color: '#A8B4B3',
    
-  }, 
+  // }, 
 
 
-  Finder: {
-    backgroundColor: '#1F2D44',
-  },
-  SwapHorizSharp: {
-    color: '#A8B4B3',
-   
-  },
-
-
-
-  // Matches: {
+  // Finder: {
   //   backgroundColor: '#1F2D44',
   // },
-  // SupervisedUserCircle: {
+  // SwapHorizSharp: {
   //   color: '#A8B4B3',
+   
   // },
 
-
-
-
-  JobMap: {
-    backgroundColor: '#1F2D44',
-  },
-  LocationOnIcon: {
-    color: '#A8B4B3',
-  },
-
-
-  
-
-
-  // SettingsBox: {
+  // JobMap: {
   //   backgroundColor: '#1F2D44',
   // },
-  // SettingsIcon: {
+  // LocationOnIcon: {
   //   color: '#A8B4B3',
-  // }
-
+  // },
    
   }
+}
 
 
 
@@ -92,14 +69,15 @@ class Footer extends Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-
+    const styles = {
+      fontSize: 30, 
+      color:'#eff4fc',
+    }
     return (
       <BottomNavigation  value={value} onChange={this.handleChange} className={classes.root} color="inherit">
-        <Link to="/Messages"><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 30 }} color='action' />}/></Link>
-        {/* <Link to="/Matches"><BottomNavigationAction className={classes.Matches} label="Matches" value="matches" icon={<SupervisedUserCircle className={classes.SupervisedUserCircle} style={{ fontSize: 30}}/>} /></Link> */}
-        <Link to="/"><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp className={classes.SwapHorizSharp} style={{ fontSize: 30}} />} /></Link>
-        <Link to="/JobMap"><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon className={classes.LocationOnIcon} style={{ fontSize: 30}}/>} /></Link>
-        {/* <Link to="/Settings"><BottomNavigationAction className={classes.SettingsBox} label="Settings" value="settings" icon={<Settings className={classes.SettingsIcon}style={{ fontSize: 30}} />}  /></Link> */}
+        <Link to="/Messages"><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp style={styles} />}/></Link>
+        <Link to="/"><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp style={styles}  />} /></Link>
+        <Link to="/JobMap"><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon style={styles} />} /></Link>
       </BottomNavigation>
     );
   }

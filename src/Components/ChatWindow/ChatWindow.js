@@ -35,20 +35,21 @@ const styles = theme => ({
     position:'fixed',
     top:60,
     color:'white',
-    overflow: 'scroll',
   },
   container: {
-    height: '100vh',
+    height: '80vh',
     display: 'flex',
     flexDirection: 'column',
   },
   roomListContainer: {
     width: '15%',
     padding: 20,
+    height:'80vh',
     backgroundColor: '#2c303b',
     color: 'white',
   },
   chatContainer: {
+    height: '80vh',
     display: 'flex',
     flex: 1
   },
@@ -222,7 +223,7 @@ sendMessage=(text)=>{
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction} className={classes.roomListContainer}>
+          <TabContainer dir={theme.direction}>
           {/* <OnlineStatus user={this.state.user} users ={this.state.currentRoom.users}/> */}
          
           <Rooms rooms={[...this.state.joinedRooms]}
