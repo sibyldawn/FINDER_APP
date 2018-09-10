@@ -6,7 +6,6 @@ import { withContext } from '../../ContextAPI/Context_HOC'
 import { withRouter } from 'react-router-dom'
 import Rooms from './Rooms';
 import './ChatWindow.css'
-import NewRoom from './NewRoom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
