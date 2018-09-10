@@ -301,19 +301,13 @@ closeModal=()=>{
                 onClose = {this.closeModal}
                 position="top center"
                 >
-               <figure style={{    
-                                    margin: 0, 
-                                    padding: 0,
-                                     }}>
+              
                  <img src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
-                  display: 'inline',
-                  height: '50%',
-                  width: '100vw', 
+                  height: '500',
                   margin: 0, 
                   padding: 0,
                    }} />
-                </figure>
                </Popup>
 
         </div>
