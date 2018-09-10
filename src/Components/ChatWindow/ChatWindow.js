@@ -193,12 +193,12 @@ sendMessage=(text)=>{
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
     console.log("CHATWINDOW room_users", this.state.room_users);
-    const styles = {
+    // const styles = {
        
         
         
        
-      }
+    //   }
   
     return (
         <div className={classes.container}>

@@ -240,8 +240,10 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-      data.length >0 || !this.state.showAnimation    ?
-          <div className="card-container">
+          data.length === 0 || this.state.showAnimation    ?
+           <div><TryAgainLater /></div>   
+           :
+           <div className="card-container">
 
           <TransitionGroup className="card-container">
               <CSSTransition
@@ -261,8 +263,8 @@ closeModal=()=>{
                 </CSSTransition>
             </TransitionGroup> 
             </div>
-          :
-           <div><TryAgainLater /></div>
+          
+           
       :
       <div>
         <div className="NoUser" style={{position: 'fixed',
