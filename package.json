@@ -47,7 +47,12 @@
     "test": "jest",
     "eject": "react-scripts eject",
     "build-css": "node-sass-chokidar src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+    "now-start": "node server/index.js",
+    "deploy": "now --public --dotenv=.env.prod -d"
+  },
+    "now":{
+     "alias":"finder"
   },
   "proxy": {
     "/auth/callback": {

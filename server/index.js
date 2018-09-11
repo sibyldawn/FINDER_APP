@@ -1,6 +1,4 @@
-const app = require('express')();
-const server = require('http').createServer(app);
-// const io = require('socket.io')(server);
+const express = require('express');
 const Chatkit = require('@pusher/chatkit-server');
 const bodyParser = require('body-parser');
 const massive = require('massive');
@@ -9,11 +7,12 @@ const RedisStore = require('connect-redis')(session)
 require('dotenv').config();
 const axios = require('axios');
 const controller = require('./controller');
-// const SocketManager = require('./SocketManager')
 const cloudinary = require('cloudinary')
 
 
+const app = express();
 app.use(bodyParser.json());
+app.use(express.static( `${__dirname}/../build` ) );
 
 // Redis Implementation
 app.use(session({
@@ -204,8 +203,12 @@ app.get('/auth/callback', (req, res) => {
 })
 
 
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 
 
 const PORT =  4000;
-server.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));
+app.listen(PORT, () => console.log(`Server Is Listening on port ${PORT} 👏`));
