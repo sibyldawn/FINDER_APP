@@ -6,7 +6,6 @@ import { withContext } from '../../ContextAPI/Context_HOC'
 import { withRouter } from 'react-router-dom'
 import Rooms from './Rooms';
 import './ChatWindow.css'
-import NewRoom from './NewRoom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -35,20 +34,21 @@ const styles = theme => ({
     position:'fixed',
     top:60,
     color:'white',
-    overflow: 'scroll',
   },
   container: {
-    height: '100vh',
+    height: '80vh',
     display: 'flex',
     flexDirection: 'column',
   },
   roomListContainer: {
     width: '15%',
     padding: 20,
+    height:'80vh',
     backgroundColor: '#2c303b',
     color: 'white',
   },
   chatContainer: {
+    height: '80vh',
     display: 'flex',
     flex: 1
   },
@@ -192,12 +192,12 @@ sendMessage=(text)=>{
     const { classes, theme } = this.props;
     console.log("===>index", this.state.value);
     console.log("CHATWINDOW room_users", this.state.room_users);
-    const styles = {
+    // const styles = {
        
         
         
        
-      }
+    //   }
   
     return (
         <div className={classes.container}>
@@ -222,7 +222,7 @@ sendMessage=(text)=>{
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction} className={classes.roomListContainer}>
+          <TabContainer dir={theme.direction}>
           {/* <OnlineStatus user={this.state.user} users ={this.state.currentRoom.users}/> */}
          
           <Rooms rooms={[...this.state.joinedRooms]}

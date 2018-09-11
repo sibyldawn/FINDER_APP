@@ -19,7 +19,9 @@ import './Profile.css'
 
 const styles = theme => ({
     progress: {
-      margin: theme.spacing.unit * 2,
+        marginTop: '20px',
+        margin: theme.spacing.unit * 8,
+        
     },
     container: {
         display: 'flex',
@@ -27,6 +29,9 @@ const styles = theme => ({
         flexDirection: 'column',
         flexWrap: 'wrap',
         backgroundColor: '#dce4e3',
+        marginTop: '60px',
+        
+        
     },
     profilePicture: {
         border: 'solid',
@@ -77,7 +82,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 2,
     },
     formControl: {
-        margin: theme.spacing.unit  * 2,
+        marginTop: theme.spacing.unit * 8,
         minWidth: 180,
     },
     button: {
@@ -102,7 +107,12 @@ const styles = theme => ({
     },
 
     buttonStyle: {
-        backgroundColor: '#dce4e3',
+        // backgroundColor: '#dce4e3',
+    },
+    Card: {
+        fontSize: '20px',
+        color: '#1F2D44',
+        backgroundColor: '#1F2D44',
     }
 
     
@@ -222,6 +232,7 @@ class Profile extends Component {
                 <div>
                     <div>
                         {this.state.editing ?
+                             
                             <div className={classes.container}>
                                 <img src={this.state.picture} className={classes.profilePicture}alt="Profile" width='300' />
                                 <div>
@@ -242,7 +253,7 @@ class Profile extends Component {
                                                         border: 'solid',
                                                         borderRadius: 9,
                                                         padding: 8,
-                                                        borderColor: '#3f51b5',
+                                                        borderColor: '#5ACCC1',
                                                         borderWidth: 2,
                                                         minWidth: '70%',
                                                         cursor: 'pointer',
@@ -251,9 +262,11 @@ class Profile extends Component {
                                                     {this.state.files ? this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>) : <p>Try dropping some files here, or click to select files to upload.</p>}
                                                 </Dropzone>
                                             </div>
+                                            
                                         </section>
                                     </ FormControl>
                                 </div>
+                               
                                 <div className='profileBio'>
                                     <TextField className={classes.bio}
                                         helperText={isrecruiter ? 'Company' : 'Bio'}
@@ -543,7 +556,7 @@ class Profile extends Component {
                             </div>
                         :
                             <div className='user-card'>
-                                <Card id={this.state.auth0_id} width={'80%'} />\
+                                <Card className={classes.Card} id={this.state.auth0_id} width={'80%'} />\
                             </div>
                         }    
                     </div>

@@ -17,7 +17,7 @@ import { CSSTransition ,TransitionGroup } from "react-transition-group";
 import men from '../../Assets/men.mp4';
 import Popup from 'reactjs-popup';
 import finder from '../../Assets/finder.gif';
-import TryAgainLater from './TryAgainLater';
+import TryAgainLater from './TryAgainLater.js';
 
 const styles = theme => ({
   formControl: {
@@ -31,10 +31,15 @@ const styles = theme => ({
     height: '60px',
   },
   howToButton: {
-    marginTop: '600px',
+    marginTop: '550px',
     background: 'linear-gradient(to right, #5ACCC1 0%, #4063fc 100%)',
     width: '150px',
     height: '60px',
+  },
+  userCard: {
+    fontFamily: 'Baloo Bhai',
+    backgroundColor: '#1F2D44', 
+
   }
  
 
@@ -225,7 +230,7 @@ closeModal=()=>{
 
 
       const { classes, context } = this.props
-      let userCards = this.state.cards.map(user => <UserCard id={user.auth0_id} draggable={false} />)
+      let userCards = this.state.cards.map(user => <UserCard className={classes.userCard} id={user.auth0_id} draggable={false} />)
       // console.log('------------ userCards', userCards)
       const data = Array.from({ length: this.state.cards.length }, (_, i) => ({
         id: new Date().getTime() + i,
@@ -237,8 +242,10 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-      !this.state.showAnimation  ?
-          <div className="card-container">
+          data.length === 0 || this.state.showAnimation    ?
+           <div><TryAgainLater /></div>   
+           :
+           <div className="card-container">
 
           <TransitionGroup className="card-container">
               <CSSTransition
@@ -258,12 +265,11 @@ closeModal=()=>{
                 </CSSTransition>
             </TransitionGroup> 
             </div>
-          :
-            <div><TryAgainLater /></div>
       :
       <div>
-      <div className="NoUser" style={{position: 'fixed',
-                          top:0,color: 'gray'}}>Swipe&Connect
+        <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe & Connect </div>
+      
       <figure style={{ 
                           margin: 0, 
                           padding: 0, 
@@ -273,7 +279,7 @@ closeModal=()=>{
                           top:0,
                           overflow: 'hidden'
                                      }}>
-                     <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
+                     <video  className = "video"  autoPlay loop muted height={'100%'} width={'100%'}>
            
                      <source src ={men} style={{ 
 
@@ -286,8 +292,7 @@ closeModal=()=>{
                      </video>
                     </figure>
       
-         </div>
-      
+         
          <div>
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
@@ -296,19 +301,13 @@ closeModal=()=>{
                 onClose = {this.closeModal}
                 position="top center"
                 >
-               <figure style={{    
-                                    margin: 0, 
-                                    padding: 0,
-                                     }}>
+              
                  <img src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
-                  display: 'inline',
-                  height: '50%',
-                  width: '100vw', 
+                  height: '500',
                   margin: 0, 
                   padding: 0,
                    }} />
-                </figure>
                </Popup>
 
         </div>
