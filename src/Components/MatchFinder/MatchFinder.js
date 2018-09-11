@@ -65,11 +65,13 @@ class App extends React.Component {
   componentDidMount(){
     // console.log('----------CONTEXT', this.props.context)
     axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-      // console.log('------------ COMPONENT DID MOUNT GET ID', res)
-      this.setState({
-        cards: res.data,
-        cardQueue: res.data,
-      })
+      console.log('------------ COMPONENT DID MOUNT GET ID', res)
+      res.data === [] ?
+        this.setState({ showAnimation: true })
+      :
+        this.setState({
+          cards: res.data,
+        })
     })
   }
 
@@ -112,7 +114,6 @@ class App extends React.Component {
     if(data.length <= 0){
       this.setState({ showAnimation: true })
     }
-   
   };
 
   connectToChat=()=>{
@@ -198,8 +199,8 @@ console.log("new ROOM=====>", newRoom)
         // console.log('------------ COMPONENT UPDATE GET ID', res)
         this.setState({
           cards: res.data,
-          cardQueue: res.data
         })
+        res.data === [] && this.setState({ showAnimation: true })
       })
     }
   }
@@ -236,7 +237,7 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-      data.length >0 || !this.state.showAnimation    ?
+      !this.state.showAnimation  ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">
@@ -258,7 +259,7 @@ closeModal=()=>{
             </TransitionGroup> 
             </div>
           :
-           <div><TryAgainLater /></div>
+            <div><TryAgainLater /></div>
       :
       <div>
       <div className="NoUser" style={{position: 'fixed',
