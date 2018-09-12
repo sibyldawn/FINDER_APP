@@ -123,7 +123,7 @@ class App extends React.Component {
         instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
         userId: this.props.context.user.auth0_id,//change to user
         tokenProvider: new Chatkit.TokenProvider({
-            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e9f2af90-4758-4eed-8d0d-f1e5faa192f5/token' 
         })
     })
     chatManager.connect()
