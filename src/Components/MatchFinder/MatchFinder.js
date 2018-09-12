@@ -272,7 +272,7 @@ closeModal=()=>{
                           position: 'fixed',
                           top:0,
                           overflow: 'hidden',
-                          zIndex: 5,
+                          
                                      }}>
                      <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
            
@@ -289,7 +289,7 @@ closeModal=()=>{
       
          </div>
       
-         <div className='howTo-button' style={{zIndex: 100}}>
+         <div className='howTo-button' >
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
                 className='pop-up-modal'
@@ -317,7 +317,7 @@ closeModal=()=>{
         </div>
 
 
-         <div className='login-button' style={{zIndex: 100}}>
+         <div className='login-button'>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 
