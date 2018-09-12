@@ -33,11 +33,11 @@ const styles = theme => ({
     fontFamily: 'Baloo Bhai',
     marginTop: '120px',
   },
-   cardheader1: {
-    fontSize: '20px',
-    color: '#1F2D44',
-    fontFamily: 'Baloo Bhai',
-   },
+  //  cardheader1: {
+  //   fontSize: '20px',
+  //   color: '#1F2D44',
+  //   fontFamily: 'Baloo Bhai',
+  //  },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9

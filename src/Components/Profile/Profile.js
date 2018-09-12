@@ -107,13 +107,13 @@ const styles = theme => ({
     },
 
     buttonStyle: {
-        // backgroundColor: '#dce4e3',
+        backgroundColor: '#dce4e3',
     },
-    Card: {
-        fontSize: '20px',
-        color: '#1F2D44',
-        backgroundColor: '#1F2D44',
-    }
+    // Card: {
+    //     fontSize: '20px',
+    //     color: '#1F2D44',
+    //     backgroundColor: '#1F2D44',
+    // }
 
     
 });
