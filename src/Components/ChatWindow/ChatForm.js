@@ -26,10 +26,10 @@ export default class ChatForm extends Component {
     render() {
         const styles={
             position: 'fixed',
-            width: '88vw'
+            width: '100vw'
         }
         const inputStyle ={
-            width: '75vw',
+            width: '65vw',
             height:'5vh'
         }
         return (

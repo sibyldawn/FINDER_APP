@@ -237,7 +237,7 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-      !this.state.showAnimation  ?
+          data.length > 0 || !this.state.showAnimation  ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">

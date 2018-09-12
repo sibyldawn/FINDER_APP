@@ -50,7 +50,8 @@ const styles = theme => ({
   },
   chatContainer: {
     display: 'flex',
-    flex: 1
+    flex: 1,
+    height: '100vh'
   },
   chatListContainer: {
     padding: 20,
