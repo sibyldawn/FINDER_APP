@@ -63,8 +63,8 @@ const styles = theme => ({
 
 
 class ChatWindow extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
 
         this.state = {
           roomId: 0,
@@ -85,15 +85,13 @@ class ChatWindow extends Component {
 
 
     componentDidMount(){
-    //change to this.props.context.user.auth0_id
-    const name = 'linkedin|c5Bs14lP1I';
-        axios.get(`/api/users/${name}`).then(response => {
+    console.log('auth0_id', this.props.context.user.auth0_id);
+        axios.get(`/api/users/${this.props.context.user.auth0_id}`).then(response => {
             console.log("FOUND USER", response.data.body);
             this.setState({
                 user: JSON.parse(response.data.body)
             },()=>{this.connectToChat()})
         }).catch(err => console.log("FIND USER ERROR",err))
-              
        }
    
   handleChange = (event, value) => {
@@ -113,7 +111,7 @@ class ChatWindow extends Component {
         instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
         userId: this.state.user.id,//change to user
         tokenProvider: new Chatkit.TokenProvider({
-            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e9f2af90-4758-4eed-8d0d-f1e5faa192f5/token' 
         })
     })
     chatManager.connect()
@@ -189,15 +187,9 @@ sendMessage=(text)=>{
 
 
   render() {
+    console.log('CONTEXT USER', this.props.context.user);
     const { classes, theme } = this.props;
-    console.log("===>index", this.state.value);
     console.log("CHATWINDOW room_users", this.state.room_users);
-    const styles = {
-       
-        
-        
-       
-      }
   
     return (
         <div className={classes.container}>
@@ -261,4 +253,4 @@ ChatWindow.propTypes = {
 };
 
 
-export default  withRouter(withStyles(styles, { withTheme: true })(ChatWindow));
+export default  withContext(withStyles(styles, { withTheme: true })(ChatWindow));

@@ -187,7 +187,7 @@ app.get('/auth/callback', (req, res) => {
                     const user = newUsers[0]
                     console.log('------------ newUsers', newUsers)
                     controller.sendEmail(user, 'welcome') // Sending welcome email with nodemailer
-                    chatkit.createUser({ // Creating a new chatroom for a new user
+                    chatkit.createUser({ // Creating a new user on chatkit
                         name: `${user.first_name} ${user.last_name}`,
                         id: user.auth0_id,
                         avatarURL: user.picture
