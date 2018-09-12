@@ -261,7 +261,7 @@ closeModal=()=>{
           :
             <div><TryAgainLater /></div>
       :
-      <div>
+      <div className='no-user-landing'>
       <div className="NoUser" style={{position: 'fixed',
                           top:0,color: 'gray'}}>Swipe&Connect
       <figure style={{ 
@@ -271,7 +271,8 @@ closeModal=()=>{
                           height:'800px',
                           position: 'fixed',
                           top:0,
-                          overflow: 'hidden'
+                          overflow: 'hidden',
+                          zIndex: 5,
                                      }}>
                      <video  className = "video "  autoPlay loop muted height={'100%'} width={'100%'}>
            
@@ -288,9 +289,11 @@ closeModal=()=>{
       
          </div>
       
-         <div>
+         <div className='howTo-button' style={{zIndex: 100}}>
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
+                className='pop-up-modal'
+                data-cy='popup'
                 open = {this.state.open}
                 closeOnDocumentClick
                 onClose = {this.closeModal}
@@ -300,7 +303,7 @@ closeModal=()=>{
                                     margin: 0, 
                                     padding: 0,
                                      }}>
-                 <img src={finder} alt="swipe left to pass,swipe right to like"
+                 <img  className='howTo-image' src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
                   display: 'inline',
                   height: '50%',
@@ -314,7 +317,7 @@ closeModal=()=>{
         </div>
 
 
-         <div>
+         <div className='login-button' style={{zIndex: 100}}>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 
