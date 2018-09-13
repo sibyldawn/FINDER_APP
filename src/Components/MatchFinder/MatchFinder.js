@@ -289,7 +289,7 @@ closeModal=()=>{
       
          </div>
       
-         <div className='howTo-button' >
+         <div className='howTo-button'  onClick={this.openModal} >
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
                 className='pop-up-modal'
@@ -317,7 +317,7 @@ closeModal=()=>{
         </div>
 
 
-         <div className='login-button'>
+         <div className='login-button' onClick={() => context.methods.login()}>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 
