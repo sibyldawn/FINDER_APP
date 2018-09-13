@@ -4,9 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FindInPageSharp from '@material-ui/icons/FindInPageSharp';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
-import './JobMatched.scss';
+import './JobMatched.css';
 import { Link } from 'react-router-dom';
 import handshake from './handshake.png';
+import { withContext } from '../../ContextAPI/Context_HOC'
 import axios from 'axios';
 
 const styles = theme => ({
@@ -45,7 +46,7 @@ const styles = theme => ({
 
 
 
-class JobMatched extends Component {
+class JobMatched extends React.Component {
 
 
   constructor(){
@@ -150,9 +151,9 @@ class JobMatched extends Component {
 
     <div className="button1">
     <Link to ="/">
-      <Button variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
+      <Button onClick={() => this.props.context.methods.toggleMatchEvent()} variant="extendedFab" aria-label="KeepJobMatching" className={classes.button}>
         <FindInPageSharp />
-         Keep Job Matching!
+          Keep Job Matching!
       </Button>
       </Link>
       </div>
@@ -162,7 +163,7 @@ class JobMatched extends Component {
     <div className="button2">
       <Link to ="/Messages">
       
-      <Button onClick={() => this.currentUser.createRoom }  variant="extendedFab" aria-label="Message" className={classes.button2}>
+      <Button variant="extendedFab" aria-label="Message" className={classes.button2}>
       {/* <Button onClick={this.currentUser.createRoom} */}
         <QuestionAnswer />
        Send A Message
@@ -183,7 +184,7 @@ JobMatched.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(JobMatched);
+export default withContext(withStyles(styles)(JobMatched));
 
 
 

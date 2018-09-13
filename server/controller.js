@@ -94,7 +94,7 @@ var self = module.exports = {
             `select u.*, c.* from users u 
             left outer join connections c
             on u.auth0_id = c."${stringToBoolean(recruiter) ? 'recruiter_id' : 'applicant_id'}"
-            where "${stringToBoolean(recruiter) ? 'applicant_id' : 'recruiter_id'}" is null 
+            where "${stringToBoolean(recruiter) ? 'applicant_decision' : 'recruiter_decision'}" is null 
             and industry_code = '${industry}' 
             and isrecruiter = '${recruiter}'
             and active = 'true';`)
@@ -144,7 +144,6 @@ var self = module.exports = {
             recruiterId: isRecruiter ? userId : cardId,
             applicantId: isRecruiter ? cardId : userId
         }).then(checkedRes => {
-            console.log('------------ checkedRes', checkedRes)
             checkedRes[0] ?
                 dbInstance.update_connection({
                     id: checkedRes[0].id,
@@ -187,8 +186,8 @@ var self = module.exports = {
         const dbInstance = req.app.get('db')
         const { roomId } = req.params;
 
-        dbInstance.get_room([roomId]).then( res => {
-            res.status(200).send(res.data)
+        dbInstance.get_room([roomId]).then( response => {
+            res.status(200).send(response)
         }).catch(err => console.log("Can't find room", err))
     },
     getChatRoomUsers(req,res){

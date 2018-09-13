@@ -102,7 +102,7 @@ class Header extends Component {
     }
 
     render() {
-        console.log('------------ this.props', this.props)
+        // console.log('------------ this.props', this.props)
         const { classes, context } = this.props;
         const { auth, anchorEl } = this.state;
         const open = Boolean(anchorEl);

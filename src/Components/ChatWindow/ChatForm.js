@@ -24,13 +24,13 @@ export default class ChatForm extends Component {
     }
 
     render() {
-       
-        const inputStyle ={
-            width: '100vw',
-            height:'20vh',
-            zIndex:1,
+        const styles={
             position: 'fixed',
-            bottom: 30,
+            width: '100vw'
+        }
+        const inputStyle ={
+            width: '65vw',
+            height:'5vh'
         }
         return (
             <div style={inputStyle}>

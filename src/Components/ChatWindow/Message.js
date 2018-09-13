@@ -62,10 +62,10 @@ class Message extends Component{
         console.log('Props Details', this.props);
         let style = this.state.sender.id !== this.props.user.id ? 'classes. rootOther' : 'classes.rootMyself' ;
     return (
-        <div className={style}>
+        <div className= {style} id='message'>
              <ListItem>
                 <Avatar src={this.state.sender.avatar_url} height={60} width={60} className={classes.avatar}/>
-                <div className={classes.container}>
+                <div className={classes.container} id='container'>
                 <Chip label={this.props.text} className={classes.chip} color={this.state.sender.id !== this.props.user.id ? "secondary" : "primary"}/>
                 <ListItemText  secondary={`${this.state.sender.name} ${date}`} className={classes.secondary} style={{fontSize:'xx-small'}} />
                 </div>

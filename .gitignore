@@ -10,9 +10,10 @@
 /build
 
 # misc
+.cypress.env.json
 .env
 .DS_Store
-.env
+.env.prod
 .env.local
 .env.development.local
 .env.test.local

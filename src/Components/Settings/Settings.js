@@ -171,9 +171,9 @@ class Settings extends React.Component {
                                 }}
                             />
                         }
-                        label='I am a recruiter'
+                        label={this.state.isrecruiter ? 'I am a recruiter' : 'I am an applicant'}
                     />
-                    <Tooltip title='If you represent a company and are looking for applicants, turn this on.'>
+                    <Tooltip title={this.state.isrecruiter ? "This account represents a company's recruiter" : 'This account represents a job applicant'}>
                         <img src={ helpIcon } alt='Help' />
                     </Tooltip>
                     <FormControlLabel
@@ -192,7 +192,7 @@ class Settings extends React.Component {
                         // the label and tool tip image need to be syled and positioned with the toggle switch
                         label='Account active'
                     />
-                    <Tooltip title="When toggled off, this account will cease to show up in other users' match queue.">
+                    <Tooltip title={this.state.active ? "This account will show up in other users's match queue" : "This account will not show up in other users' match queue."}>
                         <img src={ helpIcon } alt='Help' />
                     </Tooltip>
                     <Button className={classes.editEmailButton}

@@ -171,7 +171,6 @@ app.get('/auth/callback', (req, res) => {
             if (users.length) {
                 const user = users[0]
                 req.session.user = user // Using sessions with Auth0
-                controller.sendEmail(user, 'welcome') // Sending welcome email with nodemailer
                 res.redirect(prevPath)
                 console.log('------------ users', users)
                 console.log('------------ req.session.user', req.session.user)
@@ -187,6 +186,21 @@ app.get('/auth/callback', (req, res) => {
                 return db.add_user(createUserData).then(newUsers => {
                     const user = newUsers[0]
                     console.log('------------ newUsers', newUsers)
+                    controller.sendEmail(user, 'welcome') // Sending welcome email with nodemailer
+                    chatkit.createUser({ // Creating a new user on chatkit
+                        name: `${user.first_name} ${user.last_name}`,
+                        id: user.auth0_id,
+                        avatarURL: user.picture
+                    }).then( newUser => {
+                        console.log("chatkit response", newUser);
+                        res.status(200).json(newUser)})
+                    .catch(error => {
+                        if (error.error === 'services/chatkit/user_already_exists') {
+                            res.sendStatus(201)
+                        } else {
+                            res.status(error.status).json(error)
+                        }
+                    })
                     req.session.user = user // Here is session again
                     res.redirect('/profile')
                     }).catch(error => console.log('------------ Add user error', error))

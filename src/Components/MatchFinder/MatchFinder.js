@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import { withContext } from '../../ContextAPI/Context_HOC'
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import { MatchAnimation } from '../JobMatched/JobMatched'
+import JobMatched from '../JobMatched/JobMatched'
 import 'react-motion-stack/build/motion-stack.css';
 import PropTypes from 'prop-types';
 import UserCard from '../Card/Card';
@@ -68,20 +68,22 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log('----------CONTEXT', this.props.context)
+    // console.log('----------CONTEXT', this.props.context)
     axios.get(`/api/users/filter?industry=${this.props.context.user.industry_code}&recruiter=${!this.props.context.user.isrecruiter}`).then(res => {
-      // console.log('------------ COMPONENT DID MOUNT GET ID', res)
-      this.setState({
-        cards: res.data,
-        cardQueue: res.data,
-      })
+      console.log('------------ COMPONENT DID MOUNT GET ID', res)
+      res.data === [] ?
+        this.setState({ showAnimation: true })
+      :
+        this.setState({
+          cards: res.data,
+        })
     })
   }
 
   // Activated after a swipe action on <MotionStack/> is completed. Uses swipe direction.
   onBeforeSwipe = (swipe, direction, state) => {
-    console.log('direction', direction);
-    console.log('state', state.data[0].element.props.id);
+    // console.log('direction', direction);
+    // console.log('state', state.data[0].element.props.id);
     const {auth0_id, isrecruiter, email, first_name} = this.props.context.user
 
     axios.post('/api/user/matches', {
@@ -95,12 +97,13 @@ class App extends React.Component {
       console.log('------------ res ', res )
       if(res.data !== false ){
         const name = `${res.data[0].applicant_id} + ${res.data[0].recruiter_id}`
-  
+        
+        this.props.context.methods.toggleMatchEvent()
         this.setState({
-        user1: res.data[0].applicant_id,
-        user2: res.data[0].recruiter_id,
-        roomName: name,
-        connection_id: res.data[0].id
+          user1: res.data[0].applicant_id,
+          user2: res.data[0].recruiter_id,
+          roomName: name,
+          connection_id: res.data[0].id
         },()=>{this.connectToChat()})
     }})
     // const newState = [...this.state.cardQueue]
@@ -116,7 +119,6 @@ class App extends React.Component {
     if(data.length <= 0){
       this.setState({ showAnimation: true })
     }
-   
   };
 
   connectToChat=()=>{
@@ -126,7 +128,7 @@ class App extends React.Component {
         instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
         userId: this.props.context.user.auth0_id,//change to user
         tokenProvider: new Chatkit.TokenProvider({
-            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e9f2af90-4758-4eed-8d0d-f1e5faa192f5/token' 
         })
     })
     chatManager.connect()
@@ -155,7 +157,7 @@ getRooms=()=>{
 
 createRoomOrNot=()=>{
   const { joinedRooms ,roomName} = this.state;
-  const roomExists = joinedRooms.some(roomName)
+  const roomExists = joinedRooms.includes(roomName)
   if( !roomExists ){
   const { roomName, user1, user2 } = this.state;
   this.currentUser.createRoom({
@@ -202,8 +204,8 @@ console.log("new ROOM=====>", newRoom)
         // console.log('------------ COMPONENT UPDATE GET ID', res)
         this.setState({
           cards: res.data,
-          cardQueue: res.data
         })
+        res.data === [] && this.setState({ showAnimation: true })
       })
     }
   }
@@ -240,10 +242,8 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-          data.length === 0 || this.state.showAnimation    ?
-           <div><TryAgainLater /></div>   
-           :
-           <div className="card-container">
+          data.length > 0 || !this.state.showAnimation  ?
+          <div className="card-container">
 
           <TransitionGroup className="card-container">
               <CSSTransition
@@ -263,13 +263,12 @@ closeModal=()=>{
                 </CSSTransition>
             </TransitionGroup> 
             </div>
-          
-           
+          :
+            <div><TryAgainLater /></div>
       :
-      <div>
-        <div className="NoUser" style={{position: 'fixed',
-                          top:0,color: 'gray'}}>Swipe & Connect </div>
-      
+      <div className='no-user-landing'>
+      <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe&Connect
       <figure style={{ 
                           margin: 0, 
                           padding: 0, 
@@ -277,7 +276,8 @@ closeModal=()=>{
                           height:'800px',
                           position: 'fixed',
                           top:0,
-                          overflow: 'hidden'
+                          overflow: 'hidden',
+                          zIndex: 5,
                                      }}>
                      <video  className = "video"  autoPlay loop muted height={'100%'} width={'100%'}>
            
@@ -292,10 +292,13 @@ closeModal=()=>{
                      </video>
                     </figure>
       
-         
-         <div>
+         </div>
+      
+         <div className='howTo-button' style={{zIndex: 100}}>
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
+                className='pop-up-modal'
+                data-cy='popup'
                 open = {this.state.open}
                 closeOnDocumentClick
                 onClose = {this.closeModal}
@@ -305,7 +308,7 @@ closeModal=()=>{
                                     margin: 0, 
                                     padding: 0,
                                      }}>
-                 <img src={finder} alt="swipe left to pass,swipe right to like"
+                 <img  className='howTo-image' src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
                   display: 'inline',
                   height: '50%',
@@ -319,7 +322,7 @@ closeModal=()=>{
         </div>
 
 
-         <div>
+         <div className='login-button' style={{zIndex: 100}}>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 
