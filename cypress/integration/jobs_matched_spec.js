@@ -15,12 +15,12 @@ describe('JobsMatched test', function() {
             // failing this test
             return false
         })
-        cy.get('.button').find('.Keep-Job-Matching!-button1')
+        cy.get('.wrapper.backgroundhands.buttonStyle').find('.button2')
         // cy.contains('type').click()
     })
 
     it('click to go to matches', function() {
-        cy.visit('/')
+        cy.visit('/JobsMatched')
         cy.on('uncaught:exception', (err, runnable) => {
             expect(err.message).to.include('<')
         
