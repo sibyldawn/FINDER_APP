@@ -107,13 +107,13 @@ const styles = theme => ({
     },
 
     buttonStyle: {
-        // backgroundColor: '#dce4e3',
+        backgroundColor: '#dce4e3',
     },
-    Card: {
-        fontSize: '20px',
-        color: '#1F2D44',
-        backgroundColor: '#1F2D44',
-    }
+    // Card: {
+    //     fontSize: '20px',
+    //     color: '#1F2D44',
+    //     backgroundColor: '#1F2D44',
+    // }
 
     
 });
@@ -173,7 +173,7 @@ class Profile extends Component {
             console.log('------------ file', file)
             let formData = new FormData()
             formData.append('signature', res.data.signature)
-            formData.append('api_key', "473154255243884")
+            formData.append('api_key', "835527744512269")
             formData.append('timestamp', res.data.timestamp)
             formData.append('file', file[0])
             console.log('------------ formData', formData)
@@ -232,7 +232,6 @@ class Profile extends Component {
                 <div>
                     <div>
                         {this.state.editing ?
-                             
                             <div className={classes.container}>
                                 <img src={this.state.picture} className={classes.profilePicture}alt="Profile" width='300' />
                                 <div>
@@ -266,7 +265,7 @@ class Profile extends Component {
                                         </section>
                                     </ FormControl>
                                 </div>
-                               
+
                                 <div className='profileBio'>
                                     <TextField className={classes.bio}
                                         helperText={isrecruiter ? 'Company' : 'Bio'}
@@ -556,7 +555,7 @@ class Profile extends Component {
                             </div>
                         :
                             <div className='user-card'>
-                                <Card className={classes.Card} id={this.state.auth0_id} width={'80%'} />\
+                                <Card className={classes.Card} id={this.state.auth0_id} width={'80%'} /><br/>
                             </div>
                         }    
                     </div>

@@ -128,7 +128,7 @@ class App extends React.Component {
         instanceLocator: process.env.REACT_APP_INSTANCE_LOCATOR,
         userId: this.props.context.user.auth0_id,//change to user
         tokenProvider: new Chatkit.TokenProvider({
-            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/4845df4a-abc6-4f35-87cf-999c9f6d448d/token' 
+            url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e9f2af90-4758-4eed-8d0d-f1e5faa192f5/token' 
         })
     })
     chatManager.connect()
@@ -242,10 +242,8 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-          data.length === 0 || this.state.showAnimation    ?
-           <div><TryAgainLater /></div>   
-           :
-           <div className="card-container">
+          data.length > 0 || !this.state.showAnimation  ?
+          <div className="card-container">
 
           <TransitionGroup className="card-container">
               <CSSTransition
@@ -265,11 +263,12 @@ closeModal=()=>{
                 </CSSTransition>
             </TransitionGroup> 
             </div>
+          :
+            <div><TryAgainLater /></div>
       :
-      <div>
-        <div className="NoUser" style={{position: 'fixed',
-                          top:0,color: 'gray'}}>Swipe & Connect </div>
-      
+      <div className='no-user-landing'>
+      <div className="NoUser" style={{position: 'fixed',
+                          top:0,color: 'gray'}}>Swipe&Connect
       <figure style={{ 
                           margin: 0, 
                           padding: 0, 
@@ -277,7 +276,8 @@ closeModal=()=>{
                           height:'800px',
                           position: 'fixed',
                           top:0,
-                          overflow: 'hidden'
+                          overflow: 'hidden',
+                          
                                      }}>
                      <video  className = "video"  autoPlay loop muted height={'100%'} width={'100%'}>
            
@@ -292,28 +292,35 @@ closeModal=()=>{
                      </video>
                     </figure>
       
-         
-         <div>
+         </div>
+      
+         <div className='howTo-button' >
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
+                className='pop-up-modal'
+                data-cy='popup'
                 open = {this.state.open}
                 closeOnDocumentClick
                 onClose = {this.closeModal}
                 position="top center"
                 >
-              
-                 <img src={finder} alt="swipe left to pass,swipe right to like"
+               <figure style={{    
+                                    margin: 0, 
+                                    padding: 0,
+                                     }}>
+                 <img  className='howTo-image' src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
                   height: '500',
                   margin: 0, 
                   padding: 0,
                    }} />
+                </figure>
                </Popup>
 
         </div>
 
 
-         <div>
+         <div className='login-button'>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 

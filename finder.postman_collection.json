@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7f60c171-6ca9-4d73-bb4d-9df90336cfe0",
+		"_postman_id": "000c0921-80f7-44d4-86f7-5960b289d084",
 		"name": "Finder",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -104,6 +104,104 @@
 					]
 				},
 				"description": "Endpoint hit when user swipes right or left on another user's card."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Room ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c2c1c78-ce22-4045-a382-75cb5b4258a0",
+						"type": "text/javascript",
+						"exec": [
+							"const response = pm.response.json()",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Room 15967705 in reponse \", function() {",
+							"  const roomExists = response.some(",
+							"    room => room.room_id === 15967705",
+							"  );",
+							"  pm.expect(roomExists).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4000/api/rooms/15967705",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"rooms",
+						"15967705"
+					]
+				},
+				"description": "Get Room Details from the Chat_Room Table"
+			},
+			"response": []
+		},
+		{
+			"name": "Create a New Room",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9c152f27-be6e-443b-9399-4ca9cf53e9a7",
+						"type": "text/javascript",
+						"exec": [
+							"const res = pm.response.json();",
+							"",
+							"pm.test(\"Status code is 200\", function() {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Room has correct information\", function() {",
+							"  pm.expect(res[0].connection_id).to.eql(12);",
+							"  pm.expect(res[0].room_id).to.eql(12);",
+							"  pm.expect(res[0].room_name).to.eql(\"TEST ROOM5\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t    \"connection_id\": \"12\",\n        \"room_id\": \"00000012\",\n        \"room_name\": \"TEST ROOM5\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"rooms"
+					]
+				},
+				"description": "Creates a new entry in the chat_rooms table."
 			},
 			"response": []
 		}

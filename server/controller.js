@@ -186,8 +186,8 @@ var self = module.exports = {
         const dbInstance = req.app.get('db')
         const { roomId } = req.params;
 
-        dbInstance.get_room([roomId]).then( res => {
-            res.status(200).send(res.data)
+        dbInstance.get_room([roomId]).then( response => {
+            res.status(200).send(response)
         }).catch(err => console.log("Can't find room", err))
     },
     getChatRoomUsers(req,res){
