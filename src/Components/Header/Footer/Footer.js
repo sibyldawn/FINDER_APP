@@ -20,7 +20,7 @@ const styles = {
     bottom: 0,
     width:"100vw",
     background: "#1F2D44",
-    color:'#A8B4B3',
+    color: '#A8B4B3',
     fontSize: 50,
     display:'flex',
     justifyContent: 'space-evenly'
@@ -33,7 +33,7 @@ const styles = {
   // MessageSharp: {
   //   color: '#A8B4B3',
    
-  // }, 
+  
 
 
   // Finder: {
@@ -75,10 +75,10 @@ class Footer extends Component {
     }
     return (
       <BottomNavigation  value={value} onChange={this.handleChange} className={classes.root} color="inherit">
-        <Link to="/Messages"><div class='MessageIcon'><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 30 }} color='action' />}/></div></Link>
+        <Link to="/Messages"><div class='MessageIcon'><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 30, color:'#5ACCC1' }} />}/></div></Link>
         {/* <Link to="/Matches"><BottomNavigationAction className={classes.Matches} label="Matches" value="matches" icon={<SupervisedUserCircle className={classes.SupervisedUserCircle} style={{ fontSize: 30}}/>} /></Link> */}
-        <Link to="/"><div class='MatchIcon'><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp className={classes.SwapHorizSharp} style={{ fontSize: 30}}  />} /> </div></Link>
-        <Link to="/JobMap"><div class='MapIcon'><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon className={classes.LocationOnIcon} style={{ fontSize: 30}}/>} /> </div></Link>
+        <Link to="/"><div class='MatchIcon'><BottomNavigationAction className={classes.Finder} label="Finder" value="finder" icon={<SwapHorizSharp className={classes.SwapHorizSharp} style={{ fontSize: 30, color:'#5ACCC1'}} />} /> </div></Link>
+        <Link to="/JobMap"><div class='MapIcon'><BottomNavigationAction className={classes.JobMap} label="JobMap" value="map" icon={<LocationOnIcon className={classes.LocationOnIcon} style={{ fontSize: 30, color:'#5ACCC1'}}/>} /> </div></Link>
         {/* <Link to="/Settings"><BottomNavigationAction className={classes.SettingsBox} label="Settings" value="settings" icon={<Settings className={classes.SettingsIcon}style={{ fontSize: 30}} />}  /></Link> */}
       </BottomNavigation>
     );

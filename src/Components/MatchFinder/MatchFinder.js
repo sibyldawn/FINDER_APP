@@ -242,7 +242,7 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
-          data.length > 0 || !this.state.showAnimation  ?
+          !data.length || !this.state.showAnimation  ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">
@@ -294,7 +294,7 @@ closeModal=()=>{
       
          </div>
       
-         <div className='howTo-button' >
+         <div className='howTo-button'  >
          <Button className={classes.howToButton} onClick={this.openModal} variant='contained' >How To</Button>
          <Popup 
                 className='pop-up-modal'
@@ -310,7 +310,9 @@ closeModal=()=>{
                                      }}>
                  <img  className='howTo-image' src={finder} alt="swipe left to pass,swipe right to like"
                  style={{ 
-                  height: '500',
+                  display: 'inline',
+                  height: '50%',
+                  width: '80%', 
                   margin: 0, 
                   padding: 0,
                    }} />
@@ -320,7 +322,7 @@ closeModal=()=>{
         </div>
 
 
-         <div className='login-button'>
+         <div className='login-button' onClick={() => context.methods.login()}>
          <Button className={classes.loginButton}
               onClick={() => context.methods.login()}
               variant='contained' 
