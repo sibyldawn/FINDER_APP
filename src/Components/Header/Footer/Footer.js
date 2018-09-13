@@ -16,66 +16,43 @@ import './Footer.css';
 
 const styles = {
   root: {
-    zIndex: 2,
     position: 'fixed',
     bottom: 0,
     width:"100vw",
     background: "#1F2D44",
+    color:'#A8B4B3',
     fontSize: 50,
     display:'flex',
     justifyContent: 'space-evenly'
-  },
-  Messages: {
+  // },
+  // Messages: {
   
-   backgroundColor: '#1F2D44',
+  //  backgroundColor: '#1F2D44',
    
-  },
-  MessageSharp: {
-    color: '#A8B4B3',
+  // },
+  // MessageSharp: {
+  //   color: '#A8B4B3',
    
-  }, 
+  // }, 
 
 
-  Finder: {
-    backgroundColor: '#1F2D44',
-  },
-  SwapHorizSharp: {
-    color: '#A8B4B3',
-   
-  },
-
-
-
-  // Matches: {
+  // Finder: {
   //   backgroundColor: '#1F2D44',
   // },
-  // SupervisedUserCircle: {
+  // SwapHorizSharp: {
   //   color: '#A8B4B3',
+   
   // },
 
-
-
-
-  JobMap: {
-    backgroundColor: '#1F2D44',
-  },
-  LocationOnIcon: {
-    color: '#A8B4B3',
-  },
-
-
-  
-
-
-  // SettingsBox: {
+  // JobMap: {
   //   backgroundColor: '#1F2D44',
   // },
-  // SettingsIcon: {
+  // LocationOnIcon: {
   //   color: '#A8B4B3',
-  // }
-
+  // },
    
   }
+}
 
 
 
@@ -92,7 +69,10 @@ class Footer extends Component {
   render() {
     const { classes } = this.props;
     const { value } = this.state;
-
+    const styles = {
+      fontSize: 30, 
+      color:'#eff4fc',
+    }
     return (
       <BottomNavigation  value={value} onChange={this.handleChange} className={classes.root} color="inherit">
         <Link to="/Messages"><div class='MessageIcon'><BottomNavigationAction className={classes.Messages} label="Messages" value="messages" icon={<MessageSharp className={classes.MessageSharp}  style={{ fontSize: 30 }} color='action' />}/></div></Link>

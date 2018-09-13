@@ -33,16 +33,16 @@ export default class ChatForm extends Component {
             height:'5vh'
         }
         return (
-            <div >
+            <div style={inputStyle}>
              <form
                 onSubmit={this.handleSubmit}
-                className="send-message-form" style={styles}>
+                className="send-message-form">
                 <input
                     disabled={this.props.disabled}
                     onChange={this.handleChange}
                     value={this.state.text}
                     placeholder="Type your message and hit ENTER"
-                    type="text" style={inputStyle}/>
+                    type="text" style={{width: '80vw'}}/>
                      <button id="send-message-form-btn" type="submit" width={100}>✉️</button>
             </form>
             </div>

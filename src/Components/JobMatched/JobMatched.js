@@ -132,7 +132,7 @@ class JobMatched extends React.Component {
 
 
   return (
-    <div>
+    <div className="wrapper">
     <div className="backgroundhands" className={classes.root}>
 
 

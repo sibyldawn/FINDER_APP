@@ -10,9 +10,10 @@ import Room from './Room';
 
 const styles = theme => ({
   root: {
-    overflowY:'scroll',
+    overflow:'scroll',
     width: '100%',
     maxWidth: '100vw',
+    height: '80vh',
     backgroundColor: theme.palette.background.paper,
   },
 });
@@ -46,7 +47,7 @@ class Rooms extends Component {
     const { classes } = this.props;
         return (
              <div className={classes.root}>
-             <List className={classes.root} style={{overflow: 'scroll!important'}}>
+             <List>
                  {rooms}
             </List>
     </div>

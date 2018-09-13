@@ -22,8 +22,8 @@ export default class MessageFeed extends React.Component {
 
     render() {
         const styles={
-                height: '65vh'
-            
+                height: '65vh',
+                width: '100vw'
         }
 
 

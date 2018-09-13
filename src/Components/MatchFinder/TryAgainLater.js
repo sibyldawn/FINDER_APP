@@ -24,7 +24,7 @@ export default class TryAgainLater extends React.Component {
       }
     };
 
-    return <div className="lottie-container`">
+    return <div className="lottie-container">
       <Lottie options={defaultOptions}
               height={'80vh'}
               width={'100vw'}
