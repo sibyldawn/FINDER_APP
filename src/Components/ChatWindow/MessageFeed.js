@@ -4,10 +4,7 @@ import ReactDOM from 'react-dom';
 import List from '@material-ui/core/List';
 
 export default class MessageFeed extends React.Component {
-    constructor(props){
-        super(props);
-    }
-
+    
     componentWillUpdate(){
         const node = ReactDOM.findDOMNode(this)
         this.shouldScrollToBottom = node.scrollTop + node.clientHeight + 100 >= node.scrollHeight        
