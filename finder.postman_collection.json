@@ -1,11 +1,12 @@
 {
 	"info": {
-		"_postman_id": "000c0921-80f7-44d4-86f7-5960b289d084",
+		"_postman_id": "1b04cfa6-7edc-491a-a292-1d315d9950c6",
 		"name": "Finder",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
+			"_postman_id": "904bdf6f-b05e-4b95-9dba-b8a5f6f87678",
 			"name": "Create New Connection",
 			"event": [
 				{
@@ -57,6 +58,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "f338e645-5a0a-45fa-a1eb-c0a3f3d4e0b8",
 			"name": "Create Successful Connection",
 			"event": [
 				{
@@ -108,6 +110,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "be33cafd-1c8e-4720-b536-c8e0e7bd1e5c",
 			"name": "Get Room ",
 			"event": [
 				{
@@ -135,7 +138,10 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:4000/api/rooms/15967705",
 					"protocol": "http",
@@ -154,6 +160,7 @@
 			"response": []
 		},
 		{
+			"_postman_id": "fb787b15-c1ac-4ae8-96f7-c1e84d33e135",
 			"name": "Create a New Room",
 			"event": [
 				{
@@ -202,6 +209,101 @@
 					]
 				},
 				"description": "Creates a new entry in the chat_rooms table."
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "c21c3d09-05bf-46d9-86ab-90d32d639200",
+			"name": "Session Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f003b2c8-4e0a-48c7-80b4-15fcc006985c",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4000/api/session/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"session",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "5204dc36-2ad4-42df-91b7-4e6357f50dce",
+			"name": "Get zipcodes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "802adabd-92ec-484d-b093-f702e397083b",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:4000/api/users/zipcodes?isRecruiter=true",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"users",
+						"zipcodes"
+					],
+					"query": [
+						{
+							"key": "isRecruiter",
+							"value": "true"
+						}
+					]
+				}
 			},
 			"response": []
 		}

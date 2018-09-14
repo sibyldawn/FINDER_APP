@@ -1,8 +1,14 @@
 //Eric 2 end to end test
 describe('JobsMatched test', function() {
    
+    
     it('there should be a match finder button', function() {
         cy.visit('/JobsMatched')
+        cy.get(':nth-child(3) > .MuiButtonBase-root-52 > .MuiIconButton-label-51 > .MuiSvgIcon-root-55')
+        .click()
+        cy.get('.auth0-lock-social-button-text')
+        .click()
+        // needs sessions in order for this to work 
         cy.on('uncaught:exception', (err, runnable) => {
             expect(err.message).to.include('<')
         
@@ -15,7 +21,7 @@ describe('JobsMatched test', function() {
             // failing this test
             return false
         })
-        cy.get('.wrapper.backgroundhands.buttonStyle').find('.button2')
+        cy.get('.button2 > a > .MuiButtonBase-root-52').find('.button2')
         // cy.contains('type').click()
     })
 

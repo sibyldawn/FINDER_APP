@@ -108,7 +108,7 @@ var self = module.exports = {
 
     // This function will return a list of users that are all in the industry provided to it.
     getUserIndustryCodes(req, res) {
-        const dbInstance = req.app.get('db')
+        const dbInstance = req.app.get('db')                                                                                            
         const { industry_code } = req.query
 
         dbInstance.get_industry_code([industry_code])

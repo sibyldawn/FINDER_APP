@@ -14,6 +14,15 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.static( `${__dirname}/../build` ) );
 
+// do not forget to comment this app.use out after cypress testing
+
+// app.use((req, res, next) => {
+//       res.header("Access-Control-Allow-Origin", "*");
+//       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//       next();
+// });
+
+
 // Redis Implementation
 app.use(session({
     store: new RedisStore( {url: process.env.REDIS_URI} ),
