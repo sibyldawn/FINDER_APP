@@ -565,7 +565,7 @@ class Profile extends Component {
                     <div className={classes.buttonStyle}>
                         <Button 
                             onClick={() => this.setState({ editing: !this.state.editing })} 
-                            variant='contained' 
+                            variant='contained'
                             className={classes.button}>
                                 {this.state.editing ? 'Cancel' : 'Edit Profile'}
                         </Button>

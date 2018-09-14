@@ -242,6 +242,9 @@ closeModal=()=>{
     // console.log(this.deck)
     return (
       context.login ?
+        this.props.context.matchEvent ?
+          <JobMatched />
+        :
           !data.length || !this.state.showAnimation  ?
           <div className="card-container">
 
@@ -278,7 +281,7 @@ closeModal=()=>{
                           top:0,
                           overflow: 'hidden',
                           
-                                     }}>
+                    }}>
                      <video  className = "video"  autoPlay loop muted height={'100%'} width={'100%'}>
            
                      <source src ={men} style={{ 

@@ -61,7 +61,8 @@ var self = module.exports = {
                 pass: process.env.EMAIL_PASSWORD
             }
         })
-
+        console.log('------------ transporter', transporter)
+        
         const mailOptions = {
             from: `"Finder" <${process.env.EMAIL}`,
             to: String(email),

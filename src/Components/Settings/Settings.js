@@ -86,7 +86,9 @@ class Settings extends React.Component {
         open: false,
         confirm: false,
         snack: false,
-        snackMessage: ''
+        snackMessage: '',
+        toolTip1Open: false,
+        toolTip2Open: false
     }
 
     componentDidUpdate(prevProps) {
@@ -173,8 +175,16 @@ class Settings extends React.Component {
                         }
                         label={this.state.isrecruiter ? 'I am a recruiter' : 'I am an applicant'}
                     />
-                    <Tooltip title={this.state.isrecruiter ? "This account represents a company's recruiter" : 'This account represents a job applicant'}>
-                        <img src={ helpIcon } alt='Help' />
+                    <Tooltip 
+                        title={this.state.isrecruiter ? "This account represents a company's recruiter" : 'This account represents a job applicant'}
+                        PopperProps={{
+                            disablePortal: true,
+                          }}
+                        onClose={() => this.handleChange('toolTip1Open', false)}
+                        open={this.state.toolTip1Open}
+                        disableTouchListener
+                        >
+                        <img src={ helpIcon } alt='Help' onClick={() => this.handleChange('toolTip1Open', true)} onMouseEnter={() => this.handleChange('toolTip1Open', true)}/>
                     </Tooltip>
                     <FormControlLabel
                         control={
@@ -192,8 +202,16 @@ class Settings extends React.Component {
                         // the label and tool tip image need to be syled and positioned with the toggle switch
                         label='Account active'
                     />
-                    <Tooltip title={this.state.active ? "This account will show up in other users's match queue" : "This account will not show up in other users' match queue."}>
-                        <img src={ helpIcon } alt='Help' />
+                    <Tooltip 
+                        title={this.state.active ? "This account will show up in other users's match queue" : "This account will not show up in other users' match queue."}
+                        PopperProps={{
+                            disablePortal: true,
+                          }}
+                        onClose={() => this.handleChange('toolTip2Open', false)}
+                        open={this.state.toolTip2Open}
+                        disableTouchListener
+                        >
+                        <img src={ helpIcon } alt='Help' onClick={() => this.handleChange('toolTip2Open', true)} onMouseEnter={() => this.handleChange('toolTip2Open', true)}/>
                     </Tooltip>
                     <Button className={classes.editEmailButton}
                         onClick={() => this.handleChange('open', true)}
