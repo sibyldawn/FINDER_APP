@@ -18,8 +18,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import axios from 'axios'
-import helpIcon from '../../Assets/help-icon1.svg'
+import axios from 'axios';
+import helpIcon from '../../Assets/help-icon1.svg';
 import './Settings.css';
 
 const styles = theme => ({
