@@ -55,9 +55,9 @@
     "now-start": "node server/index.js",
     "deploy": "now --public --dotenv=.env.prod -d"
   },
-    "now":{
-      "alias":"finder",
-      "cypress-open": "./node_modules/.bin/cypress open"
+  "now": {
+    "alias": "finder",
+    "cypress-open": "./node_modules/.bin/cypress open"
   },
   "proxy": {
     "/auth/callback": {

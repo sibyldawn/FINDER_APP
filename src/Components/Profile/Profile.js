@@ -173,7 +173,7 @@ class Profile extends Component {
             console.log('------------ file', file)
             let formData = new FormData()
             formData.append('signature', res.data.signature)
-            formData.append('api_key', "835527744512269")
+            formData.append('api_key', "314668178757937")
             formData.append('timestamp', res.data.timestamp)
             formData.append('file', file[0])
             console.log('------------ formData', formData)

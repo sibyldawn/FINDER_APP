@@ -239,13 +239,13 @@ closeModal=()=>{
         )
       }));
     console.log("data",data);
-    // console.log(this.deck)
+    console.log("cards",this.state.cards)
     return (
       context.login ?
         this.props.context.matchEvent ?
           <JobMatched />
         :
-          !data.length || !this.state.showAnimation  ?
+        !this.state.showAnimation || this.state.cards !== null ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">
