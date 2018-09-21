@@ -245,7 +245,7 @@ closeModal=()=>{
         this.props.context.matchEvent ?
           <JobMatched />
         :
-        !this.state.showAnimation || this.state.cards !== null ?
+        this.state.cards.length || !this.state.showAnimation ?
           <div className="card-container">
 
           <TransitionGroup className="card-container">
