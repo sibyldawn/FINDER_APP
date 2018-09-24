@@ -245,9 +245,12 @@ closeModal=()=>{
         this.props.context.matchEvent ?
           <JobMatched />
         :
-        this.state.cards.length || !this.state.showAnimation ?
+        !data.length || this.state.showAnimation ?
+          
+        <div><TryAgainLater /></div>
+          :
           <div className="card-container">
-
+          
           <TransitionGroup className="card-container">
               <CSSTransition
             in={appearHome}
@@ -266,8 +269,7 @@ closeModal=()=>{
                 </CSSTransition>
             </TransitionGroup> 
             </div>
-          :
-            <div><TryAgainLater /></div>
+          
       :
       <div className='no-user-landing'>
       <div className="NoUser" style={{position: 'fixed',
