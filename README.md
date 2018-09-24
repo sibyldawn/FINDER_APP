@@ -16,7 +16,8 @@
 
 ![screen shot 2018-09-24 at 9 36 12 am](https://user-images.githubusercontent.com/29646098/45975469-357dd100-bff9-11e8-9d00-6c67fe8a063a.png)
 
-![screen shot 2018-09-24 at 9 47 30 am](https://user-images.githubusercontent.com/29646098/45975479-3d3d7580-bff9-11e8-9698-be0594d0aaf1.png)
+
+![swipeit](https://user-images.githubusercontent.com/29646098/45976189-e5a00980-bffa-11e8-83c0-ec37e9afbd73.gif)
 
 ![screen shot 2018-09-24 at 9 52 07 am](https://user-images.githubusercontent.com/29646098/45975512-4d555500-bff9-11e8-8511-d67311f87e73.png)
 
