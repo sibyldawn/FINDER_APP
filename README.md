@@ -4,7 +4,7 @@
 >The Tinder for Jobs, a responsive full-stack REACT app which helps
 >applicants and recruiters find job matches and chat to promote networking
 >and eventually hiring.
-============================================================================================================================
+
 
 ![screen shot 2018-09-24 at 9 33 45 am](https://user-images.githubusercontent.com/29646098/45975411-0b2c1380-bff9-11e8-923e-0e1ffb8ec91c.png)
 
@@ -28,7 +28,6 @@
 
 ![screen shot 2018-09-24 at 10 38 41 am](https://user-images.githubusercontent.com/29646098/45975592-7675e580-bff9-11e8-8646-bedc961eb670.png)
 
-============================================================================================================================
 
 * This full-stack REACT app was created for a group project using AGILE PROJECT
 MANAGEMENT.
