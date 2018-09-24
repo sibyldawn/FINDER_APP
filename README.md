@@ -22,11 +22,13 @@
 
 ![screen shot 2018-09-24 at 9 50 40 am](https://user-images.githubusercontent.com/29646098/45975546-5b0ada80-bff9-11e8-955f-748d718e2690.png)
 
-![screen shot 2018-09-24 at 9 50 40 am](https://user-images.githubusercontent.com/29646098/45975546-5b0ada80-bff9-11e8-955f-748d718e2690.png)
+![screen shot 2018-09-24 at 9 51 02 am](https://user-images.githubusercontent.com/29646098/45975738-cb196080-bff9-11e8-958a-4fcaea2be53d.png)
+
 
 ![screen shot 2018-09-24 at 10 38 41 am](https://user-images.githubusercontent.com/29646098/45975592-7675e580-bff9-11e8-8646-bedc961eb670.png)
 
-![screen shot 2018-09-24 at 10 38 41 am](https://user-images.githubusercontent.com/29646098/45975592-7675e580-bff9-11e8-8646-bedc961eb670.png)
+![screen shot 2018-09-24 at 9 52 37 am](https://user-images.githubusercontent.com/29646098/45975762-d8cee600-bff9-11e8-8a97-c01b4c68b551.png)
+
 
 
 * This full-stack REACT app was created for a group project using AGILE PROJECT
