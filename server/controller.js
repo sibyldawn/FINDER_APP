@@ -55,7 +55,7 @@ var self = module.exports = {
         const {email, first_name} = user
 
         const transporter = nodemailer.createTransport({
-            service: 'gmail',
+            service: 'yahoo',
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.EMAIL_PASSWORD
